@@ -1,0 +1,127 @@
+<?php
+require_once('lib/generalLayout.php');
+require_once('lib/permissionsMng.php');
+require_once('lib/sqlLib.php');
+require_once('lib/datetime/month.php');
+
+PermissionsMng::atMostAuthorizationLevel(1);
+
+$conn=connect();
+
+
+//gestisce l'immissione di un nuovo mese nel calendario
+if ( isset($_POST['submit']) ) {
+	$date = explode('-', $_POST['Mese']);
+	$month = new Month(intval($date[1]),intval($date[0]));
+
+	if ($month->isInFuture()) {							//controlla che il mese indicato sia nel futuro e non nel passato
+		if (!isInDB($month,$conn)) {					//controlla che il mese indicato non sia già presente in DB
+			for ($i=1; $i <= $month->dayThisMonth(); $i++) { 
+				queryThis("INSERT INTO `liltvolontari`.`calendar` (`year`, `month`, `day`) VALUES ('{$month->getYear()}', '{$month->getMonth()}', '$i');", $conn);
+			}
+			echo "<script>alert(\"Mese aggiunto con successo\")</script>";
+		} else {
+			echo "<script>alert(\"Il mese che hai inserito è gia abilitato alle iscrizioni per i turni\")</script>";
+		}
+	} else {
+		echo "<script>alert(\"Il mese che hai inserito è nel passato, deve essere nel futuro\")</script>";
+	}
+}
+
+
+function isInDB(Month $m,$conn) {
+	$result = queryThis("SELECT * FROM `liltvolontari`.`calendar` WHERE year={$m->getYear()} and month={$m->getMonth()}", $conn);
+	return (mysql_num_rows($result)!=0);
+}
+
+
+
+
+
+
+
+$monthTable='';
+$months=queryThis("SELECT DISTINCT year, month FROM calendar", $conn);
+for ($i=0; $i<mysql_num_rows($months) ; $i++) {
+	$row = mysql_fetch_assoc($months);
+	$monthTable.=monthRow($row);
+}
+function monthRow($row) {
+	$year = $row['year'];
+	$month = $row['month'];
+	$nvolontari='';
+	$actions = "<a href='delete_month.php?year=$year?month=$month'>cancella</a>";
+
+	$row = <<<EOF
+		<tr>
+			<td>$month/$year</th>
+			<td>$nvolontari</td>
+			<td>$actions</th>
+		</tr>
+EOF;
+	return $row;
+}
+
+//form per inserire il mese
+$content = <<<HTML
+<h1>Gestione Eventi</h1>
+
+<h2>Nuovo Mese</h2>
+<p> Selezionare dal picker qui sotto il mese per abilitare le iscrizioni ai turni di quel mese</p>
+<form action='#' method="POST">
+	<div class="row">
+		<div class="form-group col-sm-3">
+			<label for="Mese">Mese</label>
+			<input class="form-control" type="month" name="Mese">
+		</div>
+		<div class="col-sm-3">
+			<div class="form-check">
+				<label class="form-check-label">
+					<input class="form-check-input" type="radio" name="nVolontari" value="2" checked>
+					Due volontari per turno
+				</label>
+			</div>
+			<div class="form-check">
+				<label class="form-check-label">
+					<input class="form-check-input" type="radio" name="nVolontari" value="3">
+					Tre volontari per turno
+				</label>
+			</div>
+		</div>
+	</div>
+	<button type="submit" name="submit" value="submit" class="btn btn-default">Submit</button>
+</form>
+
+<h2>Lista Mesi abilitati</h2>
+<div class="table-responsive">
+	<table class="table table-striped table-bordered table-condensed">
+		<thead>
+			<tr>
+				<th>Mese</th>
+				<th># volontari</th>
+				<th>Azioni</th>
+			</tr>
+		</thead>
+		<tbody>
+			$monthTable
+		</tbody>
+	</table>
+</div>
+
+HTML;
+
+
+
+//general layout of one page
+$generalLayout = new GeneralLayout("events.php");
+
+//setting the title
+$generalLayout->yieldElem('title', "Gestione Eventi");
+
+//setting the body
+$generalLayout->yieldElem('content', $content);
+
+	
+$generalLayout->pprint();
+
+?>
