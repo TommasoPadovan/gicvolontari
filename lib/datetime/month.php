@@ -93,6 +93,32 @@ class Month {
 		}
 	}
 
+	public function getDayName($i) {
+		switch ($this->dayOfWeek($i)) {
+			case 0:
+				return 'Domenica';
+				break;
+			case 1:
+				return 'Lunedì';
+				break;
+			case 2:
+				return 'Martedì';
+				break;
+			case 3:
+				return 'Mercoledì';
+				break;
+			case 4:
+				return 'Giovedì';
+				break;
+			case 5:
+				return 'Venerdì';
+				break;
+			case 6:
+				return 'Sabato';
+				break;
+
+		}
+	}
 
 
 	public function isInFuture() {

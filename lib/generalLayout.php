@@ -2,7 +2,7 @@
 session_start();
 class GeneralLayout {
 
-	private $template = <<<EOF
+	private $template = <<<HTML
 <!DOCTYPE html>
 <html lang="en">
 
@@ -10,6 +10,8 @@ class GeneralLayout {
 		<meta charset="utf-8">
 		<title>@yield('title')</title>
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+		<link rel="stylesheet" href="lib/myStyle.css">
+
 
 	</head>
 
@@ -25,13 +27,14 @@ class GeneralLayout {
 	</body>
 
 </html>
-EOF;
+HTML;
 
 	public function __construct($url) {
 		$pages = array(
 			new Page('volunteers.php','Aggiungi Volontario',1),
 			new Page('events.php', 'Gestione Eventi', 1),
-			new Page('turns.php', 'Turni',2)
+			new Page('turns.php', 'Turni',2),
+			new Page('mycommittments.php', 'Miei Impegni', 2)
 		);
 
 		$this->yieldElem('nav', self::generateNav($pages, $url));

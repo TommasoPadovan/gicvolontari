@@ -35,19 +35,6 @@ $generalLayout->yieldElem('content', $content);
 $generalLayout->pprint();
 
 
-echo <<<EEND
-<script type="text/javascript">
-	function toggle_visibility(id) 
-	{
-		var e = document.getElementById(id);
-		if ( e.style.display == 'none' )
-			e.style.display = 'block';
-		else
-			e.style.display = 'none';
-	}
-</script>
-EEND;
-
 
 
 
@@ -70,19 +57,24 @@ function generateAllTables($conn) {
 	foreach ($allMonths as $month) {
 		if ( $month->isInFuture() );
 		$aux.= <<<HTML
-		<p>{$monthHideLink($month)}</p>
-		<div id="month{$month->getMonth()}-{$month->getYear()}" style="display: none">
-			<div class="row">
-				<div class="col-sm-2"><strong>Lunedì</strong></div>
-				<div class="col-sm-2"><strong>Martedì</strong></div>
-				<div class="col-sm-2"><strong>Mercoledì</strong></div>
-				<div class="col-sm-2"><strong>Giovedì</strong></div>
-				<div class="col-sm-2"><strong>Venerdì</strong></div>
-			</div>
-			<hr />
-			{$monthTable($month, $conn)}
-			<hr />
+		<div class="table-responsive">
+			<p>{$monthHideLink($month)}</p>
+			<table class="table table-striped table-bordered table-condensed">
+				<thead>
+					<tr>
+						<th>Lunedì</th>
+						<th>Martedì</th>
+						<th>Mercoledì</th>
+						<th>Giovedì</th>
+						<th>Venerdì</th>
+					</tr>
+				</thead>
+				<tbody>
+					{$monthTable($month, $conn)}
+				</tbody>
+			</table>
 		</div>
+		<hr />
 HTML;
 	}
 	return $aux;
@@ -97,28 +89,27 @@ function monthTable(Month $month, $conn) {
 	$workingDays = $month->getAllWorking();
 	$firstDay = $month->dayOfWeek($workingDays[0]);
 
-	$dayTable = "<div class='row'>\n";
+	$dayTable = "<tr>\n";
 	for ($i=0; $i < $firstDay-1 ; $i++) 
-		$dayTable.="<div class='col-sm-2'></div>\n";
+		$dayTable.="<td></td>\n";
 	for ($i=$firstDay; $i <= 5 ; $i++) {
 		$content = calendarContent($month, $i, $conn);
-		$dayTable.="<div class='col-sm-2'>$content</div>\n";
+		$dayTable.="<td>$content</td>\n";
 	}  
 
 	$firstDayOf2Week=6-$firstDay;
 	for ($i=6-$firstDay; $i < sizeof($workingDays) ; $i++) { 
-		if (($i-$firstDayOf2Week)%5==0) $dayTable.= "</div><div class='row'>\n";
+		if (($i-$firstDayOf2Week)%5==0) $dayTable.= "</tr><tr>\n";
 		$content = calendarContent($month, $workingDays[$i], $conn);
-		$dayTable.="<div class='col-sm-2'>$content</div>\n";
+		$dayTable.="<td>$content</td>\n";
 
 	}
-	$dayTable.= "</div>\n";
+	$dayTable.= "</tr>\n";
 	return $dayTable;
 }
 
 function monthHideLink(Month $month) {
-	return "<a class=\"btn btn-block btn-default\"  onclick=\"toggle_visibility('month{$month->getMonth()}-{$month->getYear()}')\">".$month->getMonthName().' '.$month->getYear()."</a>";
-	//return "<a href='#' onclick=\"porcodio('culo')\">".$month->getMonthName().' '.$month->getYear()."</a>";
+	return $month->getMonthName().' '.$month->getYear();
 }
 
 
@@ -186,33 +177,21 @@ function calendarContent(Month $month, $i, $conn) {
 	<p><strong>$i</strong></p>
 	<hr />
 	<table class="table table-striped table-bordered table-condensed">
-		<thead>
-			<tr>
-				<th>Fiabe</th>
-				<th>Oasi</th>
-				<th>Clown</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr>
-				<td>{$fiabe[1]}</td>
-				<td>{$oasi[1]}</td>
-				<td>{$clown[1]}</td>
-			</tr><tr>
-				<td>{$fiabe[2]}</td>
-				<td>{$oasi[2]}</td>
-				<td>{$clown[2]}</td>
-			</tr><tr>
-				<td>{$fiabe[3]}</td>
-				<td>{$oasi[3]}</td>
-				<td>{$clown[3]}</td>
-			</tr>
-		</tbody>
+		<tr>
+			<td>{$fiabe[1]}</td>
+			<td>{$oasi[1]}</td>
+			<td>{$clown[1]}</td>
+		</tr><tr>
+			<td>{$fiabe[2]}</td>
+			<td>{$oasi[2]}</td>
+			<td>{$clown[2]}</td>
+		</tr><tr>
+			<td>{$fiabe[3]}</td>
+			<td>{$oasi[3]}</td>
+			<td>{$clown[3]}</td>
+		</tr>
 	</table>
 END;
 }
 
 ?>
-
-
-

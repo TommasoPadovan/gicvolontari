@@ -50,6 +50,7 @@ if ( mysql_num_rows( queryThis("SELECT * FROM turni AS t JOIN calendar as c ON t
 
 
 queryThis("INSERT INTO `liltvolontari`.`turni` (`day`, `task`, `position`, `volunteer`) VALUES ($dayID, '$task', $position, $userID);",$conn);
+echo "<script>alert(\"Prenotazione effettuta con successo\")</script>";
 abortMission();
 
 

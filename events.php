@@ -17,7 +17,7 @@ if ( isset($_POST['submit']) ) {
 	if ($month->isInFuture()) {							//controlla che il mese indicato sia nel futuro e non nel passato
 		if (!isInDB($month,$conn)) {					//controlla che il mese indicato non sia già presente in DB
 			for ($i=1; $i <= $month->dayThisMonth(); $i++) { 
-				queryThis("INSERT INTO `liltvolontari`.`calendar` (`year`, `month`, `day`) VALUES ('{$month->getYear()}', '{$month->getMonth()}', '$i');", $conn);
+				queryThis("INSERT INTO `liltvolontari`.`calendar` (`year`, `month`, `day`, `maxVolunteerNumber`) VALUES ('{$month->getYear()}', '{$month->getMonth()}', '$i', {$_POST['nVolontari']});", $conn);
 			}
 			echo "<script>alert(\"Mese aggiunto con successo\")</script>";
 		} else {
@@ -41,7 +41,7 @@ function isInDB(Month $m,$conn) {
 
 
 $monthTable='';
-$months=queryThis("SELECT DISTINCT year, month FROM calendar", $conn);
+$months=queryThis("SELECT DISTINCT year, month, maxVolunteerNumber FROM calendar", $conn);
 for ($i=0; $i<mysql_num_rows($months) ; $i++) {
 	$row = mysql_fetch_assoc($months);
 	$monthTable.=monthRow($row);
@@ -49,7 +49,7 @@ for ($i=0; $i<mysql_num_rows($months) ; $i++) {
 function monthRow($row) {
 	$year = $row['year'];
 	$month = $row['month'];
-	$nvolontari='';
+	$nvolontari=$row['maxVolunteerNumber'];
 	$actions = "<a href='delete_month.php?year=$year?month=$month'>cancella</a>";
 
 	$row = <<<EOF

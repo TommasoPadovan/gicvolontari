@@ -1,7 +1,21 @@
+<?php
+require_once('../lib/sqlLib.php');
+$conn=connect();
 
-DROP SCHEMA IF EXISTS `liltvolontari`;
-CREATE SCHEMA `liltvolontari` ;
 
+queryThis("DROP SCHEMA IF EXISTS `liltvolontari`;", $conn);
+echo "schema dropped...<br />";
+
+queryThis("CREATE SCHEMA `liltvolontari`;", $conn);
+echo "schema created...<br />";
+
+
+mysql_select_db('liltvolontari');
+echo "db selected...<br />";
+
+
+
+queryThis("
 create table Users (
 	id INT(8) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
 	firstname VARCHAR(30) NOT NULL,
@@ -18,13 +32,16 @@ create table Users (
 	position INT(2),
 	permessi INT(2)
 
-) ENGINE=InnoDB;
+) ENGINE=InnoDB;", $conn);
+echo "users table created<br />";
 
 
-INSERT INTO `liltvolontari`.`users` (`firstname`, `lastname`, `email`, `psw`, `position`, `permessi`) VALUES ('admin', 'admin', 'admin@gmail.com', '21232f297a57a5a743894a0e4a801fc3', '1', '1');
+queryThis("
+	INSERT INTO `liltvolontari`.`Users` (`firstname`, `lastname`, `email`, `psw`, `position`, `permessi`) VALUES ('admin', 'admin', 'admin', '21232f297a57a5a743894a0e4a801fc3', '1', '1');", $conn);
+echo "added admin...<br />";
 
 
-
+queryThis("
 create table Calendar (
 	id INT(8) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
 	year INT(4) NOT NULL,
@@ -33,9 +50,11 @@ create table Calendar (
 	maxVolunteerNumber INT(2),
 
 	UNIQUE (year, month, day)
-) ENGINE=InnoDB;
+) ENGINE=InnoDB;", $conn);
+echo "calendar table created<br />";
 
 
+queryThis("
 create table Turni (
 	day INT(8) UNSIGNED NOT NULL,
 	task VARCHAR(30) NOT NULL,
@@ -46,4 +65,9 @@ create table Turni (
 	FOREIGN KEY(day) REFERENCES Calendar(id) ON UPDATE CASCADE ON DELETE CASCADE,
 	FOREIGN KEY(volunteer) REFERENCES Users(id) ON UPDATE CASCADE ON DELETE CASCADE
 
-)ENGINE=InnoDB;
+)ENGINE=InnoDB;",
+$conn);
+echo "turn table created...<br />";
+
+
+?>
