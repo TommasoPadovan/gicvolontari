@@ -7,7 +7,7 @@ require_once('lib/datetime/month.php');
 PermissionsMng::atMostAuthorizationLevel(2);
 
 
-$conn=connect();
+$db = new DbConnection();
 
 
 $task = $_GET['task'];
@@ -16,21 +16,31 @@ $year = $_GET['year'];
 $month = $_GET['month'];
 $day = $_GET['day'];
 
-$dayID = mysql_fetch_assoc( queryThis("SELECT * FROM calendar WHERE year=$year AND month=$month AND day=$day",$conn) );
-$dayID = $dayID['id'];
+
+$dayID = $db->select('calendar',array(
+	'year'	=>	$year,
+	'month'	=>	$month,
+	'day'	=>	$day
+))[0]['id'];
 
 $userID = $_SESSION['id'];
 
+
 //sanity check
 //è la giusta posizione del volontario?
-$row=mysql_fetch_assoc( queryThis("SELECT * FROM users WHERE id = $userID",$conn) );
+$row = $db->select('users', array('id' => $userID))[0];
 if ($position != $row['position']){
 	abortMission();
 	exit;
 }
 
 //c'è un altro volontario che fa esattamente la stessa roba?
-if (!mysql_num_rows(queryThis("SELECT * FROM turni WHERE task='$task' AND position=$position AND day=$dayID",$conn))==0) {
+$sameTask = $db->select('turni', array(
+	'task'		=>	$task,
+	'position'	=>	$position,
+	'day'		=>	$dayID
+));
+if (!count($sameTask)==0) {
 	abortMission();
 	exit;
 }
@@ -42,14 +52,23 @@ if ($task!="oasi" && $task!="clown" && $task!="fiabe" ){
 }
 
 //il volontario è sotto il suo massimo di turni questo mese?
-if ( mysql_num_rows( queryThis("SELECT * FROM turni AS t JOIN calendar as c ON t.day = c.id WHERE c.month = $month AND t.volunteer = $userID ", $conn) )>=2 ) {
+$volunteerTurnThisMonth = $db->prepare("SELECT * FROM turni AS t JOIN calendar as c ON t.day = c.id WHERE c.month = :month AND t.volunteer = :userID");
+$volunteerTurnThisMonth->execute(array(
+	':month' => $month,
+	':userID' => $userID
+));
+if ( $volunteerTurnThisMonth->rowCount() >=2 ) {
 	abortMission();
 	exit;
 }
 
 
-
-queryThis("INSERT INTO `liltvolontari`.`turni` (`day`, `task`, `position`, `volunteer`) VALUES ($dayID, '$task', $position, $userID);",$conn);
+$db->insert('turni', array(
+	'day'	=> $dayID,
+	'task'	=> $task,
+	'position'	=> $position,
+	'volunteer'	=> $userID
+));
 echo "<script>alert(\"Prenotazione effettuta con successo\")</script>";
 abortMission();
 

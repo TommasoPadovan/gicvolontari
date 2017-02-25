@@ -5,7 +5,7 @@ require_once('lib/sqlLib.php');
 
 PermissionsMng::atMostAuthorizationLevel(1);
 
-$conn=connect();
+$db = new DbConnection;
 
 //general layout of one page
 $generalLayout = new GeneralLayout("volunteers.php");
@@ -16,9 +16,8 @@ $generalLayout->yieldElem('title', "Volontari");
 
 //table of users in the db
 $usersTable='';
-$users=queryThis("SELECT * FROM users", $conn);
-for ($i=0; $i<mysql_num_rows($users) ; $i++) {
-	$row = mysql_fetch_assoc($users);
+$users = $db->select('users');
+foreach ($db->select('users') as $row) {
 	$usersTable.=userRow($row);
 }
 
@@ -172,18 +171,6 @@ echo <<<EEND
 	}
 </script>
 EEND;
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

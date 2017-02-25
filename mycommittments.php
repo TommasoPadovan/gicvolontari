@@ -6,7 +6,7 @@ require_once('lib/datetime/month.php');
 
 PermissionsMng::atMostAuthorizationLevel(2);
 
-$conn=connect();
+$db = new DbConnection();
 
 //general layout of one page
 $generalLayout = new GeneralLayout("mycommittments.php");
@@ -15,30 +15,34 @@ $generalLayout = new GeneralLayout("mycommittments.php");
 $generalLayout->yieldElem('title', "Impegni");
 
 //fetching turn data
-$result=queryThis("
+$result = $db->prepare('
 	SELECT c.month as month, c.year as year, c.day as day, t.task as task,  t.position as position
 	FROM calendar AS c JOIN turni AS t
 		ON c.id=t.day
-	WHERE t.volunteer = {$_SESSION['id']};
-	",$conn);
+	WHERE t.volunteer = :id
+');
+$result->execute(array('id' => $_SESSION['id']));
 $myCommittments=array();
-for ($i=0; $i < mysql_num_rows($result); $i++) { 
- 	$row=mysql_fetch_assoc($result);
- 	array_push(
- 		$myCommittments,
- 		array(
- 			'month' => new Month( intval($row['month']), intval($row['year']) ),
- 			'day' => $row['day'],
- 			'task' => $row['task'],
- 			'position' => $row['position']
- 		)
- 	);
- }
+foreach ($result as $row) {
+	array_push(
+		$myCommittments,
+		array(
+			'month' => new Month( intval($row['month']), intval($row['year']) ),
+			'day' => $row['day'],
+			'task' => $row['task'],
+			'position' => $row['position']
+		)
+	);
+}
+
+
 
 $strCommittments=array();
 foreach ($myCommittments as $committment) {
 	if ($committment['month']->isInFuture()) {
-		array_push($strCommittments, "<li>{$committment['day']} {$committment['month']->getMonthName()} {$committment['month']->getYear()} - - - {$committment['task']} posizione {$committment['position']} </li>");
+		array_push(
+			$strCommittments,
+			"<li>{$committment['day']} {$committment['month']->getMonthName()} {$committment['month']->getYear()} - - - {$committment['task']} posizione {$committment['position']} </li>");
 	}
 }
 

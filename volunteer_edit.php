@@ -1,9 +1,12 @@
 <?php
+session_start();
 require_once('lib/sqlLib.php');
 require_once('lib/permissionsMng.php');
+
+
 PermissionsMng::atMostAuthorizationLevel(1);
 
-$conn=connect();
+$db = new DbConnection();
 
 var_dump($_POST);
 
@@ -22,10 +25,22 @@ $position = $_POST['Posizione'];
 $permessi = $_POST['Permessi'];
 
 
-$query = "INSERT INTO `liltvolontari`.`users` (`firstname`, `lastname`, `email`, `psw`, `phone`, `address`, `address2`, `city`, `prov`, `cap`, `state`, `position`, `permessi`)
-	VALUES ('$firstname', '$lastname', '$email', '$psw', '$NumeroTelefono', '$Idirizzo', '$Indirizzo2', '$Citta', '$Provincia', '$CAP', '$Stato', '$position', '$permessi');";
 
-$r = queryThis($query,$conn);
+$db->insert('users', array(
+	'firstname'	=> $firstname,
+	'lastname'	=> $lastname,
+	'email'		=> $email,
+	'psw'		=> $psw,
+	'phone'		=> $NumeroTelefono,
+	'address'	=> $Idirizzo,
+	'address2'	=> $Indirizzo2,
+	'city'		=> $Citta,
+	'prov'		=> $Provincia,
+	'cap'		=> $CAP,
+	'state'		=> $Stato,
+	'position'	=> $position,
+	'permessi'	=> $permessi
+));
 
 header("Location: volunteers.php");
 

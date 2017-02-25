@@ -37,3 +37,19 @@
     .col-xl-three5ths {width: 60%;float: left;}
     .col-xl-four5ths {width: 80%;float: left;}
 }
+
+
+.fiabe {
+  background-color: #ccffff;
+  padding: 0 90px;
+}
+
+.oasi {
+  background-color: #ccff99;
+  padding: 0 90px;
+}
+
+.clown {
+  background-color: #ff9999;
+  padding: 0 90px;
+}

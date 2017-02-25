@@ -7,7 +7,7 @@ require_once('lib/datetime/month.php');
 PermissionsMng::atMostAuthorizationLevel(2);
 
 
-$conn=connect();
+$db = new DbConnection();
 
 
 $volunteer = $_GET['volunteer'];
@@ -16,7 +16,14 @@ $task = $_GET['task'];
 $position = $_GET['position'];
 
 if ($volunteer == $_SESSION['id'] || $_SESSION['id']<=1) {
-	queryThis("DELETE FROM turni WHERE volunteer=$volunteer AND day=$day AND task='$task' AND position=$position", $conn);
+	$db->deleteRows('turni', array(
+		'volunteer' => $volunteer,
+		'day' => $day,
+		'task' => $task,
+		'position' => $position
+	));
+
+	
 }
 
 header("Location: turns.php");

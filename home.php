@@ -1,7 +1,8 @@
 <?php
 require_once('lib/generalLayout.php');
 require_once('lib/sqlLib.php');
-$conn=connect();
+
+$db = new DbConnection();
 
 
 //general layout of one page
@@ -19,18 +20,16 @@ if ( isset($_POST['logout']) ) {
 	unset($_SESSION['permessi']);
 }
 if ( isset( $_SESSION['id'] ) ) {
-	$welcome = welcomeMsg($_SESSION['id'], $conn);
+	$welcome = welcomeMsg($_SESSION['id'], $db);
 } else {
 	if ( isset($_POST['login']) && isset($_POST['Email']) && isset($_POST['Password']) ) {
-		$allUsers=array();
-		$users=queryThis("SELECT * FROM users", $conn);
-		for ($i=0; $i<mysql_num_rows($users) ; $i++) {
-			$row=mysql_fetch_assoc($users);
+		//$users=queryThis("SELECT * FROM users", $conn);
+		foreach ($db->select('users') as $row) {
 			if ($row['email'] == $_POST['Email']) {
 				if ($row['psw'] == md5($_POST['Password'])) {
 					$_SESSION['id'] = $row['id'];
 					$_SESSION['permessi'] = $row['permessi'];
-					$welcome = welcomeMsg($_SESSION['id'], $conn);
+					$welcome = welcomeMsg($_SESSION['id'], $db);
 				}
 			}
 		}
@@ -72,9 +71,9 @@ $generalLayout->pprint();
 
 
 
-function welcomeMsg($id, $conn) {
-	$user=queryThis("SELECT * FROM users WHERE id=$id" , $conn);
-	$row = mysql_fetch_assoc($user);
-	return "Ciao {$row['lastname']}";
+function welcomeMsg($id, $db) {
+	foreach ( $db->select('users', array('id' => $id)) as $row) {
+		return "Ciao {$row['lastname']}";
+	}
 }
 ?>

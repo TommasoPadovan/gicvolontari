@@ -6,7 +6,7 @@ require_once('lib/datetime/month.php');
 
 PermissionsMng::atMostAuthorizationLevel(1);
 
-$conn=connect();
+$db = new DbConnection();
 
 
 //gestisce l'immissione di un nuovo mese nel calendario
@@ -15,9 +15,14 @@ if ( isset($_POST['submit']) ) {
 	$month = new Month(intval($date[1]),intval($date[0]));
 
 	if ($month->isInFuture()) {							//controlla che il mese indicato sia nel futuro e non nel passato
-		if (!isInDB($month,$conn)) {					//controlla che il mese indicato non sia già presente in DB
+		if (!isInDB($month,$db)) {						//controlla che il mese indicato non sia già presente in DB
 			for ($i=1; $i <= $month->dayThisMonth(); $i++) { 
-				queryThis("INSERT INTO `liltvolontari`.`calendar` (`year`, `month`, `day`, `maxVolunteerNumber`) VALUES ('{$month->getYear()}', '{$month->getMonth()}', '$i', {$_POST['nVolontari']});", $conn);
+				$db->insert('calendar', array(
+					'year'					=>	$month->getYear(),
+					'month'					=>	$month->getMonth(),
+					'day'					=>	$i,
+					'maxVolunteerNumber'	=>	$_POST['nVolontari']
+				));
 			}
 			echo "<script>alert(\"Mese aggiunto con successo\")</script>";
 		} else {
@@ -29,9 +34,12 @@ if ( isset($_POST['submit']) ) {
 }
 
 
-function isInDB(Month $m,$conn) {
-	$result = queryThis("SELECT * FROM `liltvolontari`.`calendar` WHERE year={$m->getYear()} and month={$m->getMonth()}", $conn);
-	return (mysql_num_rows($result)!=0);
+function isInDB(Month $m, $db) {
+	$dates = $db->select('calendar', array(
+		'year' => $m->getYear(),
+		'month' => $m->getMonth()
+	));
+	return count($dates) != 0;
 }
 
 
@@ -41,9 +49,8 @@ function isInDB(Month $m,$conn) {
 
 
 $monthTable='';
-$months=queryThis("SELECT DISTINCT year, month, maxVolunteerNumber FROM calendar", $conn);
-for ($i=0; $i<mysql_num_rows($months) ; $i++) {
-	$row = mysql_fetch_assoc($months);
+$months = $db->query("SELECT DISTINCT year, month, maxVolunteerNumber FROM calendar");
+foreach ($months as $row) {
 	$monthTable.=monthRow($row);
 }
 function monthRow($row) {

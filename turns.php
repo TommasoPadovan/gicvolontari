@@ -6,7 +6,7 @@ require_once('lib/datetime/month.php');
 
 PermissionsMng::atMostAuthorizationLevel(2);
 
-$conn=connect();
+$db = new DbConnection();
 
 
 
@@ -15,7 +15,7 @@ $generateAllTables='generateAllTables';		//trick malvagio per chiamare le funzio
 //genero content
 $content = <<<EOF
 <h1>Turni</h1>
-	{$generateAllTables($conn)}
+	{$generateAllTables($db)}
 EOF;
 
 
@@ -56,15 +56,14 @@ EEND;
 
 
 
-function generateAllTables($conn) {
+function generateAllTables($db) {
 	$monthTable='monthTable';		//trick malvagio per chiamare le funzioni dentro lo herdoc
 	$monthHideLink='monthHideLink';
 	$aux='';
 
-	$result = queryThis("SELECT DISTINCT year, month FROM calendar", $conn);
+	$yearMonths = $db->query("SELECT DISTINCT year, month FROM calendar");
 	$allMonths=array();
-	for ($i=0; $i<mysql_num_rows($result) ; $i++) {
-		$row = mysql_fetch_assoc($result);
+	foreach ($yearMonths as $row) {
 		array_push($allMonths, new Month( intval($row['month']), intval($row['year']) ));
 	}
 	foreach ($allMonths as $month) {
@@ -80,7 +79,7 @@ function generateAllTables($conn) {
 				<div class="col-md-5ths"><strong>Venerdì</strong></div>
 			</div>
 			<hr />-->
-			{$monthTable($month, $conn)}
+			{$monthTable($month, $db)}
 			<hr />
 		</div>
 HTML;
@@ -92,7 +91,7 @@ HTML;
 
 
 
-function monthTable(Month $month, $conn) {
+function monthTable(Month $month, $db) {
 	//genero contenuto della tabella dei giorni
 	$workingDays = $month->getAllWorking();
 	$firstDay = $month->dayOfWeek($workingDays[0]);
@@ -101,14 +100,14 @@ function monthTable(Month $month, $conn) {
 	for ($i=0; $i < $firstDay-1 ; $i++) 
 		$dayTable.="<div class='col-md-5ths'>.</div>\n";
 	for ($i=$firstDay; $i <= 5 ; $i++) {
-		$content = calendarContent($month, $i-$firstDay+1, $conn);
+		$content = calendarContent($month, $i-$firstDay+1, $db);
 		$dayTable.="<div class='col-md-5ths'>$content</div>\n";
 	}  
 
 	$firstDayOf2Week=6-$firstDay;
 	for ($i=6-$firstDay; $i < sizeof($workingDays) ; $i++) { 
 		if (($i-$firstDayOf2Week)%5==0) $dayTable.= "</div><div class='row'>\n";
-		$content = calendarContent($month, $workingDays[$i], $conn);
+		$content = calendarContent($month, $workingDays[$i], $db);
 		$dayTable.="<div class='col-md-5ths'>$content</div>\n";
 
 	}
@@ -124,22 +123,29 @@ function monthHideLink(Month $month) {
 
 
 
-function calendarContent(Month $month, $i, $conn) {
-	$turniVolontari = queryThis("
+function calendarContent(Month $month, $i, $db) {
+	$turniVolontari = $db->prepare('
 		SELECT *
 		FROM turni
 		WHERE day IN (
 			SELECT * FROM (
 				SELECT id
 				FROM calendar
-				WHERE year = '{$month->getYear()}' AND month = '{$month->getMonth()}' AND day = '$i'
+				WHERE year = :year AND month = :month AND day = :day
 			) as T
 		)
-	",$conn);
-
+	');
+	$turniVolontari->execute(array(
+		':year'		=>	$month->getYear(),
+		':month'	=>	$month->getMonth(),
+		':day'		=>	$i
+	));
+	$turniVolontari = $turniVolontari->fetchAll(PDO::FETCH_ASSOC);
 
 	$userID=$_SESSION['id'];
-	$user = mysql_fetch_assoc( queryThis("SELECT * FROM users WHERE id = $userID",$conn) );
+	$user = $db->select('users', array('id' => $userID));
+	$user = $user[0];
+
 	$userPosition = intval($user['position']);
 
 	$fiabe=array(
@@ -165,34 +171,33 @@ function calendarContent(Month $month, $i, $conn) {
 
 
 
-	for ($j=0; $j < mysql_num_rows($turniVolontari) ; $j++) { 
-		$row=mysql_fetch_assoc($turniVolontari);
+	foreach ($turniVolontari as $row) { 
 		switch ($row['task']) {
 			case 'fiabe':
-				$fiabe[$row['position']]=getUserName($row['volunteer'], $conn);
+				$fiabe[$row['position']]=$db->getUserName($row['volunteer']);
 				if ($row['volunteer'] == $_SESSION['id'] or $_SESSION['permessi']<=1) $fiabe[$row['position']].=" <a href=\"delete_prenotazione.php?volunteer={$row['volunteer']}&day={$row['day']}&task={$row['task']}&position={$row['position']}\"><img border='0' alt='cancella prenotazione' src='bin.png' width='15' height='15'></a>";
 				break;
 			case 'oasi':
-				$oasi[$row['position']]=getUserName($row['volunteer'], $conn);
+				$oasi[$row['position']]=$db->getUserName($row['volunteer']);
 				if ($row['volunteer'] == $_SESSION['id'] or $_SESSION['permessi']<=1) $oasi[$row['position']].=" <a href=\"delete_prenotazione.php?volunteer={$row['volunteer']}&day={$row['day']}&task={$row['task']}&position={$row['position']}\"><img border='0' alt='cancella prenotazione' src='bin.png' width='15' height='15'></a>";
 				break;
 			case 'clown':
-				$clown[$row['position']]=getUserName($row['volunteer'], $conn);
+				$clown[$row['position']]=$db->getUserName($row['volunteer']);
 				if ($row['volunteer'] == $_SESSION['id'] or $_SESSION['permessi']<=1) $clown[$row['position']].=" <a href=\"delete_prenotazione.php?volunteer={$row['volunteer']}&day={$row['day']}&task={$row['task']}&position={$row['position']}\"><img border='0' alt='cancella prenotazione' src='bin.png' width='15' height='15'></a>";
 				break;
 		}
 	}
 
 	
-	$nVolunteer=mysql_fetch_assoc(
-		queryThis("SELECT * FROM Calendar WHERE year = '{$month->getYear()}' AND month = '{$month->getMonth()}'", $conn)
-	)['maxVolunteerNumber'];
+
+	$nVolunteer = $db->select('calendar', array('year' => $month->getYear(), 'month' =>  $month->getMonth()))[0]['maxVolunteerNumber'];
+
 
 	if ($nVolunteer==3)
 		$thirdRow = "</tr><tr>
-				<td>{$fiabe[3]}</td>
-				<td>{$oasi[3]}</td>
-				<td>{$clown[3]}</td>";
+				<td class='fiabe'>{$fiabe[3]}</td>
+				<td class='oasi'>{$oasi[3]}</td>
+				<td class='clown'>{$clown[3]}</td>";
 		else $thirdRow='';
 
 	$numeroENomeGiorno = "<strong>$i</strong> - " . $month->getDayName($i);
@@ -203,20 +208,20 @@ function calendarContent(Month $month, $i, $conn) {
 	<table class="table table-striped table-bordered table-condensed">
 		<thead>
 			<tr>
-				<th>Fiabe</th>
-				<th>Oasi</th>
-				<th>Clown</th>
+				<th class='fiabe'>Fiabe</th>
+				<th class='oasi'>Oasi</th>
+				<th class='clown'>Clown</th>
 			</tr>
 		</thead>
 		<tbody>
 			<tr>
-				<td>{$fiabe[1]}</td>
-				<td>{$oasi[1]}</td>
-				<td>{$clown[1]}</td>
+				<td class='fiabe'>{$fiabe[1]}</td>
+				<td class='oasi'>{$oasi[1]}</td>
+				<td class='clown'>{$clown[1]}</td>
 			</tr><tr>
-				<td>{$fiabe[2]}</td>
-				<td>{$oasi[2]}</td>
-				<td>{$clown[2]}</td>
+				<td class='fiabe'>{$fiabe[2]}</td>
+				<td class='oasi'>{$oasi[2]}</td>
+				<td class='clown'>{$clown[2]}</td>
 			$thirdRow
 			</tr>
 		</tbody>
