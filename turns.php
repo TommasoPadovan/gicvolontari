@@ -32,7 +32,7 @@ $generalLayout->yieldElem('title', "Turni");
 $generalLayout->yieldElem('content', $content);
 
 
-$generalLayout->pprint();
+echo $generalLayout->getPage();
 
 
 echo <<<EEND

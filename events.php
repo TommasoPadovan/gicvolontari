@@ -129,6 +129,6 @@ $generalLayout->yieldElem('title', "Gestione Eventi");
 $generalLayout->yieldElem('content', $content);
 
 	
-$generalLayout->pprint();
+echo $generalLayout->getPage();
 
 ?>

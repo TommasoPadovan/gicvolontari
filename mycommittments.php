@@ -73,6 +73,6 @@ HTML;
 
 $generalLayout->yieldElem('content', $content);
 
-$generalLayout->pprint();
+echo $generalLayout->getPage();
 
 ?>

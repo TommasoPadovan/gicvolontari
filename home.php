@@ -5,75 +5,64 @@ require_once('lib/sqlLib.php');
 $db = new DbConnection();
 
 
-//general layout of one page
-$generalLayout = new GeneralLayout("home.php");
-
-//setting the title
-$generalLayout->yieldElem('title', "Lilt Home");
 
 
 
 
 $welcome='';
-if ( isset($_POST['logout']) ) {
-	unset($_SESSION['id']);
-	unset($_SESSION['permessi']);
-}
+
 if ( isset( $_SESSION['id'] ) ) {
-	$welcome = welcomeMsg($_SESSION['id'], $db);
-} else {
-	if ( isset($_POST['login']) && isset($_POST['Email']) && isset($_POST['Password']) ) {
-		//$users=queryThis("SELECT * FROM users", $conn);
-		foreach ($db->select('users') as $row) {
-			if ($row['email'] == $_POST['Email']) {
-				if ($row['psw'] == md5($_POST['Password'])) {
-					$_SESSION['id'] = $row['id'];
-					$_SESSION['permessi'] = $row['permessi'];
-					$welcome = welcomeMsg($_SESSION['id'], $db);
-				}
-			}
-		}
+	foreach ( $db->select('users', array('id' => $_SESSION['id'])) as $row) {
+		$welcome = "Ciao {$row['lastname']}";
 	}
-}
-
-
-$content = <<<HTML
+	$content =  <<<HTML
 <h1>Home</h1>
 <hr />
 <div>
 	$welcome
 </div>
 <hr />
-<h2>Login</h2>
-<form action='#' method="POST">
-	<div class="form-group">
-		<label for="Email">Email</label>
-		<input type="text" class="form-control" id="Email" placeholder="Email" name="Email">
-	</div>
-	<div class="form-group">
-		<label for="Password">Password</label>
-		<input type="password" class="form-control" id="Password" placeholder="Password" name="Password">
-	</div>
-	<button type="submit" class="btn btn-default" name="login" value="login">Submit</button>
+<form action='process_logout.php' method="POST">
 	<button type="submit" class="btn btn-default" name="logout" value="logout">Logout</button>
 </form>
 HTML;
+
+} else {
+	
+	$content = <<<HTML
+<h1>Home</h1>
+<hr />
+<h2>Login</h2>
+<form action='process_login.php' method="POST">
+	<div class = 'row'>
+		<div class="form-group col-sm-6">
+			<label for="Email">Email</label>
+			<input type="text" class="form-control" id="Email" placeholder="Email" name="Email">
+		</div>
+		<div class="form-group col-sm-6">
+			<label for="Password">Password</label>
+			<input type="password" class="form-control" id="Password" placeholder="Password" name="Password">
+		</div>
+	</div>
+	<button type="submit" class="btn btn-default" name="login" value="login">Submit</button>
+</form>
+HTML;
+}
+
+
+//general layout of one page
+$generalLayout = new GeneralLayout("home.php");
+
+//setting the title
+$generalLayout->yieldElem('title', "Lilt Home");
+
+//setting the content
 $generalLayout->yieldElem('content', $content);
 
-$generalLayout->pprint();
+echo $generalLayout->getPage();
 
 
 
 
 
-
-
-
-
-
-function welcomeMsg($id, $db) {
-	foreach ( $db->select('users', array('id' => $id)) as $row) {
-		return "Ciao {$row['lastname']}";
-	}
-}
 ?>

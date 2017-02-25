@@ -38,7 +38,7 @@
     .col-xl-four5ths {width: 80%;float: left;}
 }
 
-
+/* THOSE ARE WEBSAFE
 .fiabe {
   background-color: #ccffff;
   padding: 0 90px;
@@ -51,5 +51,20 @@
 
 .clown {
   background-color: #ff9999;
+  padding: 0 90px;
+}*/
+
+.fiabe {
+  background-color: #cdf7f7;
+  padding: 0 90px;
+}
+
+.oasi {
+  background-color: #d0f7cd;
+  padding: 0 90px;
+}
+
+.clown {
+  background-color: #fcdede;
   padding: 0 90px;
 }
