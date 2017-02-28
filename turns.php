@@ -4,7 +4,6 @@ require_once('lib/permissionsMng.php');
 require_once('lib/sqlLib.php');
 require_once('lib/datetime/month.php');
 
-PermissionsMng::atMostAuthorizationLevel(2);
 
 $db = new DbConnection();
 
@@ -21,18 +20,22 @@ EOF;
 
 
 
+try {
+	//general layout of one page
+	$generalLayout = new GeneralLayout("turns.php", PermissionPage::USER);
 
-//general layout of one page
-$generalLayout = new GeneralLayout("turns.php");
+	//setting the title
+	$generalLayout->yieldElem('title', "Turni");
 
-//setting the title
-$generalLayout->yieldElem('title', "Turni");
-
-//setting the title
-$generalLayout->yieldElem('content', $content);
+	//setting the title
+	$generalLayout->yieldElem('content', $content);
 
 
-echo $generalLayout->getPage();
+	echo $generalLayout->getPage();
+}
+catch (UnhautorizedException $e) {
+	$e->echoAlert();
+}
 
 
 echo <<<EEND
@@ -228,8 +231,5 @@ function calendarContent(Month $month, $i, $db) {
 	</table>
 END;
 }
-
-?>
-
 
 

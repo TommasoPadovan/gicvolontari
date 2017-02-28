@@ -4,7 +4,7 @@ require_once('lib/permissionsMng.php');
 require_once('lib/sqlLib.php');
 require_once('lib/datetime/month.php');
 
-PermissionsMng::atMostAuthorizationLevel(1);
+
 
 $db = new DbConnection();
 
@@ -16,7 +16,7 @@ if ( isset($_POST['submit']) ) {
 
 	if ($month->isInFuture()) {							//controlla che il mese indicato sia nel futuro e non nel passato
 		if (!isInDB($month,$db)) {						//controlla che il mese indicato non sia già presente in DB
-			for ($i=1; $i <= $month->dayThisMonth(); $i++) { 
+			for ($i=1; $i <= $month->dayThisMonth(); $i++) {
 				$db->insert('calendar', array(
 					'year'					=>	$month->getYear(),
 					'month'					=>	$month->getMonth(),
@@ -119,16 +119,21 @@ HTML;
 
 
 
-//general layout of one page
-$generalLayout = new GeneralLayout("events.php");
 
-//setting the title
-$generalLayout->yieldElem('title', "Gestione Eventi");
 
-//setting the body
-$generalLayout->yieldElem('content', $content);
 
-	
-echo $generalLayout->getPage();
+try {
+	$generalLayout = new GeneralLayout("events.php", PermissionPage::ADMIN);
+	//setting the title
+	$generalLayout->yieldElem('title', "Gestione Eventi");
 
-?>
+	//setting the body
+	$generalLayout->yieldElem('content', $content);
+
+	echo $generalLayout->getPage();
+}
+catch (UnhautorizedException $e) {
+	$e->echoAlert();
+	exit;
+}
+

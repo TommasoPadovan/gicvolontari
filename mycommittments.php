@@ -4,15 +4,10 @@ require_once('lib/permissionsMng.php');
 require_once('lib/sqlLib.php');
 require_once('lib/datetime/month.php');
 
-PermissionsMng::atMostAuthorizationLevel(2);
 
 $db = new DbConnection();
 
-//general layout of one page
-$generalLayout = new GeneralLayout("mycommittments.php");
 
-//setting the title
-$generalLayout->yieldElem('title', "Impegni");
 
 //fetching turn data
 $result = $db->prepare('
@@ -70,9 +65,17 @@ $content = <<<HTML
 HTML;
 
 
+try {
+	//general layout of one page
+	$generalLayout = new GeneralLayout("mycommittments.php", PermissionPage::USER);
 
-$generalLayout->yieldElem('content', $content);
+	//setting the title
+	$generalLayout->yieldElem('title', "Impegni");
 
-echo $generalLayout->getPage();
+	$generalLayout->yieldElem('content', $content);
 
-?>
+	echo $generalLayout->getPage();
+}
+catch (UnhautorizedException $e) {
+	$e->echoAlert();
+}

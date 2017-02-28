@@ -3,6 +3,7 @@ require_once("permission.php");
 require_once("exceptions.php");
 
 session_start();
+
 class GeneralLayout extends PermissionPage {
 
 	private $elems;
@@ -10,12 +11,11 @@ class GeneralLayout extends PermissionPage {
 	private $pages;
 
 
-	public function __construct($url, $permission=NULL) {
+	public function __construct($url, $permission=null) {
 		parent::__construct($permission);
 
 		if (!$this->checkPermission()) {
 			throw new UnhautorizedException();
-			exit;
 		}
 			
 

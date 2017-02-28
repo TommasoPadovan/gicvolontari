@@ -1,12 +1,12 @@
 <?php
 require_once('lib/sqlLib.php');
-require_once('lib/process.php');
+require_once('lib/command.php');
 session_start();
 
 
 
 
-class Login extends Process {
+class Login extends Command {
 	private $db;
 
 	public function __construct($permission) {

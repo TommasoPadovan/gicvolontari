@@ -2,25 +2,23 @@
 
 class PermissionPage {
 
-	private $permissionLevel=NULL;
+	private $permissionLevel;
 
 	const PUBLICPAGE = -1;
 	const ADMIN = 1;
 	const USER = 2;
 
-	public function __construct($p=0) {
+	public function __construct($p=NULL) {
 		$this->permissionLevel = $p;
 	}
 
 	public function checkPermission() {
 		if ($this->permissionLevel == self::PUBLICPAGE)
 			return true;
-		if (!isset($_SESSION) || $_SESSION==NULL || !isset($_SESSION['permission']) || $_SESSION['permission']==NULL || $this->permissionLevel=NULL)
+		if (!isset($_SESSION) || $_SESSION==NULL || !isset($_SESSION['permessi']) || $_SESSION['permessi']==NULL || $this->permissionLevel==NULL)
 			return false;
-		return $_SESSION['permission'] <= $this->permissionLevel;
+		$requiredPermission = intval($_SESSION['permessi']);;
+		return $requiredPermission<=$this->permissionLevel;
 	}
 }
 
-
-
-?>

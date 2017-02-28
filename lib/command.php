@@ -1,9 +1,9 @@
 <?php
 require_once("permission.php");
 require_once("exceptions.php");
+session_start();
 
-
-abstract class Process extends PermissionPage {
+abstract class Command extends PermissionPage {
 
 	public function __construct($permission) {
 		parent::__construct($permission);

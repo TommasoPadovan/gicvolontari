@@ -2,19 +2,7 @@
 require_once('lib/generalLayout.php');
 require_once('lib/sqlLib.php');
 
-
-
-
-
-
-
-
-
 $db = new DbConnection();
-
-
-
-
 
 
 $welcome='';
@@ -63,7 +51,7 @@ try {
 	$generalLayout = new GeneralLayout("home.php", PermissionPage::PUBLICPAGE);
 }
 catch(UnhautorizedException $e) {
-	echo "culo";
+	$e->echoAlert();
 }
 
 //setting the title
@@ -73,9 +61,3 @@ $generalLayout->yieldElem('title', "Lilt Home");
 $generalLayout->yieldElem('content', $content);
 
 echo $generalLayout->getPage();
-
-
-
-
-
-?>

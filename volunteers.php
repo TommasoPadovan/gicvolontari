@@ -6,7 +6,13 @@ require_once('lib/sqlLib.php');
 $db = new DbConnection;
 
 //general layout of one page
-$generalLayout = new GeneralLayout("volunteers.php", PermissionPage::ADMIN);
+try {
+	$generalLayout = new GeneralLayout("volunteers.php", PermissionPage::ADMIN);
+}
+catch (UnhautorizedException $e){
+	$e->echoAlert();
+	exit;
+}
 
 //setting the title
 $generalLayout->yieldElem('title', "Volontari");
@@ -52,8 +58,9 @@ EOF;
 }
 
 //setting the content of the page
-$content = <<< HTML
+$content = <<<HTML
 <a class="btn btn-block btn-default"  onclick="toggle_visibility('newVolunteerForm')">Nuovo Volontario</a>
+
 <form action='volunteer_edit.php' method="POST">
 	<div class="row" id="newVolunteerForm" style="display: none">
 		<div class="col-sm-6">
@@ -153,6 +160,7 @@ HTML;
 
 
 $generalLayout->yieldElem('content', $content);
+
 
 
 echo $generalLayout->getPage();
