@@ -15,7 +15,6 @@ abstract class Process extends PermissionPage {
 	public function execute() {
 		if (!$this->checkPermission()) {
 			throw new UnhautorizedException();
-			exit;
 		}
 		$this->template();
 	}
