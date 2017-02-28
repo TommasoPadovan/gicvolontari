@@ -3,12 +3,10 @@ require_once('lib/generalLayout.php');
 require_once('lib/permissionsMng.php');
 require_once('lib/sqlLib.php');
 
-PermissionsMng::atMostAuthorizationLevel(1);
-
 $db = new DbConnection;
 
 //general layout of one page
-$generalLayout = new GeneralLayout("volunteers.php");
+$generalLayout = new GeneralLayout("volunteers.php", PermissionPage::ADMIN);
 
 //setting the title
 $generalLayout->yieldElem('title', "Volontari");

@@ -1,12 +1,24 @@
 <?php
+require_once("permission.php");
+require_once("exceptions.php");
+
 session_start();
-class GeneralLayout {
+class GeneralLayout extends PermissionPage {
 
 	private $elems;
 
 	private $pages;
 
-	public function __construct($url) {
+
+	public function __construct($url, $permission=NULL) {
+		parent::__construct($permission);
+
+		if (!$this->checkPermission()) {
+			throw new UnhautorizedException();
+			exit;
+		}
+			
+
 		$this->pages = array(
 			new Page('volunteers.php','Aggiungi Volontario',1),
 			new Page('events.php', 'Gestione Eventi', 1),
@@ -18,6 +30,8 @@ class GeneralLayout {
 			'nav' => self::generateNav($this->pages, $url),
 			'content' => ''
 		);
+
+
 	}
 
 	
@@ -105,12 +119,6 @@ class Page {
 	}
 
 }
-
-
-
-
-
-
 
 
 

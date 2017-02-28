@@ -2,6 +2,14 @@
 require_once('lib/generalLayout.php');
 require_once('lib/sqlLib.php');
 
+
+
+
+
+
+
+
+
 $db = new DbConnection();
 
 
@@ -51,7 +59,12 @@ HTML;
 
 
 //general layout of one page
-$generalLayout = new GeneralLayout("home.php");
+try {
+	$generalLayout = new GeneralLayout("home.php", PermissionPage::PUBLICPAGE);
+}
+catch(UnhautorizedException $e) {
+	echo "culo";
+}
 
 //setting the title
 $generalLayout->yieldElem('title', "Lilt Home");

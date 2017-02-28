@@ -1,21 +1,21 @@
 <?php
 require_once('../lib/sqlLib.php');
-$conn=connect();
+$db = new PDO('mysql:host=127.0.0.1;charset=utf8mb4', 'root', '');
 
 
-queryThis("DROP SCHEMA IF EXISTS `liltvolontari`;", $conn);
+$db->query("DROP SCHEMA IF EXISTS `liltvolontari`;");
 echo "schema dropped...<br />";
 
-queryThis("CREATE SCHEMA `liltvolontari`;", $conn);
+$db->query("CREATE SCHEMA `liltvolontari`;");
 echo "schema created...<br />";
 
 
-mysql_select_db('liltvolontari');
+
+$db = new DbConnection();
 echo "db selected...<br />";
 
 
-
-queryThis("
+$db->query("
 create table Users (
 	id INT(8) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
 	firstname VARCHAR(30) NOT NULL,
@@ -32,16 +32,16 @@ create table Users (
 	position INT(2),
 	permessi INT(2)
 
-) ENGINE=InnoDB;", $conn);
+) ENGINE=InnoDB;");
 echo "users table created<br />";
 
 
-queryThis("
-	INSERT INTO `liltvolontari`.`Users` (`firstname`, `lastname`, `email`, `psw`, `position`, `permessi`) VALUES ('admin', 'admin', 'admin', '21232f297a57a5a743894a0e4a801fc3', '1', '1');", $conn);
+$db->query("
+	INSERT INTO `liltvolontari`.`Users` (`firstname`, `lastname`, `email`, `psw`, `position`, `permessi`) VALUES ('admin', 'admin', 'admin', '21232f297a57a5a743894a0e4a801fc3', '1', '1');");
 echo "added admin...<br />";
 
 
-queryThis("
+$db->query("
 create table Calendar (
 	id INT(8) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
 	year INT(4) NOT NULL,
@@ -50,11 +50,11 @@ create table Calendar (
 	maxVolunteerNumber INT(2),
 
 	UNIQUE (year, month, day)
-) ENGINE=InnoDB;", $conn);
+) ENGINE=InnoDB;");
 echo "calendar table created<br />";
 
 
-queryThis("
+$db->query("
 create table Turni (
 	day INT(8) UNSIGNED NOT NULL,
 	task VARCHAR(30) NOT NULL,
@@ -65,8 +65,7 @@ create table Turni (
 	FOREIGN KEY(day) REFERENCES Calendar(id) ON UPDATE CASCADE ON DELETE CASCADE,
 	FOREIGN KEY(volunteer) REFERENCES Users(id) ON UPDATE CASCADE ON DELETE CASCADE
 
-)ENGINE=InnoDB;",
-$conn);
+)ENGINE=InnoDB;");
 echo "turn table created...<br />";
 
 
