@@ -5,17 +5,6 @@ require_once('lib/sqlLib.php');
 
 $db = new DbConnection;
 
-//general layout of one page
-try {
-	$generalLayout = new GeneralLayout("volunteers.php", PermissionPage::ADMIN);
-}
-catch (UnhautorizedException $e){
-	$e->echoAlert();
-	exit;
-}
-
-//setting the title
-$generalLayout->yieldElem('title', "Volontari");
 
 
 //table of users in the db
@@ -31,6 +20,7 @@ function userRow($row)  {
 	$lastname = $row['lastname'];
 	$email = $row['email'];
 	$position = $row['position'];
+	$id = $row['id'];
 	switch ($row['permessi']) {
 		case 1:
 			$permission = "Amministratore";
@@ -42,7 +32,13 @@ function userRow($row)  {
 			$permission = "No permessi";
 			break;
 	}
-	$actions = "qua ci saranno dei magic link";
+	$actions = <<<LINK
+<a href="volunteer_form.php?id=$id"><img src="img/pencil.png" alt="modifica" width='15' height='15'></a>
+<a href="volunteer_delete.php?id=$id" onclick="return confirm('Sei sicuro di voler eliminare $firstname $lastname?')"><img src="bin.png" alt="cancella" width='15' height='15' /></a>
+
+
+LINK;
+
 
 	$row = <<<EOF
 		<tr>
@@ -59,9 +55,9 @@ EOF;
 
 //setting the content of the page
 $content = <<<HTML
-<a class="btn btn-block btn-default"  onclick="toggle_visibility('newVolunteerForm')">Nuovo Volontario</a>
+<a class="btn btn-block btn-default" onclick="toggle_visibility('newVolunteerForm')">Nuovo Volontario</a>
 
-<form action='volunteer_edit.php' method="POST">
+<form action='new_volunteer.php' method="POST">
 	<div class="row" id="newVolunteerForm" style="display: none">
 		<div class="col-sm-6">
 			<div class="form-group">
@@ -159,12 +155,6 @@ $content = <<<HTML
 HTML;
 
 
-$generalLayout->yieldElem('content', $content);
-
-
-
-echo $generalLayout->getPage();
-
 echo <<<EEND
 <script type="text/javascript">
 	function toggle_visibility(id) 
@@ -179,5 +169,14 @@ echo <<<EEND
 EEND;
 
 
+try {
+	$generalLayout = new GeneralLayout("volunteers.php", PermissionPage::ADMIN);
+	$generalLayout->yieldElem('title', "Volontari");
+	$generalLayout->yieldElem('content', $content);
+	echo $generalLayout->getPage();
+}
+catch (UnhautorizedException $e){
+	$e->echoAlert();
+	exit;
+}
 
-?>

@@ -22,6 +22,32 @@ class DbConnection {
 			return $this->queryAllTable('SELECT *',$table);
 	}
 
+	public function update($table, $arrayWhat, $arrayWhere) {
+		$query = "UPDATE $table SET ";
+		foreach ($arrayWhat as $columnName => $value)
+			$query.= "$columnName = :$columnName, ";
+		$query = substr($query, 0, -2);
+		$query.= " WHERE ";
+		foreach ($arrayWhere as $columnName => $value)
+			$query.= "$columnName = :$columnName AND ";
+		$query = substr($query, 0, -5);
+
+		echo $query;
+
+		$statement = $this->pdo->prepare($query);
+
+//		$colonArray = array();
+//		foreach ($arrayWhat as $columnName => $value)
+//			$colonArray[':'.$columnName] = $value;
+//		foreach ($arrayWhere as $columnName => $value)
+//			$colonArray[':'.$columnName] = $value;
+
+		$statement->execute(array_merge($arrayWhat, $arrayWhere));
+
+		return $statement->rowCount();
+
+	}
+
 
 	public function insert ($table, $arrayWhat) {
 		$query = "INSERT INTO $table(";
@@ -55,13 +81,22 @@ class DbConnection {
 	}
 
 
-	function getUserName($id) {
+	public function getUserName($id) {
 		$statement = $this->pdo->prepare("SELECT * FROM Users WHERE id=:id");
 		$statement->execute(array(':id' => $id));
 		$user = $statement->fetchAll(PDO::FETCH_ASSOC);
 		$user = $user[0];
 		return ($user['firstname'].' '.$user['lastname']);
 	}
+
+	public function getUser($id) {
+		$statement = $this->pdo->prepare("SELECT * FROM Users WHERE id=:id");
+		$statement->execute(array(':id' => $id));
+		$user = $statement->fetchAll(PDO::FETCH_ASSOC);
+		return $user[0];
+	}
+
+
 
 
 
