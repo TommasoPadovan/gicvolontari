@@ -3,93 +3,57 @@ require_once('lib/generalLayout.php');
 require_once('lib/permissionsMng.php');
 require_once('lib/sqlLib.php');
 require_once('lib/datetime/month.php');
+require_once('lib/permissionString.php');
 
 
 $db = new DbConnection();
 
 
-
-
-$generateAllTables='generateAllTables';		//trick malvagio per chiamare le funzioni dentro lo herdoc
-//genero content
-$content = <<<EOF
-<h1>Turni</h1>
-	{$generateAllTables($db)}
+function content($db) {
+	$generateTable='generateTable';		//trick malvagio per chiamare le funzioni dentro lo herdoc
+	return <<<EOF
+	<h1>Turni</h1>
+	{$generateTable($db)}
 EOF;
-
-
-
-
-try {
-	//general layout of one page
-	$generalLayout = new GeneralLayout("turns.php", PermissionPage::USER);
-
-	//setting the title
-	$generalLayout->yieldElem('title', "Turni");
-
-	//setting the title
-	$generalLayout->yieldElem('content', $content);
-
-
-	echo $generalLayout->getPage();
-}
-catch (UnhautorizedException $e) {
-	$e->echoAlert();
 }
 
 
-echo <<<EEND
-<script type="text/javascript">
-	function toggle_visibility(id) 
-	{
-		var e = document.getElementById(id);
-		if ( e.style.display == 'none' )
-			e.style.display = 'block';
-		else
-			e.style.display = 'none';
-	}
-</script>
-EEND;
 
-
-
-
-
-
-
-
-
-function generateAllTables($db) {
+function generateTable(DbConnection $db) {
 	$monthTable='monthTable';		//trick malvagio per chiamare le funzioni dentro lo herdoc
 	$monthHideLink='monthHideLink';
 	$aux='';
 
 	$yearMonths = $db->query("SELECT DISTINCT year, month FROM calendar");
 	$allMonths=array();
-	foreach ($yearMonths as $row) {
+	foreach ($yearMonths as $row)
 		array_push($allMonths, new Month( intval($row['month']), intval($row['year']) ));
-	}
+
+	$now = new Month(date('m'), date("Y"));
+
 	foreach ($allMonths as $month) {
-		if ( $month->isInFuture() );
-		$aux.= <<<HTML
+		if ($now->getMonth() != $month->getMonth() || $now->getYear() != $month->getYear() )
+			$display = 'block';
+		else
+			$display = 'none';
+
+		$monthString = <<<HTML
 		<p>{$monthHideLink($month)}</p>
-		<div id="month{$month->getMonth()}-{$month->getYear()}" style="display: none">
-			<!--<div class="row">
-				<div class="col-md-5ths"><strong>Lunedì</strong></div>
-				<div class="col-md-5ths"><strong>Martedì</strong></div>
-				<div class="col-md-5ths"><strong>Mercoledì</strong></div>
-				<div class="col-md-5ths"><strong>Giovedì</strong></div>
-				<div class="col-md-5ths"><strong>Venerdì</strong></div>
-			</div>
-			<hr />-->
+		<div id="month{$month->getMonth()}-{$month->getYear()}" style="display: $display">
+			<hr />
 			{$monthTable($month, $db)}
 			<hr />
 		</div>
 HTML;
+		if ( $month->isInFuture() ) {
+			$aux.=$monthString;
+		} else {
+			$permissionMonthString = new PermissionString(array(PermissionPage::ADMIN => $monthString));
+			$aux.=$permissionMonthString->out();
+		}
 	}
 	return $aux;
 }
-
 
 
 
@@ -118,6 +82,10 @@ function monthTable(Month $month, $db) {
 	return $dayTable;
 }
 
+/**
+ * @param Month $month
+ * @return string
+ */
 function monthHideLink(Month $month) {
 	return "<a class=\"btn btn-block btn-default\"  onclick=\"toggle_visibility('month{$month->getMonth()}-{$month->getYear()}')\">".$month->getMonthName().' '.$month->getYear()."</a>";
 }
@@ -166,10 +134,20 @@ function calendarContent(Month $month, $i, $db) {
 		2=>"clown 2",
 		3=>"clown 3"
 	);
-	$fiabe[$userPosition] = "<a href=\"process_prenota.php?task=fiabe&position=$userPosition&year={$month->getYear()}&month={$month->getMonth()}&day=$i\">fiabe $userPosition</a>";
-	$oasi[$userPosition] = "<a href=\"process_prenota.php?task=oasi&position=$userPosition&year={$month->getYear()}&month={$month->getMonth()}&day=$i\">oasi $userPosition</a>";
-	$clown[$userPosition] = "<a href=\"process_prenota.php?task=clown&position=$userPosition&year={$month->getYear()}&month={$month->getMonth()}&day=$i\">clown $userPosition</a>";
 
+	if ($userPosition == 1) {
+		$fiabe[1] = "<a href=\"process_prenota.php?task=fiabe&position=1&year={$month->getYear()}&month={$month->getMonth()}&day=$i\">fiabe 1</a>";
+		$oasi[1] = "<a href=\"process_prenota.php?task=oasi&position=1&year={$month->getYear()}&month={$month->getMonth()}&day=$i\">oasi 1</a>";
+		$clown[1] = "<a href=\"process_prenota.php?task=clown&position=1&year={$month->getYear()}&month={$month->getMonth()}&day=$i\">clown 1</a>";
+		$fiabe[2] = "<a href=\"process_prenota.php?task=fiabe&position=2&year={$month->getYear()}&month={$month->getMonth()}&day=$i\">fiabe 2</a>";
+		$oasi[2] = "<a href=\"process_prenota.php?task=oasi&position=2&year={$month->getYear()}&month={$month->getMonth()}&day=$i\">oasi 2</a>";
+		$clown[2] = "<a href=\"process_prenota.php?task=clown&position=2&year={$month->getYear()}&month={$month->getMonth()}&day=$i\">clown 2</a>";
+	}
+	if ($userPosition == 2) {
+		$fiabe[2] = "<a href=\"process_prenota.php?task=fiabe&position=2&year={$month->getYear()}&month={$month->getMonth()}&day=$i\">fiabe 2</a>";
+		$oasi[2] = "<a href=\"process_prenota.php?task=oasi&position=2&year={$month->getYear()}&month={$month->getMonth()}&day=$i\">oasi 2</a>";
+		$clown[2] = "<a href=\"process_prenota.php?task=clown&position=2&year={$month->getYear()}&month={$month->getMonth()}&day=$i\">clown 2</a>";
+	}
 
 
 
@@ -233,3 +211,34 @@ END;
 }
 
 
+try {
+	//general layout of one page
+	$generalLayout = new GeneralLayout("turns.php", PermissionPage::USER);
+
+	//setting the title
+	$generalLayout->yieldElem('title', "Turni");
+
+	//setting the title
+	$generalLayout->yieldElem('content', content($db));
+
+
+	echo $generalLayout->getPage();
+}
+catch (UnhautorizedException $e) {
+	$e->echoAlert();
+}
+
+
+
+echo <<<EEND
+<script type="text/javascript">
+	function toggle_visibility(id)
+	{
+		var e = document.getElementById(id);
+		if ( e.style.display == 'none' )
+			e.style.display = 'block';
+		else
+			e.style.display = 'none';
+	}
+</script>
+EEND;

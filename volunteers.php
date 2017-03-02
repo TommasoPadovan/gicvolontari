@@ -32,6 +32,7 @@ function userRow($row)  {
 			$permission = "No permessi";
 			break;
 	}
+	$presenze = "presenze ultimo mese";
 	$actions = <<<LINK
 <a href="volunteer_form.php?id=$id"><img src="img/pencil.png" alt="modifica" width='15' height='15'></a>
 <a href="volunteer_delete.php?id=$id" onclick="return confirm('Sei sicuro di voler eliminare $firstname $lastname?')"><img src="bin.png" alt="cancella" width='15' height='15' /></a>
@@ -47,6 +48,7 @@ LINK;
 			<td>$email</th>
 			<td>$position</th>
 			<td>$permission</td>
+			<td>$presenze</td>
 			<td>$actions</th>
 		</tr>
 EOF;
@@ -143,6 +145,7 @@ $content = <<<HTML
 				<th>Email</th>
 				<th>Posizione</th>
 				<th>Permessi</th>
+				<th>Presenze</th>
 				<th>Azioni</th>
 			</tr>
 		</thead>

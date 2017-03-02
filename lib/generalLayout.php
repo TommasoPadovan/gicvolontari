@@ -20,7 +20,7 @@ class GeneralLayout extends PermissionPage {
 			
 
 		$this->pages = array(
-			new Page('volunteers.php','Aggiungi Volontario',1),
+			new Page('volunteers.php','Volontari',1),
 			new Page('events.php', 'Gestione Eventi', 1),
 			new Page('turns.php', 'Turni',2),
 			new Page('mycommittments.php', 'Miei Impegni', 2)

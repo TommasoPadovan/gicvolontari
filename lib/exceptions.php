@@ -4,5 +4,3 @@ class UnhautorizedException extends Exception {
 		echo "uhautorized";
 	}
 }
-
-?>

@@ -18,7 +18,20 @@ class PermissionPage {
 		if (!isset($_SESSION) || $_SESSION==NULL || !isset($_SESSION['permessi']) || $_SESSION['permessi']==NULL || $this->permissionLevel==NULL)
 			return false;
 		$requiredPermission = intval($_SESSION['permessi']);;
-		return $requiredPermission<=$this->permissionLevel;
+		return $requiredPermission <= $this->permissionLevel;
+	}
+
+	/**
+	 * @return
+	 */
+	public function getPermissionLevel(){
+		return $this->permissionLevel;
+	}
+
+	public static function getCurrentPermission() {
+		if (!isset($_SESSION) || $_SESSION==NULL || !isset($_SESSION['permessi']) || $_SESSION['permessi']==NULL)
+			return null;
+		return $_SESSION['permessi'];
 	}
 }
 
