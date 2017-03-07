@@ -136,17 +136,26 @@ function calendarContent(Month $month, $i, $db) {
 	);
 
 	if ($userPosition == 1) {
-		$fiabe[1] = "<a href=\"process_prenota.php?task=fiabe&position=1&year={$month->getYear()}&month={$month->getMonth()}&day=$i\">fiabe 1</a>";
-		$oasi[1] = "<a href=\"process_prenota.php?task=oasi&position=1&year={$month->getYear()}&month={$month->getMonth()}&day=$i\">oasi 1</a>";
-		$clown[1] = "<a href=\"process_prenota.php?task=clown&position=1&year={$month->getYear()}&month={$month->getMonth()}&day=$i\">clown 1</a>";
-		$fiabe[2] = "<a href=\"process_prenota.php?task=fiabe&position=2&year={$month->getYear()}&month={$month->getMonth()}&day=$i\">fiabe 2</a>";
-		$oasi[2] = "<a href=\"process_prenota.php?task=oasi&position=2&year={$month->getYear()}&month={$month->getMonth()}&day=$i\">oasi 2</a>";
-		$clown[2] = "<a href=\"process_prenota.php?task=clown&position=2&year={$month->getYear()}&month={$month->getMonth()}&day=$i\">clown 2</a>";
+		$fiabe[1] = "<a href=\"process_prenota.php?task=fiabe&position=1&year={$month->getYear()}&month={$month->getMonth()}&day=$i\">fiabe 1</a>"
+			.adminSelectUserSelect($db, 'fiabe', 1, $month->getYear(), $month->getMonth(), $i);
+		$oasi[1] = "<a href=\"process_prenota.php?task=oasi&position=1&year={$month->getYear()}&month={$month->getMonth()}&day=$i\">oasi 1</a>"
+			.adminSelectUserSelect($db, 'oasi', 1, $month->getYear(), $month->getMonth(), $i);
+		$clown[1] = "<a href=\"process_prenota.php?task=clown&position=1&year={$month->getYear()}&month={$month->getMonth()}&day=$i\">clown 1</a>"
+			.adminSelectUserSelect($db, 'clown', 1, $month->getYear(), $month->getMonth(), $i);
+		$fiabe[2] = "<a href=\"process_prenota.php?task=fiabe&position=2&year={$month->getYear()}&month={$month->getMonth()}&day=$i\">fiabe 2</a>"
+			.adminSelectUserSelect($db, 'fiabe', 2, $month->getYear(), $month->getMonth(), $i);
+		$oasi[2] = "<a href=\"process_prenota.php?task=oasi&position=2&year={$month->getYear()}&month={$month->getMonth()}&day=$i\">oasi 2</a>"
+			.adminSelectUserSelect($db, 'oasi', 2, $month->getYear(), $month->getMonth(), $i);
+		$clown[2] = "<a href=\"process_prenota.php?task=clown&position=2&year={$month->getYear()}&month={$month->getMonth()}&day=$i\">clown 2</a>"
+			.adminSelectUserSelect($db, 'clown', 2, $month->getYear(), $month->getMonth(), $i);
 	}
 	if ($userPosition == 2) {
-		$fiabe[2] = "<a href=\"process_prenota.php?task=fiabe&position=2&year={$month->getYear()}&month={$month->getMonth()}&day=$i\">fiabe 2</a>";
-		$oasi[2] = "<a href=\"process_prenota.php?task=oasi&position=2&year={$month->getYear()}&month={$month->getMonth()}&day=$i\">oasi 2</a>";
-		$clown[2] = "<a href=\"process_prenota.php?task=clown&position=2&year={$month->getYear()}&month={$month->getMonth()}&day=$i\">clown 2</a>";
+		$fiabe[2] = "<a href=\"process_prenota.php?task=fiabe&position=2&year={$month->getYear()}&month={$month->getMonth()}&day=$i\">fiabe 2</a>"
+			.adminSelectUserSelect($db, 'fiabe', 2, $month->getYear(), $month->getMonth(), $i);
+		$oasi[2] = "<a href=\"process_prenota.php?task=oasi&position=2&year={$month->getYear()}&month={$month->getMonth()}&day=$i\">oasi 2</a>"
+			.adminSelectUserSelect($db, 'oasi', 2, $month->getYear(), $month->getMonth(), $i);
+		$clown[2] = "<a href=\"process_prenota.php?task=clown&position=2&year={$month->getYear()}&month={$month->getMonth()}&day=$i\">clown 2</a>"
+			.adminSelectUserSelect($db, 'clown', 2, $month->getYear(), $month->getMonth(), $i);
 	}
 
 
@@ -211,6 +220,47 @@ END;
 }
 
 
+function adminSelectUserSelect(DbConnection $db, $task, $position, $year, $month, $day) {
+
+	$selectString = "<select name='user'>";
+	$allUsers = $db->select('users');
+	foreach	($allUsers as $user)
+		$selectString.= "<option value='{$user['id']}'>{$user['lastname']}</option> \n";
+	$selectString.='</select>';
+
+	return (new PermissionString([
+		PermissionPage::ADMIN => "
+		<a onclick='toggle_visibility(\"adduser-$task-$position-$year-$month-$day\")'><img src=\"img/add.png\" alt='add user' width='20' height='20'></a>
+		<div style='display: none' id='adduser-$task-$position-$year-$month-$day'>
+			<form method='POST' action='admin_add_user.php'>
+				<input type='hidden' name='task' value='$task' />
+				<input type='hidden' name='position' value='$position' />
+				<input type='hidden' name='year' value='$year' />
+				<input type='hidden' name='month' value='$month' />
+				<input type='hidden' name='day' value='$day' />
+				$selectString
+				<input type='submit' class='btn btn-xs'>
+			</form>
+		</div>
+		"
+	]))->out();
+}
+
+
+
+echo <<<EEND
+<script type="text/javascript">
+	function toggle_visibility(id)
+	{
+		var e = document.getElementById(id);
+		if ( e.style.display == 'none' )
+			e.style.display = 'block';
+		else
+			e.style.display = 'none';
+	}
+</script>
+EEND;
+
 try {
 	//general layout of one page
 	$generalLayout = new GeneralLayout("turns.php", PermissionPage::USER);
@@ -230,15 +280,3 @@ catch (UnhautorizedException $e) {
 
 
 
-echo <<<EEND
-<script type="text/javascript">
-	function toggle_visibility(id)
-	{
-		var e = document.getElementById(id);
-		if ( e.style.display == 'none' )
-			e.style.display = 'block';
-		else
-			e.style.display = 'none';
-	}
-</script>
-EEND;

@@ -73,46 +73,48 @@ EOF;
 $content = <<<HTML
 <h1>Gestione Eventi</h1>
 
-<h2>Nuovo Mese</h2>
-<p> Selezionare dal picker qui sotto il mese per abilitare le iscrizioni ai turni di quel mese</p>
-<form action='#' method="POST">
-	<div class="row">
-		<div class="form-group col-sm-3">
-			<label for="Mese">Mese</label>
-			<input class="form-control" type="month" name="Mese">
-		</div>
-		<div class="col-sm-3">
-			<div class="form-check">
-				<label class="form-check-label">
-					<input class="form-check-input" type="radio" name="nVolontari" value="2" checked>
-					Due volontari per turno
-				</label>
+<div style="none">
+	<h2>Nuovo Mese</h2>
+	<p> Selezionare dal picker qui sotto il mese per abilitare le iscrizioni ai turni di quel mese</p>
+	<form action='#' method="POST">
+		<div class="row">
+			<div class="form-group col-sm-3">
+				<label for="Mese">Mese</label>
+				<input class="form-control" type="month" name="Mese">
 			</div>
-			<div class="form-check">
-				<label class="form-check-label">
-					<input class="form-check-input" type="radio" name="nVolontari" value="3">
-					Tre volontari per turno
-				</label>
+			<div class="col-sm-3">
+				<div class="form-check">
+					<label class="form-check-label">
+						<input class="form-check-input" type="radio" name="nVolontari" value="2" checked>
+						Due volontari per turno
+					</label>
+				</div>
+				<div class="form-check">
+					<label class="form-check-label">
+						<input class="form-check-input" type="radio" name="nVolontari" value="3">
+						Tre volontari per turno
+					</label>
+				</div>
 			</div>
 		</div>
-	</div>
-	<button type="submit" name="submit" value="submit" class="btn btn-default">Submit</button>
-</form>
+		<button type="submit" name="submit" value="submit" class="btn btn-default">Submit</button>
+	</form>
 
-<h2>Lista Mesi abilitati</h2>
-<div class="table-responsive">
-	<table class="table table-striped table-bordered table-condensed">
-		<thead>
-			<tr>
-				<th>Mese</th>
-				<th># volontari</th>
-				<th>Azioni</th>
-			</tr>
-		</thead>
-		<tbody>
-			$monthTable
-		</tbody>
-	</table>
+	<h2>Lista Mesi abilitati</h2>
+	<div class="table-responsive">
+		<table class="table table-striped table-bordered table-condensed">
+			<thead>
+				<tr>
+					<th>Mese</th>
+					<th># volontari</th>
+					<th>Azioni</th>
+				</tr>
+			</thead>
+			<tbody>
+				$monthTable
+			</tbody>
+		</table>
+	</div>
 </div>
 
 HTML;

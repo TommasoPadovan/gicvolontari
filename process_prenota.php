@@ -52,8 +52,9 @@ if ($task!="oasi" && $task!="clown" && $task!="fiabe" ){
 }
 
 //il volontario è sotto il suo massimo di turni questo mese?
-$volunteerTurnThisMonth = $db->prepare("SELECT * FROM turni AS t JOIN calendar as c ON t.day = c.id WHERE c.month = :month AND t.volunteer = :userID");
+$volunteerTurnThisMonth = $db->prepare("SELECT * FROM turni AS t JOIN calendar as c ON t.day = c.id WHERE c.year = :year AND c.month = :month AND t.volunteer = :userID");
 $volunteerTurnThisMonth->execute(array(
+	':year' => $year,
 	':month' => $month,
 	':userID' => $userID
 ));
@@ -78,5 +79,3 @@ abortMission();
 function abortMission() {
 	header("Location: turns.php");
 }
-
-?>

@@ -47,3 +47,17 @@ create table Turni (
 	FOREIGN KEY(volunteer) REFERENCES Users(id) ON UPDATE CASCADE ON DELETE CASCADE
 
 )ENGINE=InnoDB;
+
+
+create table Courses (
+	id INT(8) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+	title VARCHAR(100) NOT NULL,
+	date DATE,
+	timeStart TIME NOT NULL,
+	timeEnd TIME NOT NULL,
+	location VARCHAR(300),
+	description LONGTEXT,
+	requirements LONGTEXT,
+	minAttendants INT(6),
+	maxAttendants INT(6)
+)ENGINE=InnoDB;

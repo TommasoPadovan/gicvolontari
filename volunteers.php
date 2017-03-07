@@ -7,14 +7,17 @@ $db = new DbConnection;
 
 
 
+
+
+
 //table of users in the db
 $usersTable='';
 $users = $db->select('users');
 foreach ($db->select('users') as $row) {
-	$usersTable.=userRow($row);
+	$usersTable.=userRow($row, $db);
 }
 
-function userRow($row)  {
+function userRow($row, $db)  {
 
 	$firstname = $row['firstname'];
 	$lastname = $row['lastname'];
@@ -32,10 +35,12 @@ function userRow($row)  {
 			$permission = "No permessi";
 			break;
 	}
-	$presenze = "presenze ultimo mese";
+
+	$presenze = getPresenze($db, $row['id'], intval(date("Y")), intval(date("m")));
 	$actions = <<<LINK
 <a href="volunteer_form.php?id=$id"><img src="img/pencil.png" alt="modifica" width='15' height='15'></a>
 <a href="volunteer_delete.php?id=$id" onclick="return confirm('Sei sicuro di voler eliminare $firstname $lastname?')"><img src="bin.png" alt="cancella" width='15' height='15' /></a>
+<a href="volunteer_detail.php?id=$id"><img src="img/details.png" alt="details" width='15' height='15'></a>
 
 
 LINK;
@@ -145,7 +150,7 @@ $content = <<<HTML
 				<th>Email</th>
 				<th>Posizione</th>
 				<th>Permessi</th>
-				<th>Presenze</th>
+				<th>Presenze ultimo mese</th>
 				<th>Azioni</th>
 			</tr>
 		</thead>
@@ -170,6 +175,26 @@ echo <<<EEND
 	}
 </script>
 EEND;
+
+
+function getPresenze($db, $volunteerId, $year, $month) {
+	$statement = $db->prepare(<<<TAG
+SELECT c.year AS year, c.month AS month, COUNT(c.day) as count
+FROM turni AS t JOIN calendar AS c ON (t.day = c.id)
+  JOIN users AS u ON (t.volunteer = u.id)
+WHERE u.id = :id
+GROUP BY c.year, c.month
+TAG
+	);
+
+	$statement->execute([':id' => $volunteerId]);
+
+	$allVolunteerTurns = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+	foreach ($allVolunteerTurns as $row)
+		if ($row['year'] == $year and $row['month'] == $month) return $row['count'];
+	return 0;
+}
 
 
 try {
