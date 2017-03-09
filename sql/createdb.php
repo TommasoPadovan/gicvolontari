@@ -69,4 +69,3 @@ create table Turni (
 echo "turn table created...<br />";
 
 
-?>

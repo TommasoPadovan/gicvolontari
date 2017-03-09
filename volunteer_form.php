@@ -28,7 +28,7 @@ $positionCheck[$position] = "selected=\"selected\"";
 
 $permessi = $user['permessi'];
 $permessiCheck=array();
-for ($i=1; $i<=2; $i++)
+for ($i=1; $i<=4; $i++)
     $permessiCheck[$i] = '';
 $permessiCheck[$permessi] = "selected=\"selected\"";
 
@@ -71,7 +71,9 @@ $content = <<< HTML
 				<div class="select">
 					<select class="form-control" name="Permessi">
 						<option {$permessiCheck[1]} value="1">Amministratore</option>
-						<option {$permessiCheck[2]} value="2">Utente</option>
+						<option {$permessiCheck[2]} value="2">Sera</option>
+						<option {$permessiCheck[3]} value="3">Pomeriggio</option>
+						<option {$permessiCheck[4]} value="4">Mattina</option>
 					</select>
 				</div>
 			</div>

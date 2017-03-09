@@ -1,6 +1,6 @@
 <?php
 require_once('lib/generalLayout.php');
-require_once('lib/permissionsMng.php');
+require_once('lib/permission.php');
 require_once('lib/sqlLib.php');
 
 $db = new DbConnection;
@@ -99,7 +99,9 @@ $content = <<<HTML
 				<div class="select">
 					<select class="form-control" name="Permessi">
 						<option value="1">Amministratore</option>
-						<option value="2">Utente</option>
+						<option value="2">Sera</option>
+						<option value="3">Pomeriggio</option>
+						<option value="4">Mattina</option>
 					</select>
 				</div>
 			</div>

@@ -19,25 +19,25 @@ class EditEventCommand extends Command {
     protected function template() {
         $db = new DbConnection();
 
-        if ( isset($_GET['type']) )$type = $_GET['type'];
+        if ( isset($_POST['type']) )$type = $_POST['type'];
         else $type = '';
-        if ( isset($_GET['title']) )$title = $_GET['title'];
+        if ( isset($_POST['title']) )$title = $_POST['title'];
         else $title = '';
-        if ( isset($_GET['date']) )$date = $_GET['date'];
+        if ( isset($_POST['date']) )$date = $_POST['date'];
         else $date = '';
-        if ( isset($_GET['timeStart']) )$timeStart = $_GET['timeStart'];
+        if ( isset($_POST['timeStart']) )$timeStart = $_POST['timeStart'];
         else $timeStart = '';
-        if ( isset($_GET['timeEnd']) )$timeEnd = $_GET['timeEnd'];
+        if ( isset($_POST['timeEnd']) )$timeEnd = $_POST['timeEnd'];
         else $timeEnd = '';
-        if ( isset($_GET['location']) )$location = $_GET['location'];
+        if ( isset($_POST['location']) )$location = $_POST['location'];
         else $location = '';
-        if ( isset($_GET['description']) )$description = $_GET['description'];
+        if ( isset($_POST['description']) )$description = $_POST['description'];
         else $description = '';
-        if ( isset($_GET['requirements']) )$requirements = $_GET['requirements'];
+        if ( isset($_POST['requirements']) )$requirements = $_POST['requirements'];
         else $requirements = '';
-        if ( isset($_GET['minAttendants']) )$minAttendants = $_GET['minAttendants'];
+        if ( isset($_POST['minAttendants']) )$minAttendants = $_POST['minAttendants'];
         else $minAttendants = '';
-        if ( isset($_GET['maxAttendants']) )$maxAttendants = $_GET['maxAttendants'];
+        if ( isset($_POST['maxAttendants']) )$maxAttendants = $_POST['maxAttendants'];
         else $maxAttendants = '';
 
         $db->insert('events', [
@@ -53,7 +53,7 @@ class EditEventCommand extends Command {
             'maxAttendants' => $maxAttendants
         ]);
 
-        header("Location: eventandcourses.php");
+        header("Location: eventsandcourses.php");
     }
 }
 

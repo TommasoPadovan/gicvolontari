@@ -6,7 +6,15 @@ class PermissionPage {
 
 	const PUBLICPAGE = -1;
 	const ADMIN = 1;
+
+	/**
+	 * @deprecated use EVENING instead
+	 */
 	const USER = 2;
+
+	const EVENING = 2;
+	const AFTERNOON = 3;
+	const MORNING = 4;
 
 	public function __construct($p=NULL) {
 		$this->permissionLevel = $p;

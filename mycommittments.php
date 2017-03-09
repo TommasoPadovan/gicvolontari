@@ -67,7 +67,7 @@ HTML;
 
 try {
 	//general layout of one page
-	$generalLayout = new GeneralLayout("mycommittments.php", PermissionPage::USER);
+	$generalLayout = new GeneralLayout("mycommittments.php", PermissionPage::EVENING);
 
 	//setting the title
 	$generalLayout->yieldElem('title', "Impegni");

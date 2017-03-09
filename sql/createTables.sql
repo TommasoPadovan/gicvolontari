@@ -49,8 +49,11 @@ create table Turni (
 )ENGINE=InnoDB;
 
 
-create table Courses (
+
+
+create table Events (
 	id INT(8) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+	type VARCHAR(15) NOT NULL,
 	title VARCHAR(100) NOT NULL,
 	date DATE,
 	timeStart TIME NOT NULL,

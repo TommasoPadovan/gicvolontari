@@ -123,7 +123,10 @@ class Month {
 
 	public function isInFuture() {
 		return ($this->year > date("Y") || ($this->year==date("Y") && $this->month >= date("m")) );
+	}
 
+	public function isNow() {
+		return ($this->year == date("Y") && $this->month==date("m"));
 	}
 
 

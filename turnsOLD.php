@@ -33,9 +33,9 @@ function generateTable(DbConnection $db) {
 
 	foreach ($allMonths as $month) {
 		if ($now->getMonth() != $month->getMonth() || $now->getYear() != $month->getYear() )
-			$display = 'block';
-		else
 			$display = 'none';
+		else
+			$display = 'block';
 
 		$monthString = <<<HTML
 		<p>{$monthHideLink($month)}</p>
@@ -263,7 +263,7 @@ EEND;
 
 try {
 	//general layout of one page
-	$generalLayout = new GeneralLayout("turns.php", PermissionPage::USER);
+	$generalLayout = new GeneralLayout("turns.php", PermissionPage::EVENING);
 
 	//setting the title
 	$generalLayout->yieldElem('title', "Turni");

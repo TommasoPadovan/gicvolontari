@@ -38,7 +38,7 @@ class DeleteReservationCommand extends Command {
 
 
 try {
-	(new DeleteReservationCommand(PermissionPage::USER))->execute();
+	(new DeleteReservationCommand(PermissionPage::EVENING))->execute();
 }
 catch (UnhautorizedException $e) {
 	$e->echoAlert();
