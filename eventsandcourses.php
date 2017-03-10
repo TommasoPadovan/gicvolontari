@@ -35,10 +35,21 @@ foreach ($allEvents as $row) {
     $minAttendants = $row['minAttendants'];
     $maxAttendants = $row['maxAttendants'];
 
+
+    $adminEditButton = (new PermissionString([
+        PermissionPage::ADMIN => "<a class='pull-right' href='add_event.php?id={$row['id']}'><img src='img/pencil.png' alt='modifica' height='15' width='15'></a>"
+    ]))->out();
+
+    $adminRemoveButton = (new PermissionString([
+        PermissionPage::ADMIN => "<a class='pull-right' href='delete_event.php?id={$row['id']}'  onclick=\"return confirm('Sei sicuro di voler eliminare l\'evento $title?')\"><img src='bin.png' alt='cancella' height='15' width='15'></a>"
+    ]))->out();
+
     $eventDescription = <<<TAG
     <div class="panel panel-default">
         <div class="panel-body">
             <h2>$title</h2>
+            $adminEditButton
+            $adminRemoveButton
             <p><label>Tipo: </label> $type</p>
             <p><label>Data: </label> $date</p>
             <p><label>Inizio: </label> $timeStart</p>
@@ -50,6 +61,7 @@ foreach ($allEvents as $row) {
             <p><label>Massimo participanti: </label> $maxAttendants</p>
         </div>
     </div>
+
 TAG;
 
     $eventList.=$eventDescription;

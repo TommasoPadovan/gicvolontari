@@ -40,7 +40,16 @@ class EditEventCommand extends Command {
         if ( isset($_POST['maxAttendants']) )$maxAttendants = $_POST['maxAttendants'];
         else $maxAttendants = '';
 
-        $db->insert('events', [
+        $dateArray = explode('-',$date);
+        $dayRow = $db->select('calendar', [
+           'year' => $dateArray[0],
+           'month' => $dateArray[1],
+           'day' => $dateArray[2],
+        ]);
+        $dayId = $dayRow[0]['id'];
+        $maxVolunteerNumber = $dayRow[0]['maxVolunteerNumber'];
+
+        $newDataArray = [
             'type' => $type,
             'title' => $title,
             'date' => $date,
@@ -51,7 +60,37 @@ class EditEventCommand extends Command {
             'requirements' => $requirements,
             'minAttendants' => $minAttendants,
             'maxAttendants' => $maxAttendants
-        ]);
+        ];
+
+        if ($_POST['id'] == null) {     //sto creando un evento nuovo
+            echo ("into the then");
+            $db->insert('events', $newDataArray);           //inserisco l'evento
+            $db->deleteRows('turni', ['day' => $dayId]);    //rimuovo eventuali prenotazioni
+            foreach (['fiabe', 'oasi', 'clown'] as $task)
+                for ($i = 1; $i <= $maxVolunteerNumber; $i++)
+                    $db->insert('turni', [
+                        'day' => $dayId,
+                        'task' => $task,
+                        'position' => $i,
+                        'volunteer' => 0
+                    ]);
+        } else {                        //sto modificando un evento esistente
+            $oldDate = $db->select('events', ['id' => $_POST['id']]);
+            $oldDateId = $oldDate[0]['id'];
+
+            $db->update('events', $newDataArray, ['id' => $_POST['id']]);
+
+            $db->deleteRows('turni', ['day' => $oldDateId]);    //rimuovo eventuali prenotazioni
+            $db->deleteRows('turni', ['day' => $dayId]);    //rimuovo eventuali prenotazioni
+            foreach (['fiabe', 'oasi', 'clown'] as $task)
+                for ($i = 1; $i <= $maxVolunteerNumber; $i++)
+                    $db->insert('turni', [
+                        'day' => $dayId,
+                        'task' => $task,
+                        'position' => $i,
+                        'volunteer' => 0
+                    ]);
+        }
 
         header("Location: eventsandcourses.php");
     }

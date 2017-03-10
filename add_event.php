@@ -12,7 +12,7 @@ require_once('lib/sqlLib.php');
 
 $db = new DbConnection();
 
-
+$id=null;
 
 $pageTitle = 'Nuovo Evento';
 $type = '';
@@ -28,6 +28,8 @@ $maxAttendants = '';
 
 if (isset($_GET['id'])) {
     $selectedEvent=$db->select('events', ['id' => $_GET['id']])[0];
+
+    $id = $_GET['id'];
 
     $type = $selectedEvent['type'];
     $title = $selectedEvent['title'];
@@ -46,6 +48,7 @@ if (isset($_GET['id'])) {
 $content = <<<HTML
     <h1>$pageTitle</h1>
     <form action='edit_event.php' method="POST">
+        <input type="hidden" name="id" value="$id">
 	    <div class="row">
             <div class="form-group col-sm-6">
 				<label for="title">Titolo</label>
