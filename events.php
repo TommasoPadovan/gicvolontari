@@ -57,7 +57,11 @@ function monthRow($row) {
 	$year = $row['year'];
 	$month = $row['month'];
 	$nvolontari=$row['maxVolunteerNumber'];
-	$actions = "<a onclick=\"return confirm('Sei sicuro di voler eliminare il mese selezionato? Tutte le prenotazioni e gli eventi associati verranno cancellati')\" href='delete_month.php?year=$year&month=$month'>cancella</a>";
+	$actions = <<<LINK
+<a onclick="return confirm('Sei sicuro di voler eliminare il mese selezionato? Tutte le prenotazioni e gli eventi associati verranno cancellati')" href='delete_month.php?year=$year&month=$month'>
+	<img src="img/bin.png" alt="cancella" width="15" height="15">
+</a>
+LINK;
 
 	$row = <<<EOF
 		<tr>

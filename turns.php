@@ -14,11 +14,19 @@ $db = new DbConnection();
 
 
 function content(DbConnection $db) {
-    $aux = <<<EOF
+    $aux=adminAddMonthButton();
+    $aux.= <<<EOF
 	<h1>Turni</h1>
 EOF;
     $aux.= generateTable($db);
     return $aux;
+}
+
+
+function adminAddMonthButton() {
+    return (new PermissionString([
+        PermissionPage::ADMIN => "<a href='events.php' class='btn btn-default pull-right'>Gestisci Mesi</a>"
+    ]))->out();
 }
 
 /**
@@ -231,8 +239,8 @@ function adminSelectUserSelect(DbConnection $db, $task, $position, Month $month,
 
 function eventuallyAddDelete($row, $taskColumn) {
     if ($row['volunteer'] == $_SESSION['id'] or $_SESSION['permessi']<=1)
-        return "<a href=\"delete_prenotazione.php?volunteer={$row['volunteer']}&day={$row['day']}&task={$row['task']}&position={$row['position']}\">
-                <img border='0' alt='cancella prenotazione' src='bin.png' width='15' height='15'>
+        return ">
+                <img border='0' alt='cancella prenotazione' src='img/bin.png' width='15' height='15'>
             </a>";
 }
 
