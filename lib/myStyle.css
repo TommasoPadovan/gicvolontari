@@ -2,7 +2,7 @@
 .col-xs-two5ths, .col-sm-two5ths, .col-md-two5ths, .col-lg-two5ths, .col-xl-two5ths, 
 .col-xs-three5ths, .col-sm-three5ths, .col-md-three5ths, .col-lg-three5ths, .col-xl-three5ths, 
 .col-xs-four5ths, .col-sm-four5ths, .col-md-four5ths, .col-lg-four5ths, .col-xl-four5ths, 
-.col-xs-five5ths, .col-sm-five5ths, .col-md-five5ths, .col-lg-five5ths, .col-xl-five5ths, 
+.col-xs-five5ths, .col-sm-five5ths, .col-md-five5ths, .col-lg-five5ths, .col-xl-five5ths
 {
     position: relative;
     min-height: 1px;
@@ -68,3 +68,6 @@
   background-color: #fcdede;
   padding: 0 90px;
 }
+
+
+.vertical_line { border-left: 1px solid #f2f2f2; }

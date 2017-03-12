@@ -96,7 +96,13 @@ $content = <<<HTML
 				<textarea class="form-control" id="requirements" placeholder="Requisiti" name="requirements" rows="10">$requirements</textarea>
 			</div>
            <button type="submit" class="btn btn-default">Submit</button>
-		</div>
+           <a href="eventsandcourses.php" class="btn btn-default">Indietro</a>
+		</div><div class="row">
+		    <div class="col-sm-6">
+		        <label for="whoPartecipate">Chi può partecipare?</label>
+		        
+            </div>
+        </div>
 	</form>
 HTML;
 

@@ -32,7 +32,7 @@ class PermissionString {
         }
 
         if (count($lowerPermissionStrings) > 0)
-            return $this->options[max($lowerPermissionStrings)];
+            return $this->options[min($lowerPermissionStrings)];
         return "";
     }
 }

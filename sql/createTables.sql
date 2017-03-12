@@ -64,3 +64,31 @@ create table Events (
 	minAttendants INT(6),
 	maxAttendants INT(6)
 )ENGINE=InnoDB;
+
+
+
+CREATE TABLE eventsattendants (
+	event INT(8) UNSIGNED NOT NULL,
+	volunteer INT(8) UNSIGNED NOT NULL,
+
+	FOREIGN KEY(event) REFERENCES Events(id) ON UPDATE CASCADE ON DELETE CASCADE,
+	FOREIGN KEY(volunteer) REFERENCES Users(id) ON UPDATE CASCADE ON DELETE CASCADE,
+	PRIMARY KEY (event, volunteer)
+)ENGINE = InnoDB;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

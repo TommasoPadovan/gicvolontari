@@ -16,7 +16,8 @@ if ( isset($_POST['submit']) ) {
 
 	if ($month->isInFuture()) {							//controlla che il mese indicato sia nel futuro e non nel passato
 		if (!isInDB($month,$db)) {						//controlla che il mese indicato non sia già presente in DB
-			for ($i=1; $i <= $month->dayThisMonth(); $i++) {
+
+			for ($i=1; $i <= $month->dayThisMonth(); $i++) {	//aggiungo il mese nella tabella calendar
 				$db->insert('calendar', array(
 					'year'					=>	$month->getYear(),
 					'month'					=>	$month->getMonth(),
@@ -24,6 +25,36 @@ if ( isset($_POST['submit']) ) {
 					'maxVolunteerNumber'	=>	$_POST['nVolontari']
 				));
 			}
+			//cerco se ci sono eventi in programma per questo mese
+			$eventsThisMonth = $db->prepare("
+				SELECT *
+				FROM events
+				WHERE (date BETWEEN :start AND :end)
+			");
+			$eventsThisMonth->execute([
+				':start'	=>	"{$month->getYear()}-{$month->getMonth()}-1",
+				':end'		=>	"{$month->getYear()}-{$month->getMonth()}-31"
+			]);
+			foreach ($eventsThisMonth as $event) {
+				$d = explode('-', $event['date']);
+				$dayOfCalendar = $db->select('calendar', [
+					'year'	=>	$d[0],
+					'month'	=>	$d[1],
+					'day'	=>	$d[2]
+				]);
+				$db->deleteRows('turni', ['day' => $dayOfCalendar[0]['id']]);    //rimuovo eventuali prenotazioni
+				foreach(['fiabe', 'oasi', 'clown'] as $task) {
+					for ($position = 1; $position <= $dayOfCalendar[0]['maxVolunteerNumber']; $position++)
+						$db->insert('turni', [
+							'day' => $dayOfCalendar[0]['id'],
+							'task' => $task,
+							'position' => $position,
+							'volunteer' => 0
+						]);
+				}
+			}
+
+
 			echo "<script>alert(\"Mese aggiunto con successo\")</script>";
 		} else {
 			echo "<script>alert(\"Il mese che hai inserito è gia abilitato alle iscrizioni per i turni\")</script>";
@@ -75,7 +106,7 @@ EOF;
 
 //form per inserire il mese
 $content = <<<HTML
-<h1>Gestione Eventi</h1>
+<h1>Abilita Nuovo Mese</h1>
 
 <div style="none">
 	<h2>Nuovo Mese</h2>
@@ -119,6 +150,7 @@ $content = <<<HTML
 			</tbody>
 		</table>
 	</div>
+	<a class="btn btn-default" href="turns.php">Indietro</a>
 </div>
 
 HTML;

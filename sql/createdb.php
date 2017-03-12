@@ -16,7 +16,7 @@ echo "db selected...<br />";
 
 
 $db->query("
-create table Users (
+create table users (
 	id INT(8) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
 	firstname VARCHAR(30) NOT NULL,
 	lastname VARCHAR(30) NOT NULL,
@@ -39,10 +39,14 @@ echo "users table created<br />";
 $db->query("
 	INSERT INTO `liltvolontari`.`Users` (`firstname`, `lastname`, `email`, `psw`, `position`, `permessi`) VALUES ('admin', 'admin', 'admin', '21232f297a57a5a743894a0e4a801fc3', '1', '1');");
 echo "added admin...<br />";
+$db->query("
+	INSERT INTO `liltvolontari`.`Users` (`firstname`, `lastname`, `email`, `psw`, `position`, `permessi`) VALUES ('riunione', 'riunione', 'riunione', '', '99', '99');");
+echo "added 'riunione' placeholder...<br />";
+
 
 
 $db->query("
-create table Calendar (
+create table calendar (
 	id INT(8) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
 	year INT(4) NOT NULL,
 	month INT(2) NOT NULL,
@@ -55,7 +59,7 @@ echo "calendar table created<br />";
 
 
 $db->query("
-create table Turni (
+create table turni (
 	day INT(8) UNSIGNED NOT NULL,
 	task VARCHAR(30) NOT NULL,
 	position INT(2) NOT NULL,
@@ -68,4 +72,34 @@ create table Turni (
 )ENGINE=InnoDB;");
 echo "turn table created...<br />";
 
+
+$db->query("
+create table events (
+	id INT(8) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+	type VARCHAR(15) NOT NULL,
+	title VARCHAR(100) NOT NULL,
+	date DATE,
+	timeStart TIME NOT NULL,
+	timeEnd TIME NOT NULL,
+	location VARCHAR(300),
+	description LONGTEXT,
+	requirements LONGTEXT,
+	minAttendants INT(6),
+	maxAttendants INT(6)
+)ENGINE=InnoDB;
+");
+echo "events table created";
+
+
+$db->query("
+CREATE TABLE eventsattendants (
+	event INT(8) UNSIGNED NOT NULL,
+	volunteer INT(8) UNSIGNED NOT NULL,
+
+	FOREIGN KEY(event) REFERENCES Events(id) ON UPDATE CASCADE ON DELETE CASCADE,
+	FOREIGN KEY(volunteer) REFERENCES Users(id) ON UPDATE CASCADE ON DELETE CASCADE,
+	PRIMARY KEY (event, volunteer)
+)ENGINE = InnoDB;
+");
+echo "eventsattendants table created";
 

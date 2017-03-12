@@ -81,7 +81,7 @@ class EditEventCommand extends Command {
             $db->update('events', $newDataArray, ['id' => $_POST['id']]);
 
             $db->deleteRows('turni', ['day' => $oldDateId]);    //rimuovo eventuali prenotazioni
-            $db->deleteRows('turni', ['day' => $dayId]);    //rimuovo eventuali prenotazioni
+            $db->deleteRows('turni', ['day' => $dayId]);        //rimuovo eventuali prenotazioni
             foreach (['fiabe', 'oasi', 'clown'] as $task)
                 for ($i = 1; $i <= $maxVolunteerNumber; $i++)
                     $db->insert('turni', [

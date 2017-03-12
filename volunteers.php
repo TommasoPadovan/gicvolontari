@@ -14,7 +14,8 @@ $db = new DbConnection;
 $usersTable='';
 $users = $db->select('users');
 foreach ($db->select('users') as $row) {
-	$usersTable.=userRow($row, $db);
+	if ($row['id'] != 0)	//l'utente 0 è il placeholder per la riunione che va ad occupare i turni della sera
+		$usersTable.=userRow($row, $db);
 }
 
 function userRow($row, $db)  {
