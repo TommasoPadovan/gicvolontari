@@ -38,10 +38,11 @@ function userRow($row, $db)  {
 	}
 
 	$presenze = getPresenze($db, $row['id'], intval(date("Y")), intval(date("m")));
+	$currentYear = date("Y");
 	$actions = <<<LINK
 <a href="volunteer_form.php?id=$id"><img src="../img/pencil.png" alt="modifica" width='15' height='15'></a>
 <a href="volunteer_delete.php?id=$id" onclick="return confirm('Sei sicuro di voler eliminare $firstname $lastname?')"><img src="../img/bin.png" alt="cancella" width='15' height='15' /></a>
-<a href="volunteer_detail.php?id=$id"><img src="../img/details.png" alt="details" width='15' height='15'></a>
+<a href="volunteer_detail.php?id=$id&year=$currentYear"><img src="../img/details.png" alt="details" width='15' height='15'></a>
 
 LINK;
 
