@@ -1,47 +1,31 @@
 <?php
-require_once('lib/generalLayout.php');
-require_once('lib/sqlLib.php');
-require_once('lib/datetime/month.php');
-require_once('lib/permissionString.php');
+require_once('../lib/generalLayout.php');
+require_once('../lib/sqlLib.php');
+require_once('../lib/datetime/month.php');
+require_once('../lib/permissionString.php');
+
+require_once('classCommitments.php');
 
 $db = new DbConnection();
+
+$commitments = new Commitments();
 
 
 
 //fetching turn data
-$result = $db->prepare('
-	SELECT c.month as month, c.year as year, c.day as day, t.task as task,  t.position as position
-	FROM calendar AS c JOIN turni AS t
-		ON c.id=t.day
-	WHERE t.volunteer = :id
-');
-$result->execute(array('id' => $_SESSION['id']));
-$myCommittments=array();
-foreach ($result as $row) {
-	array_push(
-		$myCommittments,
-		array(
-			'month' => new Month( intval($row['month']), intval($row['year']) ),
-			'day' => $row['day'],
-			'task' => $row['task'],
-			'position' => $row['position']
-		)
-	);
-}
+$myTurns = $commitments->getTurnsArray();
 
-
-
-$strCommittments=array();
-foreach ($myCommittments as $committment) {
-	if ($committment['month']->isInFuture()) {
+$myTurnsStr=array();
+foreach ($myTurns as $turn) {
+	if ($turn['month']->isInFuture()) {
 		array_push(
-			$strCommittments,
-			"<li>{$committment['day']} {$committment['month']->getMonthName()} {$committment['month']->getYear()} - - - {$committment['task']} posizione {$committment['position']} </li>");
+			$myTurnsStr,
+			"<li>{$turn['day']} {$turn['month']->getMonthName()} {$turn['month']->getYear()} - - - {$turn['task']} posizione {$turn['position']} </li>");
 	}
 }
 
 $turniCorsia="<ul>\n";
-foreach ($strCommittments as $li)
+foreach ($myTurnsStr as $li)
 	$turniCorsia.="$li\n";
 $turniCorsia.="</ul>\n";
 
@@ -52,22 +36,8 @@ $eveningTurns = (new PermissionString([
 
 
 
-$allEvents = $db->prepare("
-	SELECT *
-	FROM eventsattendants AS ea JOIN events AS e ON ea.event = e.id
-	WHERE ea.volunteer = :volunteerId
-");
-$allEvents->execute([':volunteerId' => $_SESSION['id']]);
-
-
-$meetings=[];
-$events=[];
-foreach ($allEvents as $e) {
-	if ($e['type'] == "riunione")
-		array_push($meetings, $e);
-	if ($e['type'] == "evento")
-		array_push($events, $e);
-}
+$meetings = $commitments->getMeetingsArray();
+$events = $commitments->getEventsArray();
 
 $meetingsList='';
 foreach ($meetings as $meeting) {
@@ -85,7 +55,7 @@ $eventsList='';
 foreach ($events as $event) {
 	$eventsList.= "<li>\n";
 	$eventsList.= <<<EVENT
-	<h3>{$meeting['title']}</h3>
+	<h3>{$event['title']}</h3>
 	<p>Il {$event['date']} dalle {$event['timeStart']} alle {$event['timeEnd']} presso {$event['location']}</p>
 EVENT;
 	if ($event['requirements'] != '' && $event['requirements'] != null )
@@ -96,7 +66,7 @@ EVENT;
 
 $content = <<<HTML
 <a class="pull-right" href="print_committments.php">
-	<img src="img/print.png" alt="stampa" height="30" width="30">
+	<img src="../img/print.png" alt="stampa" height="30" width="30">
 </a>
 <h1>I miei impegni</h1>
 <div class="row">
@@ -124,7 +94,7 @@ HTML;
 
 try {
 	//general layout of one page
-	$generalLayout = new GeneralLayout("mycommittments.php", PermissionPage::MORNING);
+	$generalLayout = new GeneralLayout(GeneralLayout::HOMEPATH."commitments/mycommittments.php", PermissionPage::MORNING);
 
 	//setting the title
 	$generalLayout->yieldElem('title', "Impegni");

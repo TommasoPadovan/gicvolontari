@@ -1,8 +1,8 @@
 <?php
 session_start();
-require_once('lib/sqlLib.php');
-require_once('lib/permissionsMng.php');
-require_once('lib/command.php');
+require_once('../lib/sqlLib.php');
+require_once('../lib/permissionsMng.php');
+require_once('../lib/command.php');
 
 class EditUserCommand extends Command {
 

@@ -6,6 +6,8 @@ session_start();
 
 class GeneralLayout extends PermissionPage {
 
+	const HOMEPATH = '/padoWeb/sitoLilt/';
+
 	private $elems;
 
 	private $pages;
@@ -20,14 +22,14 @@ class GeneralLayout extends PermissionPage {
 			
 
 		$this->pages = array(
-			new Page('volunteers.php','Volontari', PermissionPage::ADMIN),
-			new Page('turns.php', 'Turni', PermissionPage::EVENING),
-			new Page('eventsandcourses.php', 'Eventi', PermissionPage::AFTERNOON),
-			new Page('mycommittments.php', 'Miei Impegni', PermissionPage::EVENING)
+			new Page(self::HOMEPATH.'volunteers/volunteers.php','Volontari', PermissionPage::ADMIN),
+			new Page(self::HOMEPATH.'turns/turns.php', 'Turni', PermissionPage::EVENING),
+			new Page(self::HOMEPATH.'events/eventsandcourses.php', 'Eventi', PermissionPage::AFTERNOON),
+			new Page(self::HOMEPATH.'commitments/mycommittments.php', 'Miei Impegni', PermissionPage::MORNING)
 		);
 		$this->elems  = array(
 			'title' => '',
-			'nav' => self::generateNav($this->pages, $url),
+			'nav' => self::generateNav($this->pages, $url, self::HOMEPATH),
 			'content' => ''
 		);
 
@@ -41,6 +43,7 @@ class GeneralLayout extends PermissionPage {
 	}
 
 	public function getPage() {
+		$homePath = self::HOMEPATH;
 		return <<<HTML
 <!DOCTYPE html>
 <html lang="en">
@@ -49,7 +52,7 @@ class GeneralLayout extends PermissionPage {
 		<meta charset="utf-8">
 		<title>{$this->elems['title']}</title>
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-		<link rel="stylesheet" href="lib/myStyle.css">
+		<link rel="stylesheet" href="{$homePath}lib/myStyle.css">
 
 
 	</head>
@@ -73,7 +76,7 @@ HTML;
 
 
 
-	private static function generateNav($pages, $current_url) {
+	private static function generateNav($pages, $current_url, $homePath) {
 		$li='';
 		foreach ($pages as $page) {
 			if ( isset( $_SESSION['permessi'] ) && $_SESSION['permessi']!=0 ) {
@@ -88,7 +91,7 @@ HTML;
 			<div class="container-fluid">
 				<ul class="nav navbar-nav">
 					<div class="navbar-header">
-						<a class="navbar-brand" href="home.php">Lilt Volontari</a>
+						<a class="navbar-brand" href="{$homePath}home.php">Lilt Volontari</a>
 	    			</div>
 	    			$li
 				</ul>
@@ -119,7 +122,3 @@ class Page {
 	}
 
 }
-
-
-
-?>

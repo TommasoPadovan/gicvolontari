@@ -5,9 +5,9 @@
  * Date: 09/03/2017
  * Time: 17:18
  */
-require_once('lib/generalLayout.php');
-require_once('lib/permission.php');
-require_once('lib/sqlLib.php');
+require_once('../lib/generalLayout.php');
+require_once('../lib/permission.php');
+require_once('../lib/sqlLib.php');
 
 
 $db = new DbConnection();
@@ -111,7 +111,7 @@ HTML;
 
 
 try {
-    $generalLayout = new GeneralLayout("add_event.php", PermissionPage::AFTERNOON);
+    $generalLayout = new GeneralLayout(GeneralLayout::HOMEPATH."events/eventsandcourses.php", PermissionPage::AFTERNOON);
     $generalLayout->yieldElem('title', "Aggiungi / Modifica Evento");
     $generalLayout->yieldElem('content', $content);
     echo $generalLayout->getPage();

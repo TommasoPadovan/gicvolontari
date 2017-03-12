@@ -5,9 +5,9 @@
  * Date: 09/03/2017
  * Time: 18:10
  */
-require_once('lib/sqlLib.php');
-require_once('lib/permission.php');
-require_once('lib/command.php');
+require_once('../lib/sqlLib.php');
+require_once('../lib/permission.php');
+require_once('../lib/command.php');
 
 
 class EditEventCommand extends Command {

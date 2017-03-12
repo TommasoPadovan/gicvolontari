@@ -1,9 +1,9 @@
 <?php
-require_once('lib/generalLayout.php');
-require_once('lib/permissionsMng.php');
-require_once('lib/sqlLib.php');
-require_once('lib/datetime/month.php');
-require_once('lib/command.php');
+require_once('../lib/generalLayout.php');
+require_once('../lib/permissionsMng.php');
+require_once('../lib/sqlLib.php');
+require_once('../lib/datetime/month.php');
+require_once('../lib/command.php');
 
 
 class DeleteReservationCommand extends Command {

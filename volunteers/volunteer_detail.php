@@ -6,9 +6,9 @@
  * Time: 11:49
  */
 
-require_once('lib/generalLayout.php');
-require_once('lib/permissionsMng.php');
-require_once('lib/sqlLib.php');
+require_once('../lib/generalLayout.php');
+require_once('../lib/permissionsMng.php');
+require_once('../lib/sqlLib.php');
 
 $db = new DbConnection;
 
@@ -69,7 +69,7 @@ HTML;
 
 
 try {
-    $generalLayout = new GeneralLayout("volunteers.php", PermissionPage::ADMIN);
+    $generalLayout = new GeneralLayout(GeneralLayout::HOMEPATH."volunteers/volunteers.php", PermissionPage::ADMIN);
     $generalLayout->yieldElem('title', "Dettagli Volontario");
     $generalLayout->yieldElem('content', $content);
     echo $generalLayout->getPage();

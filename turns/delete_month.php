@@ -1,6 +1,6 @@
 <?php
-require_once('lib/command.php');
-require_once('lib/sqlLib.php');
+require_once('../lib/command.php');
+require_once('../lib/sqlLib.php');
 
 class DeleteMonthCommand extends Command {
 

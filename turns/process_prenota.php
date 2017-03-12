@@ -1,9 +1,9 @@
 <?php
-require_once('lib/generalLayout.php');
-require_once('lib/permission.php');
-require_once('lib/sqlLib.php');
-require_once('lib/datetime/month.php');
-require_once('lib/command.php');
+require_once('../lib/generalLayout.php');
+require_once('../lib/permission.php');
+require_once('../lib/sqlLib.php');
+require_once('../lib/datetime/month.php');
+require_once('../lib/command.php');
 
 
 class UserAddTurnCommand extends Command {
@@ -35,7 +35,11 @@ class UserAddTurnCommand extends Command {
 		//sanity check
 		//è la giusta posizione del volontario?
 		$row = $db->select('users', array('id' => $userID))[0];
-		if ($position != $row['position']){
+		if (
+			($row['position']==1 && $position==3) ||
+			($row['position']==2 && ($position==1 || $position==3)) ||
+			$row['position']==3
+		){
 			$this->abortMission();
 			exit;
 		}

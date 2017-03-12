@@ -5,10 +5,10 @@
  * Date: 09/03/2017
  * Time: 17:09
  */
-require_once('lib/generalLayout.php');
-require_once('lib/permission.php');
-require_once('lib/permissionString.php');
-require_once('lib/sqlLib.php');
+require_once('../lib/generalLayout.php');
+require_once('../lib/permission.php');
+require_once('../lib/permissionString.php');
+require_once('../lib/sqlLib.php');
 
 
 $db = new DbConnection();
@@ -37,12 +37,12 @@ foreach ($allEvents as $row) {
 
 
     $adminEditButton = (new PermissionString([
-        PermissionPage::ADMIN => "<a class='pull-right' href='add_event.php?id={$row['id']}'><img src='img/pencil.png' alt='modifica' height='15' width='15'></a> "
+        PermissionPage::ADMIN => "<a class='pull-right' href='add_event.php?id={$row['id']}'><img src='../img/pencil.png' alt='modifica' height='15' width='15'></a> "
     ]))->out();
 
     $adminRemoveButton = (new PermissionString([
         PermissionPage::ADMIN => "<a class='pull-right' href='delete_event.php?id={$row['id']}'  onclick=\"return confirm('Sei sicuro di voler eliminare l\'evento $title?')\">
-            <img src='bin.png' alt='cancella' height='15' width='15'>
+            <img src='../img/bin.png' alt='cancella' height='15' width='15'>
         </a> "
     ]))->out();
 
@@ -76,15 +76,13 @@ FORM
 
         $removeOwnReservationLink = '';
         if ( isset($_SESSION['id']) && $_SESSION['id'] == $volunteerDetail['id'])
-            $removeOwnReservationLink = "<a href='process_remove_reservation.php?event={$row['id']}'
-                    onclick='return confirm(\"Sicuro di voler rimuovere la tua prenotazione?\")'>
-                    <img src=\"img/bin.png\" alt='cancella' height='15' width='15' />
+            $removeOwnReservationLink = " alt='cancella' height='15' width='15' />
                 </a>";
         $removeReservationLink = (new PermissionString([
             PermissionPage::ADMIN =>
                 "<a href='process_admin_remove_reservation.php?event={$row['id']}&volunteer={$volunteerDetail['id']}'
                     onclick='return confirm(\"Sicuro di voler rimuovere la prenotazione di {$volunteerDetail['firstname']} {$volunteerDetail['lastname']}?\")'>
-                    <img src=\"img/bin.png\" alt='cancella' height='15' width='15' />
+                    <img src=\"../img/bin.png\" alt='cancella' height='15' width='15' />
                 </a>",
             PermissionPage::MORNING => $removeOwnReservationLink
         ]))->out();
@@ -150,7 +148,7 @@ HTML;
 
 
 try {
-    $generalLayout = new GeneralLayout("eventsandcourses.php", PermissionPage::AFTERNOON);
+    $generalLayout = new GeneralLayout(GeneralLayout::HOMEPATH."events/eventsandcourses.php", PermissionPage::AFTERNOON);
     $generalLayout->yieldElem('title', "Eventi");
     $generalLayout->yieldElem('content', $content);
     echo $generalLayout->getPage();

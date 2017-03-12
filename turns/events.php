@@ -1,8 +1,8 @@
 <?php
-require_once('lib/generalLayout.php');
-require_once('lib/permissionsMng.php');
-require_once('lib/sqlLib.php');
-require_once('lib/datetime/month.php');
+require_once('../lib/generalLayout.php');
+require_once('../lib/permissionsMng.php');
+require_once('../lib/sqlLib.php');
+require_once('../lib/datetime/month.php');
 
 
 
@@ -90,7 +90,7 @@ function monthRow($row) {
 	$nvolontari=$row['maxVolunteerNumber'];
 	$actions = <<<LINK
 <a onclick="return confirm('Sei sicuro di voler eliminare il mese selezionato? Tutte le prenotazioni e gli eventi associati verranno cancellati')" href='delete_month.php?year=$year&month=$month'>
-	<img src="img/bin.png" alt="cancella" width="15" height="15">
+	<img src="../img/bin.png" alt="cancella" width="15" height="15">
 </a>
 LINK;
 
@@ -161,7 +161,7 @@ HTML;
 
 
 try {
-	$generalLayout = new GeneralLayout("events.php", PermissionPage::ADMIN);
+	$generalLayout = new GeneralLayout(GeneralLayout::HOMEPATH."turns/turns.php", PermissionPage::ADMIN);
 	//setting the title
 	$generalLayout->yieldElem('title', "Gestione Eventi");
 

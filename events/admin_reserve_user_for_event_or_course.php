@@ -5,8 +5,8 @@
  * Date: 10/03/2017
  * Time: 12:44
  */
-require_once('lib/command.php');
-require_once('lib/sqlLib.php');
+require_once('../lib/command.php');
+require_once('../lib/sqlLib.php');
 
 class AdminReserveUserForEventOrCourseCommand extends Command {
 

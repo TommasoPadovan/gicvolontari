@@ -5,12 +5,12 @@
  * Date: 11/03/2017
  * Time: 14:19
  */
+require_once('../lib/permission.php');
+require_once('../lib/command.php');
+require_once('../lib/sqlLib.php');
 
-require_once('lib/permission.php');
-require_once('lib/command.php');
-require_once('lib/sqlLib.php');
 
-class AdminRemoveReservationCommand extends Command {
+class RemoveOwnReservationCommand extends Command {
 
     public function __construct($permission) {
         parent::__construct($permission);
@@ -20,8 +20,8 @@ class AdminRemoveReservationCommand extends Command {
         $db = new DbConnection();
 
         $db->deleteRows('eventsattendants', [
-            'event' => $_GET['event'],
-            'volunteer' => $_GET['volunteer']
+            'event'     =>  $_GET['event'],
+            'volunteer' =>  $_SESSION['id']
         ]);
 
         header("Location: eventsandcourses.php");
@@ -29,8 +29,8 @@ class AdminRemoveReservationCommand extends Command {
 }
 
 try {
-    (new AdminRemoveReservationCommand(PermissionPage::ADMIN))->execute();
+    (new RemoveOwnReservationCommand(PermissionPage::MORNING))->execute();
 }
-catch(UnhautorizedException $e) {
+catch (UnhautorizedException $e) {
     $e->echoAlert();
 }

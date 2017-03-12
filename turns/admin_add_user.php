@@ -5,9 +5,9 @@
  * Date: 07/03/2017
  * Time: 18:22
  */
-require_once('lib/command.php');
-require_once('lib/sqlLib.php');
-require_once('lib/datetime/month.php');
+require_once('../lib/command.php');
+require_once('../lib/sqlLib.php');
+require_once('../lib/datetime/month.php');
 
 class AddTurn extends Command {
 
@@ -35,12 +35,16 @@ class AddTurn extends Command {
 
 
         //sanity checks
+
+        /**
+         * ho spento questo controllo perché secondo me l'admin può mettere chiunque in qualsiasi posto
+         */
         //è la giusta posizione del volontario?
         $row = $db->select('users', array('id' => $userID))[0];
-        if ($position != $row['position']){
+        /*if ($position != $row['position']){
             $this->abortMission();
             exit;
-        }
+        }*/
 
         //c'è un altro volontario che fa esattamente la stessa roba?
         $sameTask = $db->select('turni', array(

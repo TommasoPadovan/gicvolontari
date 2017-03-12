@@ -6,9 +6,9 @@
  * Time: 21:45
  */
 session_start();
-require_once('lib/permission.php');
-require_once('lib/sqlLib.php');
-require_once('lib/command.php');
+require_once('../lib/permission.php');
+require_once('../lib/sqlLib.php');
+require_once('../lib/command.php');
 
 class DeleteEventCommand extends Command {
 

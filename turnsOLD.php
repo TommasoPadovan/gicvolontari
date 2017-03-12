@@ -229,10 +229,9 @@ function adminSelectUserSelect(DbConnection $db, $task, $position, $year, $month
 	$selectString.='</select>';
 
 	return (new PermissionString([
-		PermissionPage::ADMIN => "
-		<a onclick='toggle_visibility(\"adduser-$task-$position-$year-$month-$day\")'><img src=\"img/add.png\" alt='add user' width='20' height='20'></a>
+		PermissionPage::ADMIN => " alt='add user' width='20' height='20'></a>
 		<div style='display: none' id='adduser-$task-$position-$year-$month-$day'>
-			<form method='POST' action='admin_add_user.php'>
+			<form method='POST' action='turns/admin_add_user.php'>
 				<input type='hidden' name='task' value='$task' />
 				<input type='hidden' name='position' value='$position' />
 				<input type='hidden' name='year' value='$year' />

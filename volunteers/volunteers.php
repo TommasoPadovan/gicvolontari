@@ -1,7 +1,7 @@
 <?php
-require_once('lib/generalLayout.php');
-require_once('lib/permission.php');
-require_once('lib/sqlLib.php');
+require_once('../lib/generalLayout.php');
+require_once('../lib/permission.php');
+require_once('../lib/sqlLib.php');
 
 $db = new DbConnection;
 
@@ -39,10 +39,9 @@ function userRow($row, $db)  {
 
 	$presenze = getPresenze($db, $row['id'], intval(date("Y")), intval(date("m")));
 	$actions = <<<LINK
-<a href="volunteer_form.php?id=$id"><img src="img/pencil.png" alt="modifica" width='15' height='15'></a>
-<a href="volunteer_delete.php?id=$id" onclick="return confirm('Sei sicuro di voler eliminare $firstname $lastname?')"><img src="bin.png" alt="cancella" width='15' height='15' /></a>
-<a href="volunteer_detail.php?id=$id"><img src="img/details.png" alt="details" width='15' height='15'></a>
-
+<a href="volunteer_form.php?id=$id"><img src="../img/pencil.png" alt="modifica" width='15' height='15'></a>
+<a href="volunteer_delete.php?id=$id" onclick="return confirm('Sei sicuro di voler eliminare $firstname $lastname?')"><img src="../img/bin.png" alt="cancella" width='15' height='15' /></a>
+<a href="volunteer_detail.php?id=$id"><img src="../img/details.png" alt="details" width='15' height='15'></a>
 
 LINK;
 
@@ -201,7 +200,7 @@ TAG
 
 
 try {
-	$generalLayout = new GeneralLayout("volunteers.php", PermissionPage::ADMIN);
+	$generalLayout = new GeneralLayout(GeneralLayout::HOMEPATH."volunteers/volunteers.php", PermissionPage::ADMIN);
 	$generalLayout->yieldElem('title', "Volontari");
 	$generalLayout->yieldElem('content', $content);
 	echo $generalLayout->getPage();

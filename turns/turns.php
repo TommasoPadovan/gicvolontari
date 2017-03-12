@@ -5,10 +5,10 @@
  * Date: 07/03/2017
  * Time: 21:05
  */
-require_once('lib/generalLayout.php');
-require_once('lib/sqlLib.php');
-require_once('lib/datetime/month.php');
-require_once('lib/permissionString.php');
+require_once('../lib/generalLayout.php');
+require_once('../lib/sqlLib.php');
+require_once('../lib/datetime/month.php');
+require_once('../lib/permissionString.php');
 
 $db = new DbConnection();
 
@@ -220,7 +220,7 @@ function adminSelectUserSelect(DbConnection $db, $task, $position, Month $month,
 
     return (new PermissionString([
         PermissionPage::ADMIN => "
-		<a onclick='toggle_visibility(\"adduser-$task-$position-$y-$m-$day\")'><img src=\"img/add.png\" alt='add user' width='20' height='20'></a>
+        <a onclick='return toggle_visibility(\"adduser-$task-$position-$y-$m-$day\")'><img src='../img/add.png' alt='add user' width='20' height='20'></a>
 		<div style='display: none' id='adduser-$task-$position-$y-$m-$day'>
 			<form method='POST' action='admin_add_user.php'>
 				<input type='hidden' name='task' value='$task' />
@@ -240,7 +240,7 @@ function adminSelectUserSelect(DbConnection $db, $task, $position, Month $month,
 function eventuallyAddDelete($row, $taskColumn) {
     if ($row['volunteer'] == $_SESSION['id'] or $_SESSION['permessi']<=1)
         return "<a href=\"delete_prenotazione.php?volunteer={$row['volunteer']}&day={$row['day']}&task={$row['task']}&position={$row['position']}\" >
-                <img border='0' alt='cancella prenotazione' src='img/bin.png' width='15' height='15'>
+                <img border='0' alt='cancella prenotazione' src='../img/bin.png' width='15' height='15'>
             </a>";
 }
 
@@ -260,7 +260,7 @@ EEND;
 
 try {
     //general layout of one page
-    $generalLayout = new GeneralLayout("turns.php", PermissionPage::EVENING);
+    $generalLayout = new GeneralLayout(GeneralLayout::HOMEPATH."turns/turns.php", PermissionPage::EVENING);
 
     //setting the title
     $generalLayout->yieldElem('title', "Turni");

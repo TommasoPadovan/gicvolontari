@@ -5,9 +5,9 @@
  * Date: 01/03/2017
  * Time: 18:58
  */
-require_once('lib/sqlLib.php');
-require_once('lib/permissionsMng.php');
-require_once('lib/command.php');
+require_once('../lib/sqlLib.php');
+require_once('../lib/permissionsMng.php');
+require_once('../lib/command.php');
 
 
 class DeleteVolunteerCommand extends Command {
