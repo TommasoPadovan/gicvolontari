@@ -76,7 +76,7 @@ FORM
 
         $removeOwnReservationLink = '';
         if ( isset($_SESSION['id']) && $_SESSION['id'] == $volunteerDetail['id'])
-            $removeOwnReservationLink = " alt='cancella' height='15' width='15' />
+            $removeOwnReservationLink = "<a href='process_remove_reservation.php?event={$row['id']}'><img src='../img/bin.png' alt='cancella' height='15' width='15' />
                 </a>";
         $removeReservationLink = (new PermissionString([
             PermissionPage::ADMIN =>
@@ -148,7 +148,7 @@ HTML;
 
 
 try {
-    $generalLayout = new GeneralLayout(GeneralLayout::HOMEPATH."events/eventsandcourses.php", PermissionPage::AFTERNOON);
+    $generalLayout = new GeneralLayout(GeneralLayout::HOMEPATH."events/eventsandcourses.php", PermissionPage::MORNING);
     $generalLayout->yieldElem('title', "Eventi");
     $generalLayout->yieldElem('content', $content);
     echo $generalLayout->getPage();

@@ -105,11 +105,11 @@ foreach ($meetingsEventsDetail as $row) {
 
         $eventTableBody .= "
             <tr>
-            <td>{$data[2]} {$monthObj->getMonthName()} {$monthObj->getYear()}</td>
-            <td>{$row['type']}</td>
-            <td>{$row['title']}</td>
-            <td>{$row['location']}</td>
-            <td>{$row['description']}</td>
+                <td>{$data[2]} {$monthObj->getMonthName()} {$monthObj->getYear()}</td>
+                <td>{$row['type']}</td>
+                <td>{$row['title']}</td>
+                <td>{$row['location']}</td>
+                <td>{$row['description']}</td>
             </tr>
         ";
     }
@@ -122,6 +122,7 @@ for($i=date("Y"); $i>1990; $i--)
 
 
 $content = <<<HTML
+<a class="pull-right" href="print_volunteer_detail.php?id={$_GET['id']}&year={$_GET['year']}"><img src="../img/print.png" width="30" height="30"></a>
 <h1>Dettagli di {$user['firstname']} {$user['lastname']}</h1>
 
 <h2>Riassunto presenze ai turni serali</h2>

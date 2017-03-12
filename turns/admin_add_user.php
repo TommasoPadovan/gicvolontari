@@ -35,7 +35,6 @@ class AddTurn extends Command {
 
 
         //sanity checks
-
         /**
          * ho spento questo controllo perché secondo me l'admin può mettere chiunque in qualsiasi posto
          */
@@ -64,16 +63,16 @@ class AddTurn extends Command {
         }
 
         //il volontario è sotto il suo massimo di turni questo mese?
-        $volunteerTurnThisMonth = $db->prepare("SELECT * FROM turni AS t JOIN calendar as c ON t.day = c.id WHERE c.year = :year AND c.month = :month AND t.volunteer = :userID");
-        $volunteerTurnThisMonth->execute(array(
-            ':year' => $year,
-            ':month' => $month,
-            ':userID' => $userID
-        ));
-        if ( $volunteerTurnThisMonth->rowCount() >=2 ) {
-            $this->abortMission();
-            exit;
-        }
+//        $volunteerTurnThisMonth = $db->prepare("SELECT * FROM turni AS t JOIN calendar as c ON t.day = c.id WHERE c.year = :year AND c.month = :month AND t.volunteer = :userID");
+//        $volunteerTurnThisMonth->execute(array(
+//            ':year' => $year,
+//            ':month' => $month,
+//            ':userID' => $userID
+//        ));
+//        if ( $volunteerTurnThisMonth->rowCount() >=2 ) {
+//            $this->abortMission();
+//            exit;
+//        }
 
 
         $db->insert('turni', array(
