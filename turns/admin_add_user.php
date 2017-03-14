@@ -82,7 +82,7 @@ class AddTurn extends Command {
             'volunteer'	=> $userID
         ));
 
-        header("Location: turns.php");
+        header("Location: turns.php?Mese=$year-$month");
     }
 
 

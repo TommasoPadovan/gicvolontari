@@ -86,7 +86,7 @@ class UserAddTurnCommand extends Command {
 
 
 	private function abortMission() {
-		header("Location: turns.php");
+		header("Location: turns.php?Mese={$_GET['year']}-{$_GET['month']}");
 	}
 
 }

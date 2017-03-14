@@ -5,6 +5,12 @@
  * Date: 07/03/2017
  * Time: 21:05
  */
+
+//se uno cerca di accedere direttamente turni senza specificare mettiamo per primo il mese attuale
+if (!isset($_GET['Mese']))
+    header("Location: turns.php?Mese=".date("Y-m"));
+
+
 require_once('../lib/generalLayout.php');
 require_once('../lib/sqlLib.php');
 require_once('../lib/datetime/month.php');
@@ -15,6 +21,7 @@ $db = new DbConnection();
 
 function content(DbConnection $db) {
     $currentMonth = date("Y-m");
+
     $maxMonth = getMaxMonth($db);
     if (isset($_GET['Mese'])) {
         $shownMonth = $_GET['Mese'];
@@ -35,10 +42,10 @@ function content(DbConnection $db) {
 			<button type="submit" value="Vai al Mese" class="btn btn-default col-sm-1">Submit</button>
 		</div>
 	</form>
-	<h2>{$monthObj->getMonthName()} {$monthObj->getYear()}</h2>
+	<h2>{$monthObj->getMonthName()} {$monthObj->getYear()}</h2>"
 EOF;
     if (isset($_GET['Mese']))
-        $aux.= generateTable($monthObj, $db);
+        $aux .= generateTable($monthObj, $db);
     else
         $aux.= "Seleziona un mese";
     return $aux;
@@ -70,6 +77,7 @@ function adminCsvExportButton($shownMonth) {
  * La grafica dei bottoni è delegata a monthHideLink
  * La politica di visualizzazione di default o meno dei mesi è delegata a isVisible
  * La creazione vera e propria della tabella è delegata a monthTable
+ * @param Month $month
  * @param DbConnection $db
  * @return string
  */

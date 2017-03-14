@@ -19,7 +19,7 @@ class DeleteMonthCommand extends Command {
             'month' =>  $month
         ));
 
-        header("Location: events.php");
+        header("Location: events.php?Mese=$year-$month");
     }
 }
 
