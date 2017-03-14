@@ -9,6 +9,8 @@ require_once('../lib/generalLayout.php');
 require_once('../lib/permission.php');
 require_once('../lib/permissionString.php');
 require_once('../lib/sqlLib.php');
+require_once('../lib/datetime/date.php');
+require_once('../lib/datetime/time.php');
 
 
 $db = new DbConnection();
@@ -26,9 +28,9 @@ $allEvents = $db->select('events');
 foreach ($allEvents as $row) {
     $type = $row['type'];
     $title = $row['title'];
-    $date = $row['date'];
-    $timeStart = $row['timeStart'];
-    $timeEnd = $row['timeEnd'];
+    $date = (new Date($row['date']))->getItalianDate();
+    $timeStart = (new Time($row['timeStart']))->getSimpleTime();
+    $timeEnd = (new Time($row['timeEnd']))->getSimpleTime();
     $location = $row['location'];
     $description = $row['description'];
     $requirements = $row['requirements'];
@@ -97,10 +99,10 @@ FORM
                     <h2>$title</h2>
                     $adminEditButton
                     $adminRemoveButton
-                    <p><label>Tipo: </label> $type</p>
-                    <p><label>Data: </label> $date</p>
-                    <p><label>Inizio: </label> $timeStart</p>
-                    <p><label>Fine: </label> $timeEnd</p>
+                    <!--<p><label>Tipo: </label> $type</p>-->
+                    <p><label>Data e Ora: </label> il $date dalle ore $timeStart alle ore $timeEnd</p>
+                    <!--<p><label>Inizio: </label> $timeStart</p>-->
+                    <!--<p><label>Fine: </label> $timeEnd</p>-->
                     <p><label>Luogo: </label> $location</p>
                     <p><label>Descrizione: </label> $description</p>
                     <p><label>Requisiti: </label> $requirements</p>

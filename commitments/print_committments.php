@@ -35,6 +35,7 @@ $pdf->SetFont('Times','',12);
 
 
 $pdf->Cell(0,10,' ',0,1);
+$xMargin = $pdf->GetX();
 
 $pdf->SetFont('Times', 'b', 20);
 $pdf->Cell(0,10,'Promemoria impegni',0,1);
@@ -50,6 +51,8 @@ foreach ($turns as $turn) {
         $pdf->Cell(0,10, "{$turn['day']} {$turn['month']->getMonthName()} {$turn['month']->getYear()} - - - {$turn['task']} posizione {$turn['position']} " ,0,1);
 }
 
+
+
 $pdf->Cell(0,10,' ',0,1);
 $pdf->SetFont('Times', 'iu', 16);
 $pdf->Cell(0,10,'Riunioni',0,1);
@@ -59,9 +62,9 @@ foreach ($meetings as $meeting) {
         $pdf->SetFont('Times','b',12);
         $pdf->Cell(0,10,$meeting['title'],0,1);
         $pdf->SetFont('Times','',12);
-        $pdf->Cell(0,10,"Il {$meeting['date']} dalle {$meeting['timeStart']} alle {$meeting['timeEnd']} presso {$meeting['location']}",0,1);
+        $pdf->MultiCell(0,10,"Il {$meeting['date']} dalle {$meeting['timeStart']} alle {$meeting['timeEnd']} presso {$meeting['location']}",0,1);
         if ($meeting['requirements'] != '' && $meeting['requirements'] != null )
-            $pdf->Cell(0,10,"Sono stati indicati i seguenti requisiti: {$meeting['requirements']}",0,1);
+            $pdf->Write(5, "Sono stati indicati i seguenti requisiti: {$meeting['requirements']} \n");
     }
 }
 
@@ -76,9 +79,9 @@ foreach ($events as $event) {
         $pdf->SetFont('Times','b',12);
         $pdf->Cell(0,10,$event['title'],0,1);
         $pdf->SetFont('Times','',12);
-        $pdf->Cell(0,10,"Il {$event['date']} dalle {$event['timeStart']} alle {$event['timeEnd']} presso {$event['location']}",0,1);
+        $pdf->MultiCell(0,10,"Il {$event['date']} dalle {$event['timeStart']} alle {$event['timeEnd']} presso {$event['location']}",0,1);
         if ($event['requirements'] != '' && $event['requirements'] != null )
-            $pdf->Cell(0,10,"Sono stati indicati i seguenti requisiti: {$event['requirements']}",0,1);
+            $pdf->Write(5, "Sono stati indicati i seguenti requisiti: {$event['requirements']}\n");
     }
 }
 

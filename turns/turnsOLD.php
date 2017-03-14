@@ -16,31 +16,21 @@ $db = new DbConnection();
 function content(DbConnection $db) {
     $currentMonth = date("Y-m");
     $maxMonth = getMaxMonth($db);
-    if (isset($_GET['Mese'])) {
-        $shownMonth = $_GET['Mese'];
-        $monthObj = Month::getMonthFromInternational($_GET['Mese']);
-    } else
-        $shownMonth ='';
 
     $aux=adminAddMonthButton();
-    $aux.=adminCsvExportButton($shownMonth);
     $aux.= <<<EOF
 	<h1>Turni</h1>
 	<p>Selezionare il mese dal calendario qui sotto per iscriversi ai turni serali</p>
 	<form action='#' method="get">
 		<div class="row">
-			<div class="form-group col-sm-2">
-				<input class="form-control" value="$shownMonth" type="month" name="Mese" min="$currentMonth" max="$maxMonth">
+			<div class="form-group col-sm-3">
+				<input class="form-control" value="{$_GET['Mese']}" type="month" name="Mese" min="$currentMonth" max="$maxMonth">
 			</div>
-			<button type="submit" value="Vai al Mese" class="btn btn-default col-sm-1">Submit</button>
+			<button type="submit" value="Vai al Mese" class="btn btn-default col-sm-2">Submit</button>
 		</div>
 	</form>
-	<h2>{$monthObj->getMonthName()} {$monthObj->getYear()}</h2>
 EOF;
-    if (isset($_GET['Mese']))
-        $aux.= generateTable($monthObj, $db);
-    else
-        $aux.= "Seleziona un mese";
+    $aux.= generateTable($db);
     return $aux;
 }
 
@@ -59,12 +49,6 @@ function adminAddMonthButton() {
     ]))->out();
 }
 
-function adminCsvExportButton($shownMonth) {
-    return (new PermissionString([
-        PermissionPage::ADMIN => "<a href='export_csv.php?Mese=$shownMonth' class='pull-right btn btn-default'>Esporta In Excell</a>"
-    ]))->out();
-}
-
 /**
  * Genera i bottoni per visualizzare nascondere le tabelle dei turni.
  * La grafica dei bottoni è delegata a monthHideLink
@@ -73,23 +57,53 @@ function adminCsvExportButton($shownMonth) {
  * @param DbConnection $db
  * @return string
  */
-function generateTable(Month $month, DbConnection $db) {
-    $monthString='';
-    $monthString.="
-        <div id=\"month{$month->getMonth()}-{$month->getYear()}\">
-            <hr />
-            " . monthTable($month, $db) . "
-            <hr />
-        </div>
-    ";
+function generateTable(DbConnection $db) {
+    $yearMonths = $db->query("SELECT DISTINCT year, month FROM calendar");
+    $allMonths=array();
+    foreach ($yearMonths as $row)
+        array_push($allMonths, new Month( intval($row['month']), intval($row['year']) ));
 
-    if ($month->isInFuture()) {
-        return $monthString;
-    } else {
-        return (new PermissionString([PermissionPage::ADMIN => $monthString]))->out();
+    $now = new Month(date('m'), date("Y"));
+
+    $aux='';
+    foreach ($allMonths as $month) {
+        $monthString= '<p>'.monthHideLink($month).'</p>';
+        $monthString.="
+            <div id=\"month{$month->getMonth()}-{$month->getYear()}\" style=\"display: " . isVisible($month) . "\">
+                <hr />
+                " . monthTable($month, $db) . "
+                <hr />
+            </div>";
+
+        if ($month->isInFuture()) {
+            $aux.=$monthString;
+        } else {
+            $aux.=(new PermissionString([PermissionPage::ADMIN => $monthString]))->out();
+        }
     }
+
+    return $aux;
 }
 
+
+/**
+ * Disegna il bottone per visualizzare nascondere le tabelle dei mesi
+ * @param Month $month
+ * @return string
+ */
+function monthHideLink(Month $month) {
+    return "<a class=\"btn btn-block btn-default\"  onclick=\"toggle_visibility('month{$month->getMonth()}-{$month->getYear()}')\">".$month->getMonthName().' '.$month->getYear()."</a>";
+}
+
+/**
+ * decide se un mese è o meno visibile di default
+ * @param Month $month
+ * @return string
+ */
+function isVisible(Month $month) {
+    if ($month->isNow()) return "block";
+    return "none";
+}
 
 
 /**

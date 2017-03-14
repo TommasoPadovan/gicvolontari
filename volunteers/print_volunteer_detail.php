@@ -108,7 +108,7 @@ QUERY
         foreach ($allVolunteerTurns as $row) {
             $monthObj = new Month($row['month'], $row['year']);
             $turnCount = $row['count'];
-            $pdf->Cell(0,10,"{$monthObj->getMonthName()} {$monthObj->getYear()} - - - $turnCount presenze",0,1);
+            $pdf->MultiCell(0,10,"{$monthObj->getMonthName()} {$monthObj->getYear()} - - - $turnCount presenze",0,1);
         }
 
         //sottotitolo Date e Ruoli nei turni serali
@@ -119,7 +119,7 @@ QUERY
 
         foreach ($allVolunteerTurnsDetail as $row) {
             $monthObj = new Month($row['month'], $row['year']);
-            $pdf->Cell(0,10,"{$row['day']} {$monthObj->getMonthName()} {$monthObj->getYear()} - - - {$row['task']} posizione {$row['position']}",0,1);
+            $pdf->MultiCell(0,10,"{$row['day']} {$monthObj->getMonthName()} {$monthObj->getYear()} - - - {$row['task']} posizione {$row['position']}",0,1);
         }
 
         //sottotitolo Presenze a riunioni/corsi
@@ -131,7 +131,7 @@ QUERY
         foreach ($meetingsEventsDetail as $row) {
             $data = explode('-',$row['date']);
             $monthObj = new Month($data[1], $data[0]);
-            $pdf->Cell(0,10,"{$data[2]} {$monthObj->getMonthName()} {$monthObj->getYear()} - - - {$row['type']}: \"{$row['title']}\" presso \"{$row['location']}\"",0,1);
+            $pdf->MultiCell(0,10,"{$data[2]} {$monthObj->getMonthName()} {$monthObj->getYear()} - - - {$row['type']}: \"{$row['title']}\" presso \"{$row['location']}\"",0,1);
         }
 
 

@@ -25,6 +25,10 @@ class Month {
 			$this->dayPerMonth[2]=29;
 	}
 
+	public static function getMonthFromInternational($internationalMonth) {
+		$splitMonth = explode('-', $internationalMonth);
+		return new Month(intval($splitMonth[1]), intval($splitMonth[0]));
+	}
 
 	public function getAllWorking() {
 		$allWorking = array();
@@ -42,6 +46,31 @@ class Month {
 		return date('w', strtotime($date));
 	}
 
+	public function dayOfWeekName($i) {
+		switch ($this->dayOfWeek($i)) {
+			case 0:
+				return 'Domenica';
+				break;
+			case 1:
+				return 'Lunedi\'';
+				break;
+			case 2:
+				return 'Martedi\'';
+				break;
+			case 3:
+				return 'Mercoledi\'';
+				break;
+			case 4:
+				return 'Giovedi\'';
+				break;
+			case 5:
+				return 'Venerdi\'';
+				break;
+			case 6:
+				return 'Sabato';
+				break;
+		}
+	}
 
 
 	public function dayThisMonth() {
