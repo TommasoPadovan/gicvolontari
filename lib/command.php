@@ -1,7 +1,8 @@
 <?php
 require_once("permission.php");
 require_once("exceptions.php");
-session_start();
+if (session_status() == PHP_SESSION_NONE)
+	session_start();
 
 abstract class Command extends PermissionPage {
 

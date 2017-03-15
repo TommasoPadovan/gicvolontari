@@ -7,9 +7,6 @@
  */
 
 //se uno cerca di accedere direttamente turni senza specificare mettiamo per primo il mese attuale
-if (!isset($_GET['Mese']))
-    header("Location: turns.php?Mese=".date("Y-m"));
-
 
 require_once('../lib/generalLayout.php');
 require_once('../lib/sqlLib.php');
@@ -22,12 +19,17 @@ $db = new DbConnection();
 function content(DbConnection $db) {
     $currentMonth = date("Y-m");
 
-    $maxMonth = getMaxMonth($db);
-    if (isset($_GET['Mese'])) {
+    if ( count($db->select('calendar')) != 0 )
+        $maxMonth = getMaxMonth($db);
+    else
+        $maxMonth=$currentMonth;
+
+    if (isset($_GET['Mese']))
         $shownMonth = $_GET['Mese'];
-        $monthObj = Month::getMonthFromInternational($_GET['Mese']);
-    } else
-        $shownMonth ='';
+    else
+        $shownMonth = date("Y-m");
+
+    $monthObj = Month::getMonthFromInternational($currentMonth);
 
     $aux=adminAddMonthButton();
     $aux.=adminCsvExportButton($shownMonth);
@@ -42,7 +44,7 @@ function content(DbConnection $db) {
 			<button type="submit" value="Vai al Mese" class="btn btn-default col-sm-1">Submit</button>
 		</div>
 	</form>
-	<h2>{$monthObj->getMonthName()} {$monthObj->getYear()}</h2>"
+	<h2>{$monthObj->getMonthName()} {$monthObj->getYear()}</h2>
 EOF;
     if (isset($_GET['Mese']))
         $aux .= generateTable($monthObj, $db);
@@ -82,14 +84,16 @@ function adminCsvExportButton($shownMonth) {
  * @return string
  */
 function generateTable(Month $month, DbConnection $db) {
-    $monthString='';
-    $monthString.="
-        <div id=\"month{$month->getMonth()}-{$month->getYear()}\">
-            <hr />
-            " . monthTable($month, $db) . "
-            <hr />
-        </div>
-    ";
+    if (count($db->select('calendar', ['year' => $month->getYear(), 'month' => $month->getMonth()])) != 0)
+        $monthString="
+            <div id=\"month{$month->getMonth()}-{$month->getYear()}\">
+                <hr />
+                " . monthTable($month, $db) . "
+                <hr />
+            </div>
+        ";
+    else
+        $monthString="{$month->getMonthName()} {$month->getYear()} non è abilitato per le iscrizioni ai turni serali";
 
     if ($month->isInFuture()) {
         return $monthString;

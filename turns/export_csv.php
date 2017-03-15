@@ -7,6 +7,7 @@
  */
 require_once('../lib/datetime/month.php');
 require_once('../lib/sqlLib.php');
+require_once('../lib/command.php');
 
 
 class ExportCsvTurnsCommand extends Command {
