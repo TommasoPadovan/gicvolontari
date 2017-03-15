@@ -32,7 +32,6 @@ class DbConnection {
 			$query.= "$columnName = :$columnName AND ";
 		$query = substr($query, 0, -5);
 
-		echo $query;
 
 		$statement = $this->pdo->prepare($query);
 

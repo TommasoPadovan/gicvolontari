@@ -1,19 +1,25 @@
 <?php
-session_start();
+/**
+ * Created by IntelliJ IDEA.
+ * User: kurt
+ * Date: 15/03/2017
+ * Time: 17:55
+ */
+
 require_once('../lib/sqlLib.php');
 require_once('../lib/permissionsMng.php');
-require_once('../lib/command.php');
+require_once('../lib/personalCommand.php');
 
-class InsertNewUserCommand extends Command {
+class UserModifyOwnProfileCommand extends PersonalCommand {
 
-    public function __construct($permission) {
-        parent::__construct($permission);
+    public function __construct($permission, $id){
+        parent::__construct($permission, $id);
     }
 
     protected function template() {
         $db = new DbConnection();
 
-        $id = $_POST['id'];
+        $id = $this->onlyAuthorizedId;
 
         $firstname = $_POST['Nome'];
         $lastname = $_POST['Cognome'];
@@ -27,8 +33,6 @@ class InsertNewUserCommand extends Command {
         $Provincia = $_POST['Provincia'];
         $CAP = $_POST['CAP'];
         $Stato = $_POST['Stato'];
-        $position = $_POST['Posizione'];
-        $permessi = $_POST['Permessi'];
 
         $db->update(
             'users',
@@ -44,25 +48,18 @@ class InsertNewUserCommand extends Command {
                 'city'		=> $Citta,
                 'prov'		=> $Provincia,
                 'cap'		=> $CAP,
-                'state'		=> $Stato,
-                'position'	=> $position,
-                'permessi'	=> $permessi
+                'state'		=> $Stato
             ),
             array('id'  =>  $id)
         );
 
-        header("Location: volunteers.php");
+        header("Location: ../home.php");
     }
 }
 
 try {
-    (new InsertNewUserCommand(PermissionPage::ADMIN))->execute();
+    (new UserModifyOwnProfileCommand(PermissionPage::MORNING, $_SESSION['id']))->execute();
 }
 catch (UnhautorizedException $e){
     $e->echoAlert();
 }
-
-
-
-
-

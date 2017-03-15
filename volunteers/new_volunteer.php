@@ -16,8 +16,10 @@ class EditUserCommand extends Command {
 		$firstname = $_POST['Nome'];
 		$lastname = $_POST['Cognome'];
 		$email = $_POST['Email'];
-		$psw = md5( $_POST['Password'] );
+		$psw = md5( "cammello" );
+		$CodiceFiscale = $_POST['CodiceFiscale'];
 		$NumeroTelefono = $_POST['NumeroTelefono'];
+		$DataDiNascita = $_POST['DataDiNascita'];
 		$Idirizzo = $_POST['Idirizzo'];
 		$Indirizzo2 = $_POST['Indirizzo2'];
 		$Citta = $_POST['Citta'];
@@ -33,6 +35,8 @@ class EditUserCommand extends Command {
 			'firstname'	=> $firstname,
 			'lastname'	=> $lastname,
 			'email'		=> $email,
+			'CF'		=> $CodiceFiscale,
+			'birthdate' => $DataDiNascita,
 			'psw'		=> $psw,
 			'phone'		=> $NumeroTelefono,
 			'address'	=> $Idirizzo,

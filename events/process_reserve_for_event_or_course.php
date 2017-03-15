@@ -34,7 +34,7 @@ class ReserveForEventOrCourseCommand extends Command {
 }
 
 try {
-    (new ReserveForEventOrCourseCommand(PermissionPage::AFTERNOON))->execute();
+    (new ReserveForEventOrCourseCommand(PermissionPage::MORNING))->execute();
 }
 catch (UnhautorizedException $e) {
     $e->echoAlert();

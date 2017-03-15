@@ -21,7 +21,3 @@ abstract class Command extends PermissionPage {
 	}
 
 }
-
-
-
-?>

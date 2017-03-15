@@ -9,7 +9,7 @@ $welcome='';
 
 if ( isset( $_SESSION['id'] ) ) {
 	foreach ( $db->select('users', array('id' => $_SESSION['id'])) as $row) {
-		$welcome = "Ciao {$row['lastname']}";
+		$welcome = "Ciao {$row['firstname']} {$row['lastname']}";
 	}
 	$content =  <<<HTML
 <h1>Home</h1>
@@ -18,9 +18,14 @@ if ( isset( $_SESSION['id'] ) ) {
 	$welcome
 </div>
 <hr />
-<form action='process_logout.php' method="POST">
-	<button type="submit" class="btn btn-default" name="logout" value="logout">Logout</button>
-</form>
+<div>
+	<form action='process_logout.php' method="POST">
+		<button type="submit" class="btn btn-default" name="logout" value="logout">Logout</button>
+	</form>
+</div><div>
+	<a class="btn btn-default" href="volunteers/user_edit_own_profile.php">Modifica il tuo profilo</a>
+	<a class="btn btn-default" href="volunteers/user_edit_own_psw.php">Modifica la tua password</a>
+</div>
 HTML;
 
 } else {

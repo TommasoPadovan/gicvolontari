@@ -20,7 +20,15 @@ TAG
 
 		}
 		catch (UnhautorizedException $e) {
-			echo 'I cant believe how mush Unauthorized you are';
+			echo 'I cant believe how much Unauthorized you are';
 		}
+	}
+}
+
+
+
+class AttemptToModifySomeoneElseDataOnPersonalCommandException extends Exception {
+	public function echoAlert() {
+		echo "Stai cercando di accedere ad una parte di tabella per cui non hai i permessi, ACCESS DENIED";
 	}
 }

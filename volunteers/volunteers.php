@@ -72,6 +72,9 @@ $content = <<<HTML
 <a class="btn btn-block btn-default" onclick="toggle_visibility('newVolunteerForm')">Nuovo Volontario</a>
 
 <form action='new_volunteer.php' method="POST">
+
+	<input type="hidden" name="psw" value="cammello">
+
 	<div id="newVolunteerForm" style="display: none">
 		<div class="row">
 			<div class="form-group col-sm-3">
