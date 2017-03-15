@@ -18,9 +18,6 @@ class EditEventCommand extends Command {
 
     protected function template() {
 
-        var_dump($_POST);
-        exit;
-
         $db = new DbConnection();
 
         if ( isset($_POST['type']) )$type = $_POST['type'];
