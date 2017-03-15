@@ -8,8 +8,13 @@ require_once('../lib/command.php');
 
 class UserAddTurnCommand extends Command {
 
+	private $lastPage;
+
 	public function __construct($permission){
 		parent::__construct($permission);
+		if (isset($_SERVER['HTTP_REFERER']))
+            $this->lastPage = $_SERVER['HTTP_REFERER'];
+        else $this->lastPage = 'turns.php';
 	}
 
 	protected function template(){
@@ -86,7 +91,7 @@ class UserAddTurnCommand extends Command {
 
 
 	private function abortMission() {
-		header("Location: turns.php?Mese={$_GET['year']}-{$_GET['month']}");
+		header("Location: {$this->lastPage}");
 	}
 
 }

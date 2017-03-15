@@ -10,8 +10,13 @@ require_once('../lib/sqlLib.php');
 
 class AdminReserveUserForEventOrCourseCommand extends Command {
 
+    private $lastPage;
+
     public function __construct($permission) {
         parent::__construct($permission);
+        if (isset($_SERVER['HTTP_REFERER']))
+            $this->lastPage = $_SERVER['HTTP_REFERER'];
+        else $this->lastPage = 'eventsandcourses.php';
     }
 
     protected function template(){
@@ -24,7 +29,7 @@ class AdminReserveUserForEventOrCourseCommand extends Command {
             'volunteer' => $user
         ]);
 
-        header('Location: eventsandcourses.php');
+        header('Location: '.$this->lastPage);
     }
 }
 

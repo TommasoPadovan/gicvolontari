@@ -63,7 +63,6 @@ class EditEventCommand extends Command {
         ];
 
         if ($_POST['id'] == null) {     //sto creando un evento nuovo
-            echo ("into the then");
             $db->insert('events', $newDataArray);           //inserisco l'evento
             $db->deleteRows('turni', ['day' => $dayId]);    //rimuovo eventuali prenotazioni
             foreach (['fiabe', 'oasi', 'clown'] as $task)

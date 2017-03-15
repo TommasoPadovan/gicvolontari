@@ -8,8 +8,13 @@ require_once('../lib/command.php');
 
 class DeleteReservationCommand extends Command {
 
+	private $lastPage;
+
 	public function __construct($permission) {
 		parent::__construct($permission);
+		if (isset($_SERVER['HTTP_REFERER']))
+            $this->lastPage = $_SERVER['HTTP_REFERER'];
+        else $this->lastPage = 'turns.php';
 	}
 
 	protected function template() {
@@ -32,7 +37,7 @@ class DeleteReservationCommand extends Command {
 
 		}
 
-		header("Location: turns.php");
+		header("Location: {$this->lastPage}");
 	}
 }
 

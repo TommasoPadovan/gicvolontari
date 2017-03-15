@@ -4,8 +4,13 @@ require_once('../lib/sqlLib.php');
 
 class DeleteMonthCommand extends Command {
 
+    private $lastPage;
+
     public function __construct($permission) {
         parent::__construct($permission);
+        if (isset($_SERVER['HTTP_REFERER']))
+            $this->lastPage = $_SERVER['HTTP_REFERER'];
+        else $this->lastPage = 'turns.php';
     }
 
     protected function template() {
@@ -19,7 +24,7 @@ class DeleteMonthCommand extends Command {
             'month' =>  $month
         ));
 
-        header("Location: events.php?Mese=$year-$month");
+        header("Location: {$this->lastPage}");
     }
 }
 

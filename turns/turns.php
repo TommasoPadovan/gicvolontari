@@ -29,7 +29,10 @@ function content(DbConnection $db) {
     else
         $shownMonth = date("Y-m");
 
-    $monthObj = Month::getMonthFromInternational($currentMonth);
+    $nextMonthButton = nextMonthButton($shownMonth, $maxMonth);
+    $prevMonthButton = prevMonthButton($shownMonth, $currentMonth);
+
+    $monthObj = Month::getMonthFromInternational($shownMonth);
 
     $aux=adminAddMonthButton();
     $aux.=adminCsvExportButton($shownMonth);
@@ -41,16 +44,51 @@ function content(DbConnection $db) {
 			<div class="form-group col-sm-2">
 				<input class="form-control" value="$shownMonth" type="month" name="Mese" min="$currentMonth" max="$maxMonth">
 			</div>
-			<button type="submit" value="Vai al Mese" class="btn btn-default col-sm-1">Submit</button>
+			<button type="submit" value="Vai al Mese" class="btn btn-default col-sm-1">Submit</button> $prevMonthButton $nextMonthButton
 		</div>
 	</form>
 	<h2>{$monthObj->getMonthName()} {$monthObj->getYear()}</h2>
 EOF;
-    if (isset($_GET['Mese']))
+    if (isset($shownMonth))
         $aux .= generateTable($monthObj, $db);
     else
         $aux.= "Seleziona un mese";
     return $aux;
+}
+
+
+function nextMonthButton($shownMonth, $maxMonth) {
+    $shownMonth = explode('-', $shownMonth);
+    $maxMonth = explode('-', $maxMonth);
+
+    $shownMonth[1]++;
+    if ($shownMonth[1]>12) {
+        $shownMonth[1] = 1;
+        $shownMonth[0]++;
+    }
+    if ($shownMonth[0]<=$maxMonth[0] && $shownMonth[1]<=$maxMonth[1]) {
+        $targetMonth = $shownMonth[0].'-'.str_pad($shownMonth[1], 2, '0', STR_PAD_LEFT);
+
+        return "<div class='col-sm-1'><a href='turns.php?Mese=$targetMonth' class='btn btn-default'>Prossimo</a></div>";
+    }
+    return "<div class='col-sm-1'><a class='btn btn-default disabled'>Prossimo</a></div>";
+}
+
+function prevMonthButton($shownMonth, $currentMonth) {
+    $shownMonth = explode('-', $shownMonth);
+    $currentMonth = explode('-', $currentMonth);
+
+    $shownMonth[1]--;
+    if ($shownMonth[1]<1) {
+        $shownMonth[1] = 12;
+        $shownMonth[0]--;
+    }
+    if ($shownMonth[0]>=$currentMonth[0] && $shownMonth[1]>=$currentMonth[1]) {
+        $targetMonth = $shownMonth[0].'-'.str_pad($shownMonth[1], 2, '0', STR_PAD_LEFT);
+
+        return "<div class='col-sm-1'><a href='turns.php?Mese=$targetMonth' class='btn btn-default'>Precedente</a></div>";
+    }
+    return "<div class='col-sm-1'><a class='btn btn-default disabled'>Precedente</a></div>";
 }
 
 

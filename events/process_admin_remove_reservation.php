@@ -12,8 +12,13 @@ require_once('../lib/sqlLib.php');
 
 class AdminRemoveReservationCommand extends Command {
 
+    private $lastPage;
+
     public function __construct($permission) {
         parent::__construct($permission);
+         if (isset($_SERVER['HTTP_REFERER']))
+            $this->lastPage = $_SERVER['HTTP_REFERER'];
+        else $this->lastPage = 'eventsandcourses.php';
     }
 
     protected function template() {
@@ -24,7 +29,7 @@ class AdminRemoveReservationCommand extends Command {
             'volunteer' => $_GET['volunteer']
         ]);
 
-        header("Location: eventsandcourses.php");
+        header("Location: ".$this->lastPage);
     }
 }
 

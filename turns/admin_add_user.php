@@ -11,8 +11,13 @@ require_once('../lib/datetime/month.php');
 
 class AddTurn extends Command {
 
+    private $lastPage;
+
     public function __construct($permission) {
         parent::__construct($permission);
+        if (isset($_SERVER['HTTP_REFERER']))
+            $this->lastPage = $_SERVER['HTTP_REFERER'];
+        else $this->lastPage = 'turns.php';
     }
 
     protected function template() {
@@ -87,7 +92,7 @@ class AddTurn extends Command {
 
 
     private function abortMission() {
-        header("Location: turns.php");
+        header("Location: {$this->lastPage}");
     }
 }
 
