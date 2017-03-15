@@ -90,7 +90,7 @@ foreach ($allVolunteerTurnsDetail as $row) {
  * /////////////////////////////////////
  */
 $meetingsEventsDetail = $db->prepare(<<<QUERY
-SELECT e.date AS date, e.type AS type, e.title AS title, e.location AS location, e.description AS description
+SELECT e.id AS id, e.date AS date, e.type AS type, e.title AS title, e.location AS location, e.description AS description
 FROM events AS e JOIN eventsattendants AS ea ON (e.id = ea.event)
 WHERE ea.volunteer = :id
 ORDER BY e.date
@@ -107,7 +107,7 @@ foreach ($meetingsEventsDetail as $row) {
             <tr>
                 <td>{$data[2]} {$monthObj->getMonthName()} {$monthObj->getYear()}</td>
                 <td>{$row['type']}</td>
-                <td>{$row['title']}</td>
+                <td><a href=\"../events/eventDescriptionPage.php?id={$row['id']}\">{$row['title']}</a></td>
                 <td>{$row['location']}</td>
                 <td>{$row['description']}</td>
             </tr>
@@ -125,7 +125,6 @@ $content = <<<HTML
 <a class="pull-right" href="print_volunteer_detail.php?id={$_GET['id']}&year={$_GET['year']}"><img src="../img/print.png" width="30" height="30"></a>
 <h1>Dettagli di {$user['firstname']} {$user['lastname']}</h1>
 
-<h2>Riassunto presenze ai turni serali</h2>
 <form method="GET" action="volunteer_detail.php">
     <input type="hidden" name="id" value="{$_GET['id']}">
     <div class="form-group row">
@@ -137,6 +136,8 @@ $content = <<<HTML
         <input class="btn btn-default col-sm-2" type="submit" value="Filtra per anno">
     </div>
 </form>
+
+<h2>Riassunto presenze ai turni serali</h2>
 
 <div class="table-responsive">
 	<table class="table table-striped table-bordered table-condensed">

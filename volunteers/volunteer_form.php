@@ -116,6 +116,7 @@ $content = <<< HTML
 			</div>
 		</div>
 		<button type="submit" class="btn btn-default">Submit</button>
+		<a href="volunteers.php" class="btn btn-default">Indietro</a>
 
 	</div>
 </form>

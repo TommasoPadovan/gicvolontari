@@ -95,14 +95,38 @@ $content = <<<HTML
 				<label for="requirements">Requisiti</label>
 				<textarea class="form-control" id="requirements" placeholder="Requisiti" name="requirements" rows="10">$requirements</textarea>
 			</div>
-           <button type="submit" class="btn btn-default">Submit</button>
-           <a href="eventsandcourses.php" class="btn btn-default">Indietro</a>
-		</div><div class="row">
-		    <div class="col-sm-6">
-		        <label for="whoPartecipate">Chi può partecipare?</label>
-		        
+		</div>
+
+		<div class="row">
+		    <div class="col-sm-6 from-group">
+		        <label for="who">Chi può partecipare?</label>
+		        <div class="checkbox">
+                    <label><input type="checkbox" name="who[]" checked="checked" value="sera1">Sera 1</label>
+                </div>
+                <div class="checkbox">
+                    <label><input type="checkbox" name="who[]" checked="checked" value="sera2">Sera 2</label>
+                </div>
+                <div class="checkbox">
+                    <label><input type="checkbox" name="who[]" checked="checked" value="sera3">Sera 3</label>
+                </div>
+                <div class="checkbox">
+                    <label><input type="checkbox" name="who[]" checked="checked" value="pomeriggio1">Pomeriggio 1</label>
+                </div>
+                <div class="checkbox">
+                    <label><input type="checkbox" name="who[]" checked="checked" value="pomeriggio2">Pomeriggio 2</label>
+                </div>
+                <div class="checkbox">
+                    <label><input type="checkbox" name="who[]" checked="checked" value="mattina1">Mattina 1</label>
+                </div>
+                <div class="checkbox">
+                    <label><input type="checkbox" name="who[]" checked="checked" value="mattina2">Mattina 2</label>
+                </div>
+
             </div>
         </div>
+
+		<button type="submit" class="btn btn-default">Submit</button>
+        <a href="eventsandcourses.php" class="btn btn-default">Indietro</a>
 	</form>
 HTML;
 

@@ -39,10 +39,6 @@ class EventDetail {
         $timeStart = (new Time($this->event['timeStart']))->getSimpleTime();
         $timeEnd = (new Time($this->event['timeEnd']))->getSimpleTime();
         $location = $this->event['location'];
-        $description = $this->event['description'];
-        $requirements = $this->event['requirements'];
-        $minAttendants = $this->event['minAttendants'];
-        $maxAttendants = $this->event['maxAttendants'];
 
         $adminEditButton = (new PermissionString([
             PermissionPage::ADMIN => "<a class='pull-right' href='add_event.php?id={$this->event['id']}'><img src='../img/pencil.png' alt='modifica' height='15' width='15'></a> "
