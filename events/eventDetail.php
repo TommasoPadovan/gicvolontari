@@ -191,8 +191,14 @@ FORM
                 <ol>
                     $liAttendants
                 </ol>
-                <a href="process_reserve_for_event_or_course.php?event={$this->event['id']}" class="btn btn-default">Iscriviti all'evento!</a>
-                $adminReserveUserForm
+                <div class="row">
+                    <div class="col-sm-6">
+                        <a href="process_reserve_for_event_or_course.php?event={$this->event['id']}" class="btn btn-default btn-block">Iscriviti all'evento!</a>
+                    </div>
+                </div>
+                <div class="row">
+                    $adminReserveUserForm
+                </div>
 RESDIV;
     }
 

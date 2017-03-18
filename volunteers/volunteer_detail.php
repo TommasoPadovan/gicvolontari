@@ -122,18 +122,20 @@ for($i=date("Y"); $i>1990; $i--)
 
 
 $content = <<<HTML
-<a class="pull-right" href="print_volunteer_detail.php?id={$_GET['id']}&year={$_GET['year']}"><img src="../img/print.png" width="30" height="30"></a>
+<a class="pull-right" href="print_volunteer_detail.php?id={$_GET['id']}&year={$_GET['year']}"><img src="../img/print.png" width="30" height="30" alt="stampa dettagli volontario"></a>
 <h1>Dettagli di {$user['firstname']} {$user['lastname']}</h1>
 
 <form method="GET" action="volunteer_detail.php">
     <input type="hidden" name="id" value="{$_GET['id']}">
     <div class="form-group row">
-		<div class="select col-sm-2">
+		<div class="select col-sm-2 col-xs-6">
             <select class="form-control" name="year">
                 $yearOptions
             </select>
         </div>
-        <input class="btn btn-default col-sm-2" type="submit" value="Filtra per anno">
+        <div class="col-sm-2 col-xs-6">
+            <input class="btn btn-default btn-block" type="submit" value="Filtra per anno">
+        </div>
     </div>
 </form>
 

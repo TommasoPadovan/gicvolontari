@@ -101,7 +101,7 @@ $content = <<<HTML
 			</div>
 			<div class="form-group col-sm-4">
 				<label for="DataDiNascita">Data Di Nascita</label>
-				<input type="date" class="form-control" id="DataDiNascita" placeholder="Data Di Nascita" name="DataDiNascita">
+				<input type="date" class="form-control" id="DataDiNascita" name="DataDiNascita">
 			</div>
 		</div>
 		<div class="row">
