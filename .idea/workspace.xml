@@ -5,10 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c70546f0-d070-4f10-b6a5-303fa8dc1774" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/events/eventDetail.php" afterPath="$PROJECT_DIR$/events/eventDetail.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/volunteers/volunteer_detail.php" afterPath="$PROJECT_DIR$/volunteers/volunteer_detail.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/volunteers/volunteers.php" afterPath="$PROJECT_DIR$/volunteers/volunteers.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sql/createdb.php" afterPath="$PROJECT_DIR$/sql/createdb.php" />
     </list>
     <ignored path="sitoLilt.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -75,10 +72,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="volunteers.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="volunteers.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/volunteers/volunteers.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.23824131">
+            <state vertical-scroll-proportion="-8.961538">
               <caret line="103" column="74" selection-start-line="103" selection-start-column="74" selection-end-line="103" selection-end-column="74" />
               <folding>
                 <marker date="1489840729980" expanded="true" signature="1929:5144" placeholder="..." />
@@ -110,6 +107,25 @@
                 <marker date="1489840729980" expanded="true" signature="5368:5559" placeholder="..." />
                 <marker date="1489840729980" expanded="true" signature="5376:5548" placeholder="..." />
                 <marker date="1489840729980" expanded="true" signature="5569:5595" placeholder="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="createdb.php" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/sql/createdb.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.34867075">
+              <caret line="45" column="46" selection-start-line="45" selection-start-column="46" selection-end-line="45" selection-end-column="46" />
+              <folding>
+                <marker date="1489841414631" expanded="true" signature="348:712" placeholder="create table... users" />
+                <marker date="1489841414631" expanded="true" signature="767:949" placeholder="INSERT INTO `liltvolontari`.`users`... " />
+                <marker date="1489841414631" expanded="true" signature="997:1158" placeholder="INSERT INTO `liltvolontari`.`users`... " />
+                <marker date="1489841414631" expanded="true" signature="1226:1284" placeholder="UPDATE `lilt... " />
+                <marker date="1489841414631" expanded="true" signature="1369:1581" placeholder="create table... calendar" />
+                <marker date="1489841414631" expanded="true" signature="1638:2004" placeholder="create table... turni" />
+                <marker date="1489841414631" expanded="true" signature="2060:2380" placeholder="create table... events" />
+                <marker date="1489841414631" expanded="true" signature="2430:2742" placeholder="CREATE TABLE... eventsattendants" />
               </folding>
             </state>
           </provider>
@@ -174,11 +190,11 @@
         <option value="$PROJECT_DIR$/lib/generalLayout.php" />
         <option value="$PROJECT_DIR$/process_logout.php" />
         <option value="$PROJECT_DIR$/home.php" />
-        <option value="$PROJECT_DIR$/sql/createdb.php" />
         <option value="$PROJECT_DIR$/turns/turns.php" />
         <option value="$PROJECT_DIR$/events/eventDetail.php" />
         <option value="$PROJECT_DIR$/volunteers/volunteer_detail.php" />
         <option value="$PROJECT_DIR$/volunteers/volunteers.php" />
+        <option value="$PROJECT_DIR$/sql/createdb.php" />
       </list>
     </option>
   </component>
@@ -975,12 +991,12 @@
       <workItem from="1489588533128" duration="11144000" />
       <workItem from="1489680787414" duration="158000" />
       <workItem from="1489791853718" duration="7616000" />
-      <workItem from="1489828688321" duration="8323000" />
+      <workItem from="1489828688321" duration="8968000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="133971000" />
+    <option name="totallyTimeSpent" value="134616000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1920" height="1080" extended-state="6" />
@@ -1451,20 +1467,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/sql/createdb.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.49591002">
-          <caret line="82" column="26" selection-start-line="82" selection-start-column="26" selection-end-line="82" selection-end-column="26" />
-          <folding>
-            <marker date="1489839353018" expanded="true" signature="348:712" placeholder="create table... users" />
-            <marker date="1489839353018" expanded="true" signature="1235:1447" placeholder="create table... calendar" />
-            <marker date="1489839353018" expanded="true" signature="1504:1870" placeholder="create table... turni" />
-            <marker date="1489839353018" expanded="true" signature="1926:2246" placeholder="create table... events" />
-            <marker date="1489839353018" expanded="true" signature="2296:2608" placeholder="CREATE TABLE... eventsattendants" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/sql/createTables.sql">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-0.03480041">
@@ -1589,7 +1591,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/volunteers/volunteers.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.23824131">
+        <state vertical-scroll-proportion="-8.961538">
           <caret line="103" column="74" selection-start-line="103" selection-start-column="74" selection-end-line="103" selection-end-column="74" />
           <folding>
             <marker date="1489840729980" expanded="true" signature="1929:5144" placeholder="..." />
@@ -1621,6 +1623,23 @@
             <marker date="1489840729980" expanded="true" signature="5368:5559" placeholder="..." />
             <marker date="1489840729980" expanded="true" signature="5376:5548" placeholder="..." />
             <marker date="1489840729980" expanded="true" signature="5569:5595" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sql/createdb.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.34867075">
+          <caret line="45" column="46" selection-start-line="45" selection-start-column="46" selection-end-line="45" selection-end-column="46" />
+          <folding>
+            <marker date="1489841414631" expanded="true" signature="348:712" placeholder="create table... users" />
+            <marker date="1489841414631" expanded="true" signature="767:949" placeholder="INSERT INTO `liltvolontari`.`users`... " />
+            <marker date="1489841414631" expanded="true" signature="997:1158" placeholder="INSERT INTO `liltvolontari`.`users`... " />
+            <marker date="1489841414631" expanded="true" signature="1226:1284" placeholder="UPDATE `lilt... " />
+            <marker date="1489841414631" expanded="true" signature="1369:1581" placeholder="create table... calendar" />
+            <marker date="1489841414631" expanded="true" signature="1638:2004" placeholder="create table... turni" />
+            <marker date="1489841414631" expanded="true" signature="2060:2380" placeholder="create table... events" />
+            <marker date="1489841414631" expanded="true" signature="2430:2742" placeholder="CREATE TABLE... eventsattendants" />
           </folding>
         </state>
       </provider>
