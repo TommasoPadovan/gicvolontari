@@ -109,11 +109,11 @@ $content = <<<HTML
 				<label for="Idirizzo">Idirizzo</label>
 				<input type="text" class="form-control" id="Idirizzo" placeholder="Idirizzo" name="Idirizzo">
 			</div>
-			<div class="form-group col-sm-3">
+			<div class="form-group col-sm-3 col-xs-8">
 				<label for="Citta">Città</label>
 				<input type="text" class="form-control" id="Citta" placeholder="Città" name="Citta">
 			</div>
-			<div class="form-group col-sm-1">
+			<div class="form-group col-sm-1 col-xs-4">
 				<label for="Provincia">Provincia</label>
 				<input type="text" class="form-control" id="Provincia" placeholder="Prov" name="Provincia">
 			</div>
@@ -123,27 +123,27 @@ $content = <<<HTML
 				<label for="Indirizzo2">Indirizzo (riga 2)</label>
 				<input type="text" class="form-control" id="Indirizzo2" placeholder="Indirizzo (riga 2)" name="Indirizzo2">
 			</div>
-			<div class="form-group col-sm-2">
+			<div class="form-group col-sm-2 col-xs-4">
 				<label for="CAP">CAP</label>
 				<input type="text" class="form-control" id="CAP" placeholder="CAP" name="CAP">
 			</div>
-			<div class="form-group col-sm-2">
+			<div class="form-group col-sm-2 col-xs-8">
 				<label for="Stato">Stato</label>
 				<input type="text" class="form-control" id="Stato" placeholder="Stato" name="Stato">
 			</div>
 		</div>
 		<div class="row">
-			<div class="form-group col-sm-2">
+			<div class="form-group col-sm-2 col-xs-8">
 				<label for="Permessi">Permessi</label>
 				<select class="form-control" name="Permessi">
-					<option value="1">Amministratore</option>
-					<option value="2">Sera</option>
-					<option value="3">Pomeriggio</option>
 					<option value="4">Mattina</option>
+					<option value="3">Pomeriggio</option>
+					<option value="2">Sera</option>
+					<option value="1">Amministratore</option>
 				</select>
 			</div>
 
-			<div class="form-group col-sm-1">
+			<div class="form-group col-sm-1 col-xs-4">
 			<label for="Posizione">Posizione</label>
 				<select class="form-control" name="Posizione">
 					<option value="1">1</option>

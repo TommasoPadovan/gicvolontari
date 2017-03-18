@@ -13,6 +13,8 @@ class Logout extends Command {
 		if ( isset($_POST['logout']) ) {
 			unset($_SESSION['id']);
 			unset($_SESSION['permessi']);
+			unset($_SESSION['name']);
+			unset($_SESSION);
 		}
 		header("Location: home.php");
 	}

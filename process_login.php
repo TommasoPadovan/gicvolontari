@@ -21,6 +21,7 @@ class Login extends Command {
 					if ($row['psw'] == md5($_POST['Password'])) {
 						$_SESSION['id'] = $row['id'];
 						$_SESSION['permessi'] = $row['permessi'];
+						$_SESSION['name'] = $row['firstname'] . ' ' . $row['lastname'];
 					} else {
 						echo "<script>>alert(\"Password errata\")</script>";
 					}
@@ -42,7 +43,3 @@ try {
 catch (UnhautorizedException $e) {
 	$e->echoAlert();
 }
-
-
-
-?>

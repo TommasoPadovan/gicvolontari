@@ -15,16 +15,25 @@ if ( isset( $_SESSION['id'] ) ) {
 <h1>Home</h1>
 <hr />
 <div>
-	$welcome
+	<p>$welcome</p>
 </div>
 <hr />
-<div>
-	<form action='process_logout.php' method="POST">
-		<button type="submit" class="btn btn-default" name="logout" value="logout">Logout</button>
-	</form>
-</div><div>
-	<a class="btn btn-default" href="volunteers/user_edit_own_profile.php">Modifica il tuo profilo</a>
-	<a class="btn btn-default" href="volunteers/user_edit_own_psw.php">Modifica la tua password</a>
+<div class="row">
+	<div class="col-sm-3">
+		<form action='process_logout.php' method="POST">
+			<button type="submit" class="btn btn-default btn-block" name="logout" value="logout">Logout</button>
+		</form>
+	</div>
+</div>
+<div class="row">
+	<div class="col-sm-3">
+		<a class="btn btn-default btn-block" href="volunteers/user_edit_own_profile.php">Modifica il tuo profilo</a>
+	</div>
+</div>
+<div class="row">
+	<div class="col-sm-3">
+		<a class="btn btn-default btn-block" href="volunteers/user_edit_own_psw.php">Modifica la tua password</a>
+	</div>
 </div>
 HTML;
 

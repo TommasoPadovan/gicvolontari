@@ -33,7 +33,6 @@ class GeneralLayout extends PermissionPage {
 			'content' => ''
 		);
 
-
 	}
 
 	
@@ -100,6 +99,10 @@ HTML;
 //				</ul>
 //			</div>
 //END;
+
+		if (isset($_SESSION['name'])) $userName = $_SESSION['name'];
+		else $userName = 'Profilo';
+
 		return <<<HTML
   <div class="container-fluid">
     <div class="navbar-header">
@@ -115,7 +118,7 @@ HTML;
         $li
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="{$homePath}home.php"><span class="glyphicon glyphicon-user"></span> Profilo</a></li>
+        <li><a href="{$homePath}home.php"><span class="glyphicon glyphicon-user"></span> $userName</a></li>
       </ul>
     </div>
   </div>

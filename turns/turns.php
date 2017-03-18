@@ -44,12 +44,22 @@ function content(DbConnection $db) {
 			<div class="form-group col-sm-3 col-xs-12">
 				<input class="form-control" value="$shownMonth" type="month" name="Mese" min="$currentMonth" max="$maxMonth">
 			</div>
-            <button type="submit" value="Vai al Mese" class="btn btn-default col-sm-2 col-xs-12">Vai al Mese</button>
-            $prevMonthButton
-            $nextMonthButton
+			<div class="col-sm-2 col-xs-12">
+                <button type="submit" value="Vai al Mese" class="btn btn-default btn-block">Vai al Mese</button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-1 col-xs-3">
+                $prevMonthButton
+            </div>
+            <div class="col-sm-3 col-xs-6 text-center">
+	            <h2>{$monthObj->getMonthName()} {$monthObj->getYear()}</h2>
+	        </div>
+            <div class="col-sm-1 col-xs-3">
+                $nextMonthButton
+            </div>
 		</div>
 	</form>
-	<h2>{$monthObj->getMonthName()} {$monthObj->getYear()}</h2>
 EOF;
     if (isset($shownMonth))
         $aux .= generateTable($monthObj, $db);
@@ -71,9 +81,9 @@ function nextMonthButton($shownMonth, $maxMonth) {
     if ($shownMonth[0]<=$maxMonth[0] && $shownMonth[1]<=$maxMonth[1]) {
         $targetMonth = $shownMonth[0].'-'.str_pad($shownMonth[1], 2, '0', STR_PAD_LEFT);
 
-        return "<a href='turns.php?Mese=$targetMonth' class='btn btn-default col-sm-2 col-xs-6'>Prossimo</a>";
+        return "<a href='turns.php?Mese=$targetMonth' class='btn btn-default btn-block'><img src=\"../img/rArrow.png\" width='30em' height='50em' alt='vai al mese successivo'></a>";
     }
-    return "<a class='btn btn-default disabled col-sm-2 col-xs-6'>Prossimo</a>";
+    return "<a class='btn btn-default disabled btn-block'><img src=\"../img/rArrow.png\" width='30em' height='50em' alt='vai al mese successivo'></a>";
 }
 
 function prevMonthButton($shownMonth, $currentMonth) {
@@ -88,9 +98,9 @@ function prevMonthButton($shownMonth, $currentMonth) {
     if ($shownMonth[0]>=$currentMonth[0] && $shownMonth[1]>=$currentMonth[1]) {
         $targetMonth = $shownMonth[0].'-'.str_pad($shownMonth[1], 2, '0', STR_PAD_LEFT);
 
-        return "<a href='turns.php?Mese=$targetMonth' class='btn btn-default col-sm-2 col-xs-6'>Precedente</a>";
+        return "<a href='turns.php?Mese=$targetMonth' class='btn btn-default btn-block'><img src=\"../img/lArrow.png\" width='30em' height='50em' alt='vai al mese precedente'></a>";
     }
-    return "<a class='btn btn-default disabled col-sm-2 col-xs-6'>Precedente</a>";
+    return "<a class='btn btn-default disabled btn-block'><img src=\"../img/lArrow.png\" width='30em' height='50em' alt='vai al mese precedente'></a>";
 }
 
 

@@ -37,11 +37,11 @@ echo "users table created<br />";
 
 
 $db->query("
-	INSERT INTO `liltvolontari`.`Users` (`firstname`, `lastname`, `email`, `psw`, `position`, `permessi`) VALUES ('admin', 'admin', 'admin', '21232f297a57a5a743894a0e4a801fc3', '1', '1');");
-echo "added admin...<br />";
-$db->query("
-	INSERT INTO `liltvolontari`.`Users` (`firstname`, `lastname`, `email`, `psw`, `position`, `permessi`) VALUES ('riunione', 'riunione', 'riunione', '', '99', '99');");
+	INSERT INTO `liltvolontari`.`users` (`id`,`firstname`, `lastname`, `email`, `psw`, `position`, `permessi`) VALUES ('0', 'riunione', 'riunione', 'riunione', '', '99', '99');");
 echo "added 'riunione' placeholder...<br />";
+$db->query("
+	INSERT INTO `liltvolontari`.`users` (`firstname`, `lastname`, `email`, `psw`, `position`, `permessi`) VALUES ('admin', 'admin', 'admin', '21232f297a57a5a743894a0e4a801fc3', '1', '1');");
+echo "added admin...<br />";
 
 
 
