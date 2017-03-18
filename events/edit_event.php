@@ -65,31 +65,34 @@ class EditEventCommand extends Command {
 
         if ($_POST['id'] == null) {     //sto creando un evento nuovo
             $db->insert('events', $newDataArray);           //inserisco l'evento
-            $db->deleteRows('turni', ['day' => $dayId]);    //rimuovo eventuali prenotazioni
-            foreach (['fiabe', 'oasi', 'clown'] as $task)
-                for ($i = 1; $i <= $maxVolunteerNumber; $i++)
-                    $db->insert('turni', [
-                        'day' => $dayId,
-                        'task' => $task,
-                        'position' => $i,
-                        'volunteer' => 0
-                    ]);
+            if ($newDataArray['type'] == 'riunione') {
+                $db->deleteRows('turni', ['day' => $dayId]);    //rimuovo eventuali prenotazioni
+                foreach (['fiabe', 'oasi', 'clown'] as $task)
+                    for ($i = 1; $i <= $maxVolunteerNumber; $i++)
+                        $db->insert('turni', [
+                            'day' => $dayId,
+                            'task' => $task,
+                            'position' => $i,
+                            'volunteer' => 0
+                        ]);
+            }
         } else {                        //sto modificando un evento esistente
             $oldDate = $db->select('events', ['id' => $_POST['id']]);
-            $oldDateId = $oldDate[0]['id'];
 
             $db->update('events', $newDataArray, ['id' => $_POST['id']]);
 
-            $db->deleteRows('turni', ['day' => $oldDateId]);    //rimuovo eventuali prenotazioni
-            $db->deleteRows('turni', ['day' => $dayId]);        //rimuovo eventuali prenotazioni
-            foreach (['fiabe', 'oasi', 'clown'] as $task)
-                for ($i = 1; $i <= $maxVolunteerNumber; $i++)
-                    $db->insert('turni', [
-                        'day' => $dayId,
-                        'task' => $task,
-                        'position' => $i,
-                        'volunteer' => 0
-                    ]);
+            if ($newDataArray['type'] == 'riunione') {
+                $db->deleteRows('turni', ['day' => $_POST['id']]);    //rimuovo eventuali prenotazioni
+                $db->deleteRows('turni', ['day' => $dayId]);        //aggiungo eventuali prenotazioni
+                foreach (['fiabe', 'oasi', 'clown'] as $task)
+                    for ($i = 1; $i <= $maxVolunteerNumber; $i++)
+                        $db->insert('turni', [
+                            'day' => $dayId,
+                            'task' => $task,
+                            'position' => $i,
+                            'volunteer' => 0
+                        ]);
+            }
         }
 
         header("Location: eventsandcourses.php");

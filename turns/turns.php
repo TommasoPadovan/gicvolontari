@@ -41,10 +41,12 @@ function content(DbConnection $db) {
 	<p>Selezionare il mese dal calendario qui sotto per iscriversi ai turni serali</p>
 	<form action='#' method="get">
 		<div class="row">
-			<div class="form-group col-sm-2">
+			<div class="form-group col-sm-3 col-xs-12">
 				<input class="form-control" value="$shownMonth" type="month" name="Mese" min="$currentMonth" max="$maxMonth">
 			</div>
-			<button type="submit" value="Vai al Mese" class="btn btn-default col-sm-1">Submit</button> $prevMonthButton $nextMonthButton
+            <button type="submit" value="Vai al Mese" class="btn btn-default col-sm-2 col-xs-12">Vai al Mese</button>
+            $prevMonthButton
+            $nextMonthButton
 		</div>
 	</form>
 	<h2>{$monthObj->getMonthName()} {$monthObj->getYear()}</h2>
@@ -69,9 +71,9 @@ function nextMonthButton($shownMonth, $maxMonth) {
     if ($shownMonth[0]<=$maxMonth[0] && $shownMonth[1]<=$maxMonth[1]) {
         $targetMonth = $shownMonth[0].'-'.str_pad($shownMonth[1], 2, '0', STR_PAD_LEFT);
 
-        return "<div class='col-sm-1'><a href='turns.php?Mese=$targetMonth' class='btn btn-default'>Prossimo</a></div>";
+        return "<a href='turns.php?Mese=$targetMonth' class='btn btn-default col-sm-2 col-xs-6'>Prossimo</a>";
     }
-    return "<div class='col-sm-1'><a class='btn btn-default disabled'>Prossimo</a></div>";
+    return "<a class='btn btn-default disabled col-sm-2 col-xs-6'>Prossimo</a>";
 }
 
 function prevMonthButton($shownMonth, $currentMonth) {
@@ -86,9 +88,9 @@ function prevMonthButton($shownMonth, $currentMonth) {
     if ($shownMonth[0]>=$currentMonth[0] && $shownMonth[1]>=$currentMonth[1]) {
         $targetMonth = $shownMonth[0].'-'.str_pad($shownMonth[1], 2, '0', STR_PAD_LEFT);
 
-        return "<div class='col-sm-1'><a href='turns.php?Mese=$targetMonth' class='btn btn-default'>Precedente</a></div>";
+        return "<a href='turns.php?Mese=$targetMonth' class='btn btn-default col-sm-2 col-xs-6'>Precedente</a>";
     }
-    return "<div class='col-sm-1'><a class='btn btn-default disabled'>Precedente</a></div>";
+    return "<a class='btn btn-default disabled col-sm-2 col-xs-6'>Precedente</a>";
 }
 
 
@@ -224,8 +226,8 @@ function calendarContent (Month $month, $day, DbConnection $db) {
 
     if ($nVolunteer==3)
         $thirdRow = "</tr><tr>
-				<td class='fiabe'>{$dayTurns['fiabe'][3]}</td>
 				<td class='oasi'>{$dayTurns['oasi'][3]}</td>
+				<td class='fiabe'>{$dayTurns['fiabe'][3]}</td>
 				<td class='clown'>{$dayTurns['clown'][3]}</td>";
     else $thirdRow='';
 
@@ -237,19 +239,19 @@ function calendarContent (Month $month, $day, DbConnection $db) {
 	<table class="table table-striped table-bordered table-condensed">
 		<thead>
 			<tr>
-				<th class='fiabe'>Fiabe</th>
 				<th class='oasi'>Oasi</th>
+				<th class='fiabe'>Fiabe</th>
 				<th class='clown'>Clown</th>
 			</tr>
 		</thead>
 		<tbody>
 			<tr>
-				<td class='fiabe'>{$dayTurns['fiabe'][1]}</td>
 				<td class='oasi'>{$dayTurns['oasi'][1]}</td>
+				<td class='fiabe'>{$dayTurns['fiabe'][1]}</td>
 				<td class='clown'>{$dayTurns['clown'][1]}</td>
 			</tr><tr>
-				<td class='fiabe'>{$dayTurns['fiabe'][2]}</td>
 				<td class='oasi'>{$dayTurns['oasi'][2]}</td>
+				<td class='fiabe'>{$dayTurns['fiabe'][2]}</td>
 				<td class='clown'>{$dayTurns['clown'][2]}</td>
 			$thirdRow
 			</tr>
@@ -271,7 +273,8 @@ function adminSelectUserSelect(DbConnection $db, $task, $position, Month $month,
     $selectString = "<select name='user'>";
     $allUsers = $db->select('users');
     foreach	($allUsers as $user)
-        $selectString.= "<option value='{$user['id']}'>{$user['lastname']}</option> \n";
+        if ($user['id'] != 0)
+            $selectString.= "<option value='{$user['id']}'>{$user['lastname']}</option> \n";
     $selectString.='</select>';
 
     return (new PermissionString([
@@ -296,7 +299,7 @@ function adminSelectUserSelect(DbConnection $db, $task, $position, Month $month,
 function eventuallyAddDelete($row, $taskColumn) {
     if ($row['volunteer'] == $_SESSION['id'] or $_SESSION['permessi']<=1)
         return "<a href=\"delete_prenotazione.php?volunteer={$row['volunteer']}&day={$row['day']}&task={$row['task']}&position={$row['position']}\" >
-                <img border='0' alt='cancella prenotazione' src='../img/bin.png' width='15' height='15'>
+                <img alt='cancella prenotazione' src='../img/bin.png' width='15' height='15'>
             </a>";
 }
 

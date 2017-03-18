@@ -84,12 +84,12 @@ class ExportCsvTurnsCommand extends Command {
             $getLine = 'getLine';
             echo <<<CSV
             {$month->getMonthName()} {$month->getYear()};$numberLine;
-            Fiabe1;{$getLine($arrayString['fiabe'][1])}
-            Fiabe2;{$getLine($arrayString['fiabe'][2])}
-            Fiabe3;{$getLine($arrayString['fiabe'][3])}
             Oasi1;{$getLine($arrayString['oasi'][1])}
             Oasi2;{$getLine($arrayString['oasi'][2])}
             Oasi3;{$getLine($arrayString['oasi'][3])}
+            Fiabe1;{$getLine($arrayString['fiabe'][1])}
+            Fiabe2;{$getLine($arrayString['fiabe'][2])}
+            Fiabe3;{$getLine($arrayString['fiabe'][3])}
             Clown1;{$getLine($arrayString['clown'][1])}
             Clown2;{$getLine($arrayString['clown'][2])}
             Clown3;{$getLine($arrayString['clown'][3])}

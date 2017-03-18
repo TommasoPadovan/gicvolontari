@@ -50,9 +50,12 @@ class GeneralLayout extends PermissionPage {
 
 	<head>
 		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 		<title>{$this->elems['title']}</title>
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 		<link rel="stylesheet" href="{$homePath}lib/myStyle.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 
 	</head>
@@ -87,16 +90,37 @@ HTML;
 				}
 			}
 		}
-		return <<<END
-			<div class="container-fluid">
-				<ul class="nav navbar-nav">
-					<div class="navbar-header">
-						<a class="navbar-brand" href="{$homePath}home.php">Lilt Volontari</a>
-	    			</div>
-	    			$li
-				</ul>
-			</div>
-END;
+//		return <<<END
+//			<div class="container-fluid collapse navbar-collapse">
+//				<ul class="nav navbar-nav">
+//					<div class="navbar-header">
+//						<a class="navbar-brand" href="{$homePath}home.php">Lilt Volontari</a>
+//	    			</div>
+//	    			$li
+//				</ul>
+//			</div>
+//END;
+		return <<<HTML
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">GIC Volontari</a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav">
+        $li
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="{$homePath}home.php"><span class="glyphicon glyphicon-user"></span> Profilo</a></li>
+      </ul>
+    </div>
+  </div>
+HTML;
+
 	}
 
 }

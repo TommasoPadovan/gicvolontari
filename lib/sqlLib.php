@@ -122,7 +122,6 @@ class DbConnection {
 		}
 		$query = substr($query, 0, -5);
 
-
 		$statement = $this->pdo->prepare($query);
 		$colonArray = array();
 		foreach ($arrayWhere as $columnName => $value)

@@ -34,13 +34,13 @@ HTML;
 <h1>Home</h1>
 <hr />
 <h2>Login</h2>
-<form action='process_login.php' method="POST">
+<form class="col-xs-12" action='process_login.php' method="POST">
 	<div class = 'row'>
-		<div class="form-group col-sm-6">
+		<div class="form-group col-sm-6 col-xs-12">
 			<label for="Email">Email</label>
 			<input type="text" class="form-control" id="Email" placeholder="Email" name="Email">
 		</div>
-		<div class="form-group col-sm-6">
+		<div class="form-group col-sm-6 col-xs-12">
 			<label for="Password">Password</label>
 			<input type="password" class="form-control" id="Password" placeholder="Password" name="Password">
 		</div>

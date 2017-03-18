@@ -3,6 +3,8 @@ require_once('../lib/generalLayout.php');
 require_once('../lib/sqlLib.php');
 require_once('../lib/datetime/month.php');
 require_once('../lib/permissionString.php');
+require_once('../lib/datetime/date.php');
+require_once('../lib/datetime/time.php');
 
 require_once('classCommitments.php');
 
@@ -42,9 +44,12 @@ $events = $commitments->getEventsArray();
 $meetingsList='';
 foreach ($meetings as $meeting) {
 	$meetingsList.= "<li>\n";
+	$date = (new Date($meeting['date']))->getItalianDate();
+	$timeStart = (new Time($meeting['timeStart']))->getSimpleTime();
+	$timeEnd = (new Time($meeting['timeEnd']))->getSimpleTime();
 	$meetingsList.= <<<MEETING
-	<h3>{$meeting['title']}</h3>
-	<p>Il {$meeting['date']} dalle {$meeting['timeStart']} alle {$meeting['timeEnd']} presso {$meeting['location']}</p>
+	<h3><a href="../events/eventDescriptionPage.php?id={$meeting['id']}">{$meeting['title']}</a></h3>
+	<p>Il $date dalle $timeStart alle $timeEnd presso {$meeting['location']}</p>
 MEETING;
 	if ($meeting['requirements'] != '' && $meeting['requirements'] != null )
 		$meetingsList.= "<p>Sono stati indicati i seguenti requisiti: {$meeting['requirements']}</p>";
@@ -54,9 +59,12 @@ MEETING;
 $eventsList='';
 foreach ($events as $event) {
 	$eventsList.= "<li>\n";
+	$date = (new Date($event['date']))->getItalianDate();
+	$timeStart = (new Time($event['timeStart']))->getSimpleTime();
+	$timeEnd = (new Time($event['timeEnd']))->getSimpleTime();
 	$eventsList.= <<<EVENT
-	<h3>{$event['title']}</h3>
-	<p>Il {$event['date']} dalle {$event['timeStart']} alle {$event['timeEnd']} presso {$event['location']}</p>
+	<h3><a href="../events/eventDescriptionPage.php?id={$event['id']}">{$event['title']}</a></h3>
+	<p>Il $date dalle $timeStart alle $timeEnd presso {$event['location']}</p>
 EVENT;
 	if ($event['requirements'] != '' && $event['requirements'] != null )
 		$eventsList.= "<p>Sono stati indicati i seguenti requisiti: {$event['requirements']}</p>";

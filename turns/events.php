@@ -25,11 +25,11 @@ if ( isset($_POST['submit']) ) {
 					'maxVolunteerNumber'	=>	$_POST['nVolontari']
 				));
 			}
-			//cerco se ci sono eventi in programma per questo mese
+			//cerco se ci sono riunioni in programma per questo mese
 			$eventsThisMonth = $db->prepare("
 				SELECT *
 				FROM events
-				WHERE (date BETWEEN :start AND :end)
+				WHERE (date BETWEEN :start AND :end) AND type = 'riunione'
 			");
 			$eventsThisMonth->execute([
 				':start'	=>	"{$month->getYear()}-{$month->getMonth()}-1",

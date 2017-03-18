@@ -16,6 +16,7 @@ $id=null;
 
 $pageTitle = 'Nuovo Evento';
 $type = '';
+$typeSelected = ['',''];
 $title = '';
 $date = '';
 $timeStart = '';
@@ -32,6 +33,9 @@ if (isset($_GET['id'])) {
     $id = $_GET['id'];
 
     $type = $selectedEvent['type'];
+    if ($type == 'riunione') $typeSelected[0] = 'selected';
+    elseif ($type == 'evento') $typeSelected[1] = 'selected';
+
     $title = $selectedEvent['title'];
     $date = $selectedEvent['date'];
     $timeStart = $selectedEvent['timeStart'];
@@ -57,8 +61,8 @@ $content = <<<HTML
 			<div class="form-group col-sm-2">
 				<label for="type">Tipo</label>
                 <select class="form-control" name="type" id="type">
-                    <option value="riunione">Riunione</option>
-                    <option value="evento">Evento</option>
+                    <option value="riunione" {$typeSelected[0]}>Riunione</option>
+                    <option value="evento" {$typeSelected[1]}>Evento</option>
                 </select>
 			</div>
 			<div class="form-group col-sm-4">
