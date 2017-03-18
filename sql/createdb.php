@@ -21,6 +21,8 @@ create table users (
 	firstname VARCHAR(30) NOT NULL,
 	lastname VARCHAR(30) NOT NULL,
 	email VARCHAR(50),
+	CF varchar(15),
+	birthdate DATE,
 	psw VARCHAR(150),
 	phone VARCHAR(20),
 	address VARCHAR(75),
