@@ -57,13 +57,13 @@ class AddTurn extends Command {
             'day'		=>	$dayID
         ));
         if (!count($sameTask)==0) {
-            $this->abortMission();
+            $this->abortMission('Impossibile aggiungere il volontario: c è già un altro volontario assegnato a questo turno.');
             exit;
         }
 
         //hanno tattarato con l'url cambiando il task?
         if ($task!="oasi" && $task!="clown" && $task!="fiabe" ){
-            $this->abortMission();
+            $this->abortMission('Impossibile aggiungere il volontario: il ruolo non è valido.');
             exit;
         }
 
@@ -91,8 +91,8 @@ class AddTurn extends Command {
     }
 
 
-    private function abortMission() {
-        header("Location: {$this->lastPage}");
+    private function abortMission($msg='Operazione non valida') {
+        echo("<script> alert('$msg'); window.location='{$this->lastPage}'; </script>");
     }
 }
 

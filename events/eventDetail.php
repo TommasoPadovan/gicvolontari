@@ -183,7 +183,8 @@ FORM
 
             $removeOwnReservationLink = '';
             if ( isset($_SESSION['id']) && $_SESSION['id'] == $volunteerDetail['id'])
-                $removeOwnReservationLink = "<a href='process_remove_reservation.php?event={$this->event['id']}'><img src='../img/bin.png' alt='cancella' height='15' width='15' />
+                $removeOwnReservationLink = "<a href='process_remove_reservation.php?event={$this->event['id']}'><img src='../img/bin.png' alt='cancella' height='15' width='15'
+                    onclick=\"return confirm('Sei sicuro di voler cancellare la prenotazione?')\"/>
                 </a>";
             $removeReservationLink = (new PermissionString([
                 PermissionPage::ADMIN =>

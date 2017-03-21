@@ -55,7 +55,7 @@ class ReserveForEventOrCourseCommand extends Command {
                     'event' => $_GET['event'],
                     'volunteer' => $_SESSION['id']
                 ]);
-                header("Location: ".$this->lastPage);
+                echo("<script> alert('Prenotazione effettuata con successo.'); window.location='{$this->lastPage}'; </script>");
             }
             else
                 echo("<script> alert('I volontari con il tuo ruolo non possono iscriversi a questo evento'); window.location='{$this->lastPage}'; </script>");

@@ -45,7 +45,7 @@ class UserAddTurnCommand extends Command {
 			($row['position']==2 && ($position==1 || $position==3)) ||
 			$row['position']==3
 		){
-			$this->abortMission();
+			$this->abortMission('Non puoi prenotarti per questo turno, non hai sufficienti privilegi.');
 			exit;
 		}
 
@@ -55,14 +55,14 @@ class UserAddTurnCommand extends Command {
 			'position'	=>	$position,
 			'day'		=>	$dayID
 		));
-		if (!count($sameTask)==0) {
-			$this->abortMission();
+		if (count($sameTask)!=0) {
+			$this->abortMission('Non puoi prenotarti per questo turno, c è già un altro volontario assegnato.');
 			exit;
 		}
 
 		//hanno tattarato con l'url cambiando il task?
 		if ($task!="oasi" && $task!="clown" && $task!="fiabe" ){
-			$this->abortMission();
+			$this->abortMission('Non puoi prenotarti per questo turno: il ruolo non è valido');
 			exit;
 		}
 
@@ -73,8 +73,12 @@ class UserAddTurnCommand extends Command {
 			':month' => $month,
 			':userID' => $userID
 		));
-		if ( $volunteerTurnThisMonth->rowCount() >=2 ) {
-			$this->abortMission();
+
+		$maxReservations = 2;
+		if ($month == date("m")) $maxReservations++; //if the month is the current one you can reserve one time more
+
+		if ( $volunteerTurnThisMonth->rowCount() >= $maxReservations ) {
+			$this->abortMission('Non puoi prenotarti per questo turno, sei già al massimo possibile di prenotazioni questo mese.');
 			exit;
 		}
 
@@ -85,13 +89,12 @@ class UserAddTurnCommand extends Command {
 			'position'	=> $position,
 			'volunteer'	=> $userID
 		));
-		echo "<script>alert(\"Prenotazione effettuta con successo\")</script>";
-		$this->abortMission();
+		$this->abortMission('Prenotazione effettuta con successo.');
 	}
 
 
-	private function abortMission() {
-		header("Location: {$this->lastPage}");
+	private function abortMission($msg='Operazione non valida') {
+		echo("<script> alert('$msg'); window.location='{$this->lastPage}'; </script>");
 	}
 
 }

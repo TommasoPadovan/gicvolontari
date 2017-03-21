@@ -34,10 +34,25 @@ function content(DbConnection $db) {
 
     $monthObj = Month::getMonthFromInternational($shownMonth);
 
+    //calculating number of reservation left this month
+    $reservationsLeft = 2;
+    $d = explode('-', $shownMonth);
+    if ($d[1] == date("m")) $reservationsLeft++;
+    $volunteerTurnThisMonth = $db->prepare("SELECT * FROM turni AS t JOIN calendar as c ON t.day = c.id WHERE c.year = :year AND c.month = :month AND t.volunteer = :userID");
+    $volunteerTurnThisMonth->execute(array(
+        ':year' => $d[0],
+        ':month' => $d[1],
+        ':userID' => $_SESSION['id']
+    ));
+    $reservationsLeft -= $volunteerTurnThisMonth->rowCount();
+
     $aux=adminAddMonthButton();
     $aux.=adminCsvExportButton($shownMonth);
     $aux.= <<<EOF
 	<h1>Turni</h1>
+	<div class="pull-right well well-sm">
+	    Puoi prenotarti ancora <strong>$reservationsLeft</strong> volte questo mese
+    </div>
 	<p>Selezionare il mese dal calendario qui sotto per iscriversi ai turni serali</p>
 	<form action='#' method="get">
 		<div class="row">
@@ -313,7 +328,8 @@ function adminSelectUserSelect(DbConnection $db, $task, $position, Month $month,
 
 function eventuallyAddDelete($row, $taskColumn) {
     if ($row['volunteer'] == $_SESSION['id'] or $_SESSION['permessi']<=1)
-        return "<a href=\"delete_prenotazione.php?volunteer={$row['volunteer']}&day={$row['day']}&task={$row['task']}&position={$row['position']}\" >
+        return "<a href=\"delete_prenotazione.php?volunteer={$row['volunteer']}&day={$row['day']}&task={$row['task']}&position={$row['position']}\"
+            onclick=\"return confirm('Sei sicuro di voler cancellare la prenotazione?')\">
                 <img alt='cancella prenotazione' src='../img/bin.png' width='15' height='15'>
             </a>";
 }
