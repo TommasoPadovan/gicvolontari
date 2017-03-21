@@ -22,14 +22,46 @@ class ReserveForEventOrCourseCommand extends Command {
     protected function template(){
         $db = new DbConnection();
 
+
         if ( isset($_SESSION['id']) && isset($_GET['event'])) {
-            $db->insert('eventsattendants', [
-                'event' => $_GET['event'],
-                'volunteer' => $_SESSION['id']
-            ]);
+            //can i reserve?
+            $me = $db->getUser($_SESSION['id']);
+            $permission = $me['permessi'];
+            switch ($permission) {
+                case 1:
+                    $permissionStr = 'admin';
+                    break;
+                case 2:
+                    $permissionStr = 'sera';
+                    break;
+                case 3:
+                    $permissionStr = 'pomeriggio';
+                    break;
+                case 4:
+                    $permissionStr = 'mattina';
+                    break;
+                default:
+                    $permissionStr = '-';
+                    break;
+            }
+            $position = $me['position'];
+
+
+            $event = $db->select('events', ['id' => $_GET['event']]);
+            $whoCanReserve = unserialize($event[0]['who']);
+
+            if ($permissionStr == 'admin' || in_array($permissionStr.$position, $whoCanReserve)) {
+                $db->insert('eventsattendants', [
+                    'event' => $_GET['event'],
+                    'volunteer' => $_SESSION['id']
+                ]);
+                header("Location: ".$this->lastPage);
+            }
+            else
+                echo("<script> alert('I volontari con il tuo ruolo non possono iscriversi a questo evento'); window.location='{$this->lastPage}'; </script>");
         }
 
-        header("Location: ".$this->lastPage);
+
     }
 }
 

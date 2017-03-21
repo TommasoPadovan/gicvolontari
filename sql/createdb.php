@@ -91,7 +91,8 @@ create table events (
 	description LONGTEXT,
 	requirements LONGTEXT,
 	minAttendants INT(6),
-	maxAttendants INT(6)
+	maxAttendants INT(6),
+	who VARCHAR(256)
 )ENGINE=InnoDB;
 ");
 echo "events table created";

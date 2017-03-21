@@ -182,19 +182,6 @@ $content = <<<HTML
 HTML;
 
 
-echo <<<EEND
-<script type="text/javascript">
-	function toggle_visibility(id) 
-	{
-		var e = document.getElementById(id);
-		if ( e.style.display == 'none' )
-			e.style.display = 'block';
-		else
-			e.style.display = 'none';
-	}
-</script>
-EEND;
-
 
 function getPresenze($db, $volunteerId, $year, $month) {
 	$statement = $db->prepare(<<<TAG
@@ -220,6 +207,19 @@ try {
 	$generalLayout = new GeneralLayout(GeneralLayout::HOMEPATH."volunteers/volunteers.php", PermissionPage::ADMIN);
 	$generalLayout->yieldElem('title', "Volontari");
 	$generalLayout->yieldElem('content', $content);
+	$generalLayout->yieldElem('scripts', <<<EEND
+<script type="text/javascript">
+	function toggle_visibility(id)
+	{
+		var e = document.getElementById(id);
+		if ( e.style.display == 'none' )
+			e.style.display = 'block';
+		else
+			e.style.display = 'none';
+	}
+</script>
+EEND
+	);
 	echo $generalLayout->getPage();
 }
 catch (UnhautorizedException $e){

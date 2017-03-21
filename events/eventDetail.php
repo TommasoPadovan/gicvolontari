@@ -92,6 +92,7 @@ TAG;
         $requirements = $this->event['requirements'];
         $minAttendants = $this->event['minAttendants'];
         $maxAttendants = $this->event['maxAttendants'];
+        $who = unserialize($this->event['who']);
 
         $adminEditButton = (new PermissionString([
             PermissionPage::ADMIN => "<a class='pull-right' href='add_event.php?id={$this->event['id']}'><img src='../img/pencil.png' alt='modifica' height='15' width='15'></a> "
@@ -102,6 +103,10 @@ TAG;
             <img src='../img/bin.png' alt='cancella' height='15' width='15'>
         </a> "
         ]))->out();
+
+        $liWhoCanReserve = '';
+        foreach($who as $role)
+            $liWhoCanReserve.="<li>$role</li>\n";
 
         $reservationDiv = $this->getReservationDiv();
         return <<<TAG
@@ -121,6 +126,10 @@ TAG;
                             <p><label>Requisiti: </label> $requirements</p>
                             <p><label>Minimo partecipanti: </label> $minAttendants</p>
                             <p><label>Massimo participanti: </label> $maxAttendants</p>
+                            <p><label>Chi si può iscrivere?</label></p>
+                            <ul>
+                                $liWhoCanReserve
+                            </ul>
                         </div>
                         <div class="col-sm-6 vertical_line">
                             $reservationDiv
@@ -145,7 +154,8 @@ TAG;
         $options='';
         $allUsers = $this->db->select('users');
         foreach ($allUsers as $user)
-            $options.= "<option value='{$user['id']}'>{$user['lastname']} {$user['firstname']}</option>";
+            if ($user['id'] != 0)
+                $options.= "<option value='{$user['id']}'>{$user['lastname']} {$user['firstname']}</option>";
         $adminReserveUserForm = (new PermissionString([
             PermissionPage::ADMIN => <<<FORM
             <form action="admin_reserve_user_for_event_or_course.php" method="POST">

@@ -40,6 +40,10 @@ class EditEventCommand extends Command {
         else $minAttendants = '';
         if ( isset($_POST['maxAttendants']) )$maxAttendants = $_POST['maxAttendants'];
         else $maxAttendants = '';
+        if ( isset($_POST['who']) )$who = $_POST['who'];
+        else $who = '';
+
+        $who = serialize($who);
 
         $dateArray = explode('-',$date);
         $dayRow = $db->select('calendar', [
@@ -51,16 +55,17 @@ class EditEventCommand extends Command {
         $maxVolunteerNumber = $dayRow[0]['maxVolunteerNumber'];
 
         $newDataArray = [
-            'type' => $type,
-            'title' => $title,
-            'date' => $date,
-            'timeStart' => $timeStart,
-            'timeEnd' => $timeEnd,
-            'location' => $location,
-            'description' => $description,
-            'requirements' => $requirements,
-            'minAttendants' => $minAttendants,
-            'maxAttendants' => $maxAttendants
+            'type'          =>  $type,
+            'title'         =>  $title,
+            'date'          =>  $date,
+            'timeStart'     =>  $timeStart,
+            'timeEnd'       =>  $timeEnd,
+            'location'      =>  $location,
+            'description'   =>  $description,
+            'requirements'  =>  $requirements,
+            'minAttendants' =>  $minAttendants,
+            'maxAttendants' =>  $maxAttendants,
+            'who'           =>  $who
         ];
 
         if ($_POST['id'] == null) {     //sto creando un evento nuovo

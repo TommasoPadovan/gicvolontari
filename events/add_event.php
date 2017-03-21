@@ -26,6 +26,15 @@ $description = '';
 $requirements = '';
 $minAttendants = '';
 $maxAttendants = '';
+$whoCheck = [
+    'sera1' => 'checked=\'checked\'',
+    'sera2' => 'checked=\'checked\'',
+    'sera3' => 'checked=\'checked\'',
+    'pomeriggio1' => 'checked=\'checked\'',
+    'pomeriggio2' => 'checked=\'checked\'',
+    'pomeriggio3' => 'checked=\'checked\'',
+    'mattina2' => 'checked=\'checked\''
+];
 
 if (isset($_GET['id'])) {
     $selectedEvent=$db->select('events', ['id' => $_GET['id']])[0];
@@ -45,6 +54,24 @@ if (isset($_GET['id'])) {
     $requirements = $selectedEvent['requirements'];
     $minAttendants = $selectedEvent['minAttendants'];
     $maxAttendants = $selectedEvent['maxAttendants'];
+
+    $who = unserialize($selectedEvent['who']);
+
+    $whoCheck = [
+        'sera1' => '',
+        'sera2' => '',
+        'sera3' => '',
+        'pomeriggio1' => '',
+        'pomeriggio2' => '',
+        'mattina1' => '',
+        'mattina2' => ''
+    ];
+
+    foreach ($who as $role)
+        $whoCheck[$role] = 'checked=\'checked\'';
+
+
+
 
     $pageTitle="Modifica evento: $title";
 }
@@ -105,25 +132,25 @@ $content = <<<HTML
 		    <div class="col-sm-6 from-group">
 		        <label for="who">Chi può partecipare?</label>
 		        <div class="checkbox">
-                    <label><input type="checkbox" name="who[]" checked="checked" value="sera1">Sera 1</label>
+                    <label><input type="checkbox" name="who[]" {$whoCheck['sera1']} value="sera1">Sera 1</label>
                 </div>
                 <div class="checkbox">
-                    <label><input type="checkbox" name="who[]" checked="checked" value="sera2">Sera 2</label>
+                    <label><input type="checkbox" name="who[]" {$whoCheck['sera2']} value="sera2">Sera 2</label>
                 </div>
                 <div class="checkbox">
-                    <label><input type="checkbox" name="who[]" checked="checked" value="sera3">Sera 3</label>
+                    <label><input type="checkbox" name="who[]" {$whoCheck['sera3']} value="sera3">Sera 3</label>
                 </div>
                 <div class="checkbox">
-                    <label><input type="checkbox" name="who[]" checked="checked" value="pomeriggio1">Pomeriggio 1</label>
+                    <label><input type="checkbox" name="who[]" {$whoCheck['pomeriggio1']} value="pomeriggio1">Pomeriggio 1</label>
                 </div>
                 <div class="checkbox">
-                    <label><input type="checkbox" name="who[]" checked="checked" value="pomeriggio2">Pomeriggio 2</label>
+                    <label><input type="checkbox" name="who[]" {$whoCheck['pomeriggio2']} value="pomeriggio2">Pomeriggio 2</label>
                 </div>
                 <div class="checkbox">
-                    <label><input type="checkbox" name="who[]" checked="checked" value="mattina1">Mattina 1</label>
+                    <label><input type="checkbox" name="who[]" {$whoCheck['mattina1']} value="mattina1">Mattina 1</label>
                 </div>
                 <div class="checkbox">
-                    <label><input type="checkbox" name="who[]" checked="checked" value="mattina2">Mattina 2</label>
+                    <label><input type="checkbox" name="who[]" {$whoCheck['mattina2']} value="mattina2">Mattina 2</label>
                 </div>
 
             </div>

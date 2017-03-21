@@ -234,12 +234,17 @@ function calendarContent (Month $month, $day, DbConnection $db) {
     $nVolunteer = $db->select('calendar', array('year' => $month->getYear(), 'month' =>  $month->getMonth()))[0]['maxVolunteerNumber'];
 
 
-    if ($nVolunteer==3)
+    if ($nVolunteer==3) {
+        $selectArr = [
+            adminSelectUserSelect($db, 'oasi', 3, $month, $day),
+            adminSelectUserSelect($db, 'fiabe', 3, $month, $day),
+            adminSelectUserSelect($db, 'clown', 3, $month, $day)
+        ];
         $thirdRow = "</tr><tr>
-				<td class='oasi'>{$dayTurns['oasi'][3]}</td>
-				<td class='fiabe'>{$dayTurns['fiabe'][3]}</td>
-				<td class='clown'>{$dayTurns['clown'][3]}</td>";
-    else $thirdRow='';
+				<td class='oasi'>{$dayTurns['oasi'][3]} {$selectArr[0]}</td>
+				<td class='fiabe'>{$dayTurns['fiabe'][3]} {$selectArr[1]}</td>
+				<td class='clown'>{$dayTurns['clown'][3]} {$selectArr[2]}</td>";
+    } else $thirdRow='';
 
     $numeroENomeGiorno = "<strong>$day</strong> - " . $month->getDayName($day);
 
@@ -313,18 +318,18 @@ function eventuallyAddDelete($row, $taskColumn) {
             </a>";
 }
 
-echo <<<EEND
-<script type="text/javascript">
-	function toggle_visibility(id)
-	{
-		var e = document.getElementById(id);
-		if ( e.style.display == 'none' )
-			e.style.display = 'block';
-		else
-			e.style.display = 'none';
-	}
-</script>
-EEND;
+//echo <<<EEND
+//<script type="text/javascript">
+//	function toggle_visibility(id)
+//	{
+//		var e = document.getElementById(id);
+//		if ( e.style.display == 'none' )
+//			e.style.display = 'block';
+//		else
+//			e.style.display = 'none';
+//	}
+//</script>
+//EEND;
 
 
 try {
@@ -336,6 +341,20 @@ try {
 
     //setting the title
     $generalLayout->yieldElem('content', content($db));
+
+    $generalLayout->yieldElem('scripts', <<<EEND
+<script type="text/javascript">
+	function toggle_visibility(id)
+	{
+		var e = document.getElementById(id);
+		if ( e.style.display == 'none' )
+			e.style.display = 'block';
+		else
+			e.style.display = 'none';
+	}
+</script>
+EEND
+    );
 
     echo $generalLayout->getPage();
 }
