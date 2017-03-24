@@ -1,7 +1,6 @@
 <?php
 require_once('lib/sqlLib.php');
 require_once('lib/command.php');
-session_start();
 
 
 
@@ -15,23 +14,41 @@ class Login extends Command {
 	}
 
 	protected function template() {
-		if ( isset($_POST['login']) && isset($_POST['Email']) && isset($_POST['Password']) ) {
-			foreach ($this->db->select('users') as $row) {
-				if ($row['email'] == $_POST['Email'] && $row['psw'] == md5($_POST['Password'])) {
-					if ($row['psw'] == md5($_POST['Password'])) {
-						$_SESSION['id'] = $row['id'];
-						$_SESSION['permessi'] = $row['permessi'];
-						$_SESSION['name'] = $row['firstname'] . ' ' . $row['lastname'];
-					} else {
-						echo "<script>>alert(\"Password errata\")</script>";
-					}
+		if ( isset($_POST['Email']) && isset($_POST['Password']))  {
+			$user = $this->db->select('users', ['email' => $_POST['Email']]);
+
+			if (count($user)==0) {
+				echo("<script> alert('Username errato'); window.location='home.php'; </script>");
+			} else {
+				if ( $user[0]['psw'] != md5($_POST['Password']) ) {
+					echo("<script> alert('Password errata'); window.location='home.php'; </script>");
 				} else {
-					echo "<script>>alert(\"Username errato\")</script>";
+					$_SESSION['id'] = $user[0]['id'];
+					$_SESSION['permessi'] = $user[0]['permessi'];
+					$_SESSION['name'] = $user[0]['firstname'] . ' ' . $user[0]['lastname'];
 				}
 			}
 		}
 
-		header("Location: home.php");		
+
+
+//		if (isset($_POST['Email']) && isset($_POST['Password']) ) {
+//			foreach ($this->db->select('users') as $row) {
+//				if ($row['email'] == $_POST['Email'] && $row['psw'] == md5($_POST['Password'])) {
+//					if ($row['psw'] == md5($_POST['Password'])) {
+//						$_SESSION['id'] = $row['id'];
+//						$_SESSION['permessi'] = $row['permessi'];
+//						$_SESSION['name'] = $row['firstname'] . ' ' . $row['lastname'];
+//					} else {
+//						echo("<script> alert('Password errata'); window.location='home.php'; </script>");
+//					}
+//				} else {
+//					echo("<script> alert('Username errato'); window.location='home.php'; </script>");
+//				}
+//			}
+//		}
+
+		echo("<script> window.location='home.php'; </script>");
 	}
 }
 

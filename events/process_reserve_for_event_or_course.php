@@ -50,6 +50,13 @@ class ReserveForEventOrCourseCommand extends Command {
             $event = $db->select('events', ['id' => $_GET['event']]);
             $whoCanReserve = unserialize($event[0]['who']);
 
+            if (count($db->select('eventsattendants', [
+                    'event' => $_GET['event'],
+                    'volunteer' => $me['id']
+                ]))!=0) {
+                echo("<script> alert('Sei già iscritto a questo evento.'); window.location='{$this->lastPage}'; </script>");
+            }
+
             if ($permissionStr == 'admin' || in_array($permissionStr.$position, $whoCanReserve)) {
                 $db->insert('eventsattendants', [
                     'event' => $_GET['event'],

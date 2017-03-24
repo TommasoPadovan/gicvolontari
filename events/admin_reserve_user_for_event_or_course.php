@@ -24,12 +24,20 @@ class AdminReserveUserForEventOrCourseCommand extends Command {
         $event = $_POST['eventId'];
         $user = $_POST['userId'];
 
-        $db->insert('eventsattendants', [
-            'event' => $event,
-            'volunteer' => $user
-        ]);
+        if ( count( $db->select('eventsattendants', [
+                'event' => $event,
+                'volunteer' => $user
+            ]) )!=0 ) {
+            echo("<script> alert('Il volontario selezionato è gia iscritto a questo evento.'); window.location='{$this->lastPage}'; </script>");
+        } else {
+            $db->insert('eventsattendants', [
+                'event' => $event,
+                'volunteer' => $user
+            ]);
 
-        header('Location: '.$this->lastPage);
+            echo("<script> window.location='{$this->lastPage}'; </script>");
+        }
+
     }
 }
 
