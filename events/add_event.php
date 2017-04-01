@@ -8,75 +8,87 @@
 require_once('../lib/generalLayout.php');
 require_once('../lib/permission.php');
 require_once('../lib/sqlLib.php');
+require_once('../lib/GetConstraints.php');
 
 
-$db = new DbConnection();
 
-$id=null;
 
-$pageTitle = 'Nuovo Evento';
-$type = '';
-$typeSelected = ['',''];
-$title = '';
-$date = '';
-$timeStart = '';
-$timeEnd = '';
-$location = '';
-$description = '';
-$requirements = '';
-$minAttendants = '';
-$maxAttendants = '';
-$whoCheck = [
-    'sera1' => 'checked=\'checked\'',
-    'sera2' => 'checked=\'checked\'',
-    'sera3' => 'checked=\'checked\'',
-    'pomeriggio1' => 'checked=\'checked\'',
-    'pomeriggio2' => 'checked=\'checked\'',
-    'pomeriggio3' => 'checked=\'checked\'',
-    'mattina2' => 'checked=\'checked\''
-];
+$constraints = new GetConstraints(
+    [$_GET['id'] => ['users', 'id']],
+    []
+);
 
-if (isset($_GET['id'])) {
-    $selectedEvent=$db->select('events', ['id' => $_GET['id']])[0];
 
-    $id = $_GET['id'];
+if (!$constraints->areOk()) {
+    $content = $constraints->getErrorContent();
+} else {
 
-    $type = $selectedEvent['type'];
-    if ($type == 'riunione') $typeSelected[0] = 'selected';
-    elseif ($type == 'evento') $typeSelected[1] = 'selected';
 
-    $title = $selectedEvent['title'];
-    $date = $selectedEvent['date'];
-    $timeStart = $selectedEvent['timeStart'];
-    $timeEnd = $selectedEvent['timeEnd'];
-    $location = $selectedEvent['location'];
-    $description = $selectedEvent['description'];
-    $requirements = $selectedEvent['requirements'];
-    $minAttendants = $selectedEvent['minAttendants'];
-    $maxAttendants = $selectedEvent['maxAttendants'];
+    $db = new DbConnection();
 
-    $who = unserialize($selectedEvent['who']);
+    $id = null;
 
+    $pageTitle = 'Nuovo Evento';
+    $type = '';
+    $typeSelected = ['', ''];
+    $title = '';
+    $date = '';
+    $timeStart = '';
+    $timeEnd = '';
+    $location = '';
+    $description = '';
+    $requirements = '';
+    $minAttendants = '';
+    $maxAttendants = '';
     $whoCheck = [
-        'sera1' => '',
-        'sera2' => '',
-        'sera3' => '',
-        'pomeriggio1' => '',
-        'pomeriggio2' => '',
-        'mattina1' => '',
-        'mattina2' => ''
+        'sera1' => 'checked=\'checked\'',
+        'sera2' => 'checked=\'checked\'',
+        'sera3' => 'checked=\'checked\'',
+        'pomeriggio1' => 'checked=\'checked\'',
+        'pomeriggio2' => 'checked=\'checked\'',
+        'pomeriggio3' => 'checked=\'checked\'',
+        'mattina2' => 'checked=\'checked\''
     ];
 
-    foreach ($who as $role)
-        $whoCheck[$role] = 'checked=\'checked\'';
+    if (isset($_GET['id'])) {
+        $selectedEvent = $db->select('events', ['id' => $_GET['id']])[0];
+
+        $id = $_GET['id'];
+
+        $type = $selectedEvent['type'];
+        if ($type == 'riunione') $typeSelected[0] = 'selected';
+        elseif ($type == 'evento') $typeSelected[1] = 'selected';
+
+        $title = $selectedEvent['title'];
+        $date = $selectedEvent['date'];
+        $timeStart = $selectedEvent['timeStart'];
+        $timeEnd = $selectedEvent['timeEnd'];
+        $location = $selectedEvent['location'];
+        $description = $selectedEvent['description'];
+        $requirements = $selectedEvent['requirements'];
+        $minAttendants = $selectedEvent['minAttendants'];
+        $maxAttendants = $selectedEvent['maxAttendants'];
+
+        $who = unserialize($selectedEvent['who']);
+
+        $whoCheck = [
+            'sera1' => '',
+            'sera2' => '',
+            'sera3' => '',
+            'pomeriggio1' => '',
+            'pomeriggio2' => '',
+            'mattina1' => '',
+            'mattina2' => ''
+        ];
+
+        foreach ($who as $role)
+            $whoCheck[$role] = 'checked=\'checked\'';
 
 
+        $pageTitle = "Modifica evento: $title";
+    }
 
-
-    $pageTitle="Modifica evento: $title";
-}
-
-$content = <<<HTML
+    $content = <<<HTML
     <h1>$pageTitle</h1>
     <form action='edit_event.php' method="POST">
         <input type="hidden" name="id" value="$id">
@@ -162,7 +174,7 @@ $content = <<<HTML
 HTML;
 
 
-
+}
 
 
 try {

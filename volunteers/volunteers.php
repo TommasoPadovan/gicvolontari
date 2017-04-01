@@ -12,8 +12,8 @@ $db = new DbConnection;
 
 //table of users in the db
 $usersTable='';
-$users = $db->select('users');
-foreach ($db->select('users') as $row) {
+$users = $db->query('SELECT * FROM users ORDER BY permessi, lastname, firstname');
+foreach ($users as $row) {
 	if ($row['id'] != 0)	//l'utente 0 è il placeholder per la riunione che va ad occupare i turni della sera
 		$usersTable.=userRow($row, $db);
 }
@@ -55,8 +55,8 @@ LINK;
 
 	$row = <<<EOF
 		<tr>
-			<td>$firstname</th>
 			<td>$lastname</th>
+			<td>$firstname</th>
 			<td>$email</th>
 			<td>$position</th>
 			<td>$permission</td>
@@ -164,8 +164,8 @@ $content = <<<HTML
 	<table class="table table-striped table-bordered table-condensed">
 		<thead>
 			<tr>
-				<th>Firstname</th>
-				<th>Lastname</th>
+				<th>Cognome</th>
+				<th>Nome</th>
 				<th>Email</th>
 				<th>Posizione</th>
 				<th>Permessi</th>

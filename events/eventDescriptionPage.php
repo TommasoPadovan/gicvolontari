@@ -9,6 +9,7 @@
 require_once('eventDetail.php');
 require_once('../lib/generalLayout.php');
 require_once('../lib/sqlLib.php');
+require_once('../lib/GetConstraints.php');
 
 
 $db = new DbConnection();
@@ -20,30 +21,19 @@ else
     $back = '../home.php';
 
 
-if (isset($_GET['id']) && count($db->select('events', ['id' => $_GET['id']]))!=0 ) {
+$constraints = new GetConstraints(
+    [$_GET['id'] => ['events', 'id']],
+    []
+);
+
+
+if ($constraints->areOk()) {
     $content = (new EventDetail($_GET['id']))->getEventDescription();
     $content.= <<<BACKBUTTON
         <a href="$back" class="btn btn-default">Indietro</a>
 BACKBUTTON;
 } else {
-    $time = time();
-    $content = <<<ERRORPAGE
-    <div class="row">
-        <div class="col-sm-6">
-            <img src="../img/something-wrong.jpg" width="100%" height="100%">
-        </div>
-        <div class="col-sm-6">
-            <p>Oooops, l'evento che hai selzionato non esiste più. Ci deve essere una problema.</p>
-            <p>Se vuoi segnalare il problema segnati questi dati.</p>
-            <ol>
-                <li>Page: eventDescriptionPage.php</li>
-                <li>getId: {$_GET['id']}</li>
-                <li>timestamp: $time</li>
-            </ol>
-            <a href="$back" class="btn btn-default">Indietro</a>
-        </div>
-    </div>
-ERRORPAGE;
+    $content = $constraints->getErrorContent();
 }
 
 try {

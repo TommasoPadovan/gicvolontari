@@ -1,39 +1,53 @@
 <?php
 require_once('../lib/generalLayout.php');
 require_once('../lib/sqlLib.php');
-
-$db = new DbConnection();
-
-$user = $db->getUser($_GET['id']);
+require_once('../lib/GetConstraints.php');
 
 
-$Nome = $user['firstname'];
-$Cognome = $user['lastname'];
-$Email = $user['email'];
-$CF = $user['CF'];
-$birthDate = $user['birthdate'];
-$NumeroTelefono = $user['phone'];
-$Indirizzo = $user['address'];
-$Indirizzo2 = $user['address2'];
-$Citta = $user['city'];
-$Provincia = $user['prov'];
-$CAP = $user['cap'];
-$Stato = $user['state'];
-
-$position = $user['position'];
-$positionCheck=array();
-for ($i=1; $i<=3; $i++)
-    $positionCheck[$i] = '';
-$positionCheck[$position] = "selected=\"selected\"";
 
 
-$permessi = $user['permessi'];
-$permessiCheck=array();
-for ($i=1; $i<=4; $i++)
-    $permessiCheck[$i] = '';
-$permessiCheck[$permessi] = "selected=\"selected\"";
+$constraints = new GetConstraints(
+    [$_GET['id'] => ['users', 'id']],
+    []
+);
 
-$content = <<< HTML
+
+if (!$constraints->areOk()) {
+    $content = $constraints->getErrorContent();
+} else {
+
+    $db = new DbConnection();
+
+    $user = $db->getUser($_GET['id']);
+
+
+    $Nome = $user['firstname'];
+    $Cognome = $user['lastname'];
+    $Email = $user['email'];
+    $CF = $user['CF'];
+    $birthDate = $user['birthdate'];
+    $NumeroTelefono = $user['phone'];
+    $Indirizzo = $user['address'];
+    $Indirizzo2 = $user['address2'];
+    $Citta = $user['city'];
+    $Provincia = $user['prov'];
+    $CAP = $user['cap'];
+    $Stato = $user['state'];
+
+    $position = $user['position'];
+    $positionCheck = array();
+    for ($i = 1; $i <= 3; $i++)
+        $positionCheck[$i] = '';
+    $positionCheck[$position] = "selected=\"selected\"";
+
+
+    $permessi = $user['permessi'];
+    $permessiCheck = array();
+    for ($i = 1; $i <= 4; $i++)
+        $permessiCheck[$i] = '';
+    $permessiCheck[$permessi] = "selected=\"selected\"";
+
+    $content = <<< HTML
 <h1>Modifica il profilo di $Nome $Cognome</h1>
 <hr />
 <form action='volunteer_edit.php' method="POST">
@@ -121,8 +135,9 @@ $content = <<< HTML
 	</div>
 </form>
 <hr />
-HTML
-;
+HTML;
+
+}
 
 try {
     $generalLayout = new GeneralLayout(GeneralLayout::HOMEPATH."volunteers/volunteers.php", PermissionPage::ADMIN);

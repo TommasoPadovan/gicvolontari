@@ -10,18 +10,31 @@ require_once('../lib/generalLayout.php');
 require_once('../lib/permissionsMng.php');
 require_once('../lib/sqlLib.php');
 require_once('../lib/datetime/month.php');
-
-$db = new DbConnection;
-
-$user = $db->getUser($_GET['id']);
+require_once('../lib/GetConstraints.php');
 
 
-/**
- * /////////////////////////////////////
- * Count presenze turni serali
- * /////////////////////////////////////
- */
-$statement = $db->prepare(<<<TAG
+
+
+$constraints = new GetConstraints(
+    [$_GET['id'] => ['users', 'id']],
+    []
+);
+
+
+if (!$constraints->areOk()) {
+    $content = $constraints->getErrorContent();
+} else {
+    $db = new DbConnection;
+
+    $user = $db->getUser($_GET['id']);
+
+
+    /**
+     * /////////////////////////////////////
+     * Count presenze turni serali
+     * /////////////////////////////////////
+     */
+    $statement = $db->prepare(<<<TAG
 SELECT c.year AS year, c.month AS month, COUNT(c.day) as count
 FROM turni AS t JOIN calendar AS c ON (t.day = c.id)
   JOIN users AS u ON (t.volunteer = u.id)
@@ -29,81 +42,81 @@ WHERE u.id = :id
 GROUP BY c.year, c.month
 ORDER BY c.year, c.month
 TAG
-);
+    );
 
-$statement->execute([':id' => $_GET['id']]);
+    $statement->execute([':id' => $_GET['id']]);
 
-$allVolunteerTurns = $statement->fetchAll(PDO::FETCH_ASSOC);
+    $allVolunteerTurns = $statement->fetchAll(PDO::FETCH_ASSOC);
 
-$turnTableBody='';
-foreach ($allVolunteerTurns as $row) {
-    if ($row['year']==$_GET['year']) {
-        $monthObj = new Month($row['month'], $row['year']);
-        $turnCount = $row['count'];
+    $turnTableBody='';
+    foreach ($allVolunteerTurns as $row) {
+        if ($row['year']==$_GET['year']) {
+            $monthObj = new Month($row['month'], $row['year']);
+            $turnCount = $row['count'];
 
-        $turnTableBody .= "
+            $turnTableBody .= "
             <tr>
                 <td>{$monthObj->getYear()}</td>
                 <td>{$monthObj->getMonthName()}</td>
                 <td>$turnCount</td>
             </tr>
         ";
+        }
     }
-}
 
 
 
-/**
- * /////////////////////////////////////
- * Dettagli presenze turni serali
- * /////////////////////////////////////
- */
+    /**
+     * /////////////////////////////////////
+     * Dettagli presenze turni serali
+     * /////////////////////////////////////
+     */
 
-$allVolunteerTurnsDetail = $db->prepare(<<<TAG
+    $allVolunteerTurnsDetail = $db->prepare(<<<TAG
 SELECT c.year AS year, c.month AS month, c.day AS day, t.task AS task, t.position AS position
 FROM turni AS t JOIN calendar AS c ON (t.day = c.id)
   JOIN users AS u ON (t.volunteer = u.id)
 WHERE u.id = :id
 ORDER BY c.year, c.month, c.day
 TAG
-);
+    );
 
-$allVolunteerTurnsDetail->execute([':id' => $_GET['id']]);
-$turnDetailTableBody = '';
-foreach ($allVolunteerTurnsDetail as $row) {
-    if ($row['year'] == $_GET['year']) {
-        $monthObj = new Month($row['month'], $row['year']);
+    $allVolunteerTurnsDetail->execute([':id' => $_GET['id']]);
+    $turnDetailTableBody = '';
+    foreach ($allVolunteerTurnsDetail as $row) {
+        if ($row['year'] == $_GET['year']) {
+            $monthObj = new Month($row['month'], $row['year']);
 
-        $turnDetailTableBody .= "
+            $turnDetailTableBody .= "
             <tr>
                 <td>{$row['day']} {$monthObj->getMonthName()} {$monthObj->getYear()}</td>
                 <td>{$row['task']} posizione {$row['position']}</td>
             </tr>
         ";
+        }
     }
-}
 
 
-/**
- * /////////////////////////////////////
- * Dettagli presenze riunioni/eventi
- * /////////////////////////////////////
- */
-$meetingsEventsDetail = $db->prepare(<<<QUERY
+    /**
+     * /////////////////////////////////////
+     * Dettagli presenze riunioni/eventi
+     * /////////////////////////////////////
+     */
+    $meetingsEventsDetail = $db->prepare(<<<QUERY
 SELECT e.id AS id, e.date AS date, e.type AS type, e.title AS title, e.location AS location, e.description AS description
 FROM events AS e JOIN eventsattendants AS ea ON (e.id = ea.event)
 WHERE ea.volunteer = :id
 ORDER BY e.date
 QUERY
-);
-$meetingsEventsDetail->execute([':id' => $_GET['id']]);
-$eventTableBody = '';
-foreach ($meetingsEventsDetail as $row) {
-    $data = explode('-',$row['date']);
-    if ($data[0] == $_GET['year']) {
-        $monthObj = new Month($data[1], $data[0]);
+    );
+    $meetingsEventsDetail->execute([':id' => $_GET['id']]);
+    $eventTableBody = '';
+    foreach ($meetingsEventsDetail as $row) {
+        $data = explode('-',$row['date']);
+        if ($data[0] == $_GET['year']) {
+            $monthObj = new Month($data[1], $data[0]);
 
-        $eventTableBody .= "
+            $eventTableBody .= "
             <tr>
                 <td>{$data[2]} {$monthObj->getMonthName()} {$monthObj->getYear()}</td>
                 <td>{$row['type']}</td>
@@ -112,16 +125,16 @@ foreach ($meetingsEventsDetail as $row) {
                 <td>{$row['description']}</td>
             </tr>
         ";
+        }
     }
-}
 
 
-$yearOptions='';
-for($i=date("Y"); $i>1990; $i--)
-    $yearOptions.="<option value='$i'>$i</option>";
+    $yearOptions='';
+    for($i=date("Y"); $i>1990; $i--)
+        $yearOptions.="<option value='$i'>$i</option>";
 
 
-$content = <<<HTML
+    $content = <<<HTML
 <a class="pull-right" href="print_volunteer_detail.php?id={$_GET['id']}&year={$_GET['year']}"><img src="../img/print.png" width="30" height="30" alt="stampa dettagli volontario"></a>
 <h1>Dettagli di {$user['firstname']} {$user['lastname']}</h1>
 
@@ -191,6 +204,9 @@ $content = <<<HTML
 
 <a href="volunteers.php" class="btn btn-default">Indietro</a>
 HTML;
+}
+
+
 
 
 
