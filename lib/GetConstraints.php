@@ -12,19 +12,19 @@ class GetConstraints {
     private $betweenBounds = [];
     private $db;
 
-    public function __construct($table, $bounds) {
+    public function __construct($table = [], $bounds = []) {
         $this->inTable = $table;
         $this->betweenBounds = $bounds;
         $this->db = new DbConnection();
     }
 
-    public function addTableConstraint($tableConstraint) {
-        array_push($this->inTable, $tableConstraint);
+    public function addTableConstraint($what, $tableConstraint) {
+        $this->inTable[$what] = $tableConstraint;
     }
 
-    public function addBoundsConstraint($boundsConstraint) {
-        array_push($this->betweenBounds, $boundsConstraint);
-    }
+//    public function addBoundsConstraint($boundsConstraint) {
+//        array_push($this->betweenBounds, $boundsConstraint);
+//    }
 
 
     public function areOk(){

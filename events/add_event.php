@@ -13,10 +13,11 @@ require_once('../lib/GetConstraints.php');
 
 
 
-$constraints = new GetConstraints(
-    [$_GET['id'] => ['users', 'id']],
-    []
-);
+$constraints = new GetConstraints();
+
+if (isset($_GET['id']))
+    $constraints->addTableConstraint($_GET['id'], ['events', 'id']);
+
 
 
 if (!$constraints->areOk()) {
@@ -47,6 +48,7 @@ if (!$constraints->areOk()) {
         'pomeriggio1' => 'checked=\'checked\'',
         'pomeriggio2' => 'checked=\'checked\'',
         'pomeriggio3' => 'checked=\'checked\'',
+        'mattina1' => 'checked=\'checked\'',
         'mattina2' => 'checked=\'checked\''
     ];
 
@@ -178,7 +180,7 @@ HTML;
 
 
 try {
-    $generalLayout = new GeneralLayout(GeneralLayout::HOMEPATH."events/eventsandcourses.php", PermissionPage::AFTERNOON);
+    $generalLayout = new GeneralLayout(GeneralLayout::HOMEPATH."events/eventsandcourses.php", PermissionPage::ADMIN);
     $generalLayout->yieldElem('title', "Aggiungi / Modifica Evento");
     $generalLayout->yieldElem('content', $content);
     echo $generalLayout->getPage();
