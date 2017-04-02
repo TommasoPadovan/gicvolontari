@@ -48,11 +48,18 @@ function content(DbConnection $db) {
 
     $aux=adminAddMonthButton();
     $aux.=adminCsvExportButton($shownMonth);
+
+    $puoiPrenotartiAncoraTotVolte = new PermissionString([
+        PermissionPage::EVENING => <<<WELL
+        <div class="pull-right well well-sm">
+            Puoi prenotarti ancora <strong>$reservationsLeft</strong> volte questo mese
+        </div>
+WELL
+    ]);
+
     $aux.= <<<EOF
 	<h1>Turni</h1>
-	<div class="pull-right well well-sm">
-	    Puoi prenotarti ancora <strong>$reservationsLeft</strong> volte questo mese
-    </div>
+	{$puoiPrenotartiAncoraTotVolte->out()}
 	<p>Selezionare il mese dal calendario qui sotto per iscriversi ai turni serali</p>
 	<form action='#' method="get">
 		<div class="row">
@@ -220,6 +227,7 @@ function calendarContent (Month $month, $day, DbConnection $db) {
     $userID=$_SESSION['id'];
     $user = $db->getUser($userID);
 
+    $userPermission = intval($user['permessi']);
     $userPosition = intval($user['position']);
 
     //tabella vuota solo scritte niente link
@@ -229,15 +237,17 @@ function calendarContent (Month $month, $day, DbConnection $db) {
         'clown' => [1 => 'clown 1', 2 => 'clown 2', 3 => 'clown 3']
     ];
 
-    //link se posso prenotarmi + link di prenotazione solo per l'admin
-    foreach ($dayTurns as $task => $value) {
-        if ($userPosition <= 2)
-            $dayTurns[$task][2] = reservationLink($db, $task, 2, $month, $day).
-                adminSelectUserSelect($db, $task, 2, $month, $day);
+    if ($userPermission<=PermissionPage::EVENING) {     //se uno è pomeriggio o mattina non vede i link per prenotarsi
+        //link se posso prenotarmi + link di prenotazione solo per l'admin
+        foreach ($dayTurns as $task => $value) {
+            if ($userPosition <= 2)
+                $dayTurns[$task][2] = reservationLink($db, $task, 2, $month, $day) .
+                    adminSelectUserSelect($db, $task, 2, $month, $day);
 
-        if ($userPosition <= 1)
-            $dayTurns[$task][1] = reservationLink($db, $task, 1, $month, $day).
-                adminSelectUserSelect($db, $task, 1, $month, $day);
+            if ($userPosition <= 1)
+                $dayTurns[$task][1] = reservationLink($db, $task, 1, $month, $day) .
+                    adminSelectUserSelect($db, $task, 1, $month, $day);
+        }
     }
 
     //nomi di quelli già prenotati
@@ -350,7 +360,7 @@ function eventuallyAddDelete($row, $taskColumn) {
 
 try {
     //general layout of one page
-    $generalLayout = new GeneralLayout(GeneralLayout::HOMEPATH."turns/turns.php", PermissionPage::EVENING);
+    $generalLayout = new GeneralLayout(GeneralLayout::HOMEPATH."turns/turns.php", PermissionPage::MORNING);
 
     //setting the title
     $generalLayout->yieldElem('title', "Turni");
