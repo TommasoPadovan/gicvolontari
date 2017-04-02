@@ -31,11 +31,11 @@ foreach ($myTurnsStr as $li)
 	$turniCorsia.="$li\n";
 $turniCorsia.="</ul>\n";
 
-$eveningTurns = (new PermissionString([
-	PermissionPage::EVENING => "<h2>Turni corsia</h2>\n$turniCorsia"
-]))->out();
+//$eveningTurns = (new PermissionString([
+//	PermissionPage::EVENING => "<h2>Turni corsia</h2>\n$turniCorsia"
+//]))->out();
 
-
+$eveningTurns = "<h2>Turni corsia</h2>\n$turniCorsia";
 
 
 $meetings = $commitments->getMeetingsArray();
