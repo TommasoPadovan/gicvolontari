@@ -20,7 +20,7 @@ class EditUserCommand extends Command {
 		$CodiceFiscale = $_POST['CodiceFiscale'];
 		$NumeroTelefono = $_POST['NumeroTelefono'];
 		$DataDiNascita = $_POST['DataDiNascita'];
-		$Idirizzo = $_POST['Idirizzo'];
+		$Idirizzo = $_POST['Indirizzo'];
 		$Indirizzo2 = $_POST['Indirizzo2'];
 		$Citta = $_POST['Citta'];
 		$Provincia = $_POST['Provincia'];

@@ -30,7 +30,7 @@ $constraints = new GetConstraints(
 if ($constraints->areOk()) {
     $content = (new EventDetail($_GET['id']))->getEventDescription();
     $content.= <<<BACKBUTTON
-        <a href="$back" class="btn btn-default">Indietro</a>
+        <!--<a href="$back" class="btn btn-default">Indietro</a>-->
 BACKBUTTON;
 } else {
     $content = $constraints->getErrorContent();

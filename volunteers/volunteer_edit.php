@@ -21,7 +21,7 @@ class InsertNewUserCommand extends Command {
         $CF = $_POST['CodiceFiscale'];
         $birthDate = $_POST['DataDiNascita'];
         $NumeroTelefono = $_POST['NumeroTelefono'];
-        $Idirizzo = $_POST['Idirizzo'];
+        $Indirizzo = $_POST['Indirizzo'];
         $Indirizzo2 = $_POST['Indirizzo2'];
         $Citta = $_POST['Citta'];
         $Provincia = $_POST['Provincia'];
@@ -39,7 +39,7 @@ class InsertNewUserCommand extends Command {
                 'CF'        => $CF,
                 'birthdate' => $birthDate,
                 'phone'		=> $NumeroTelefono,
-                'address'	=> $Idirizzo,
+                'address'	=> $Indirizzo,
                 'address2'	=> $Indirizzo2,
                 'city'		=> $Citta,
                 'prov'		=> $Provincia,
