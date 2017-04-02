@@ -337,7 +337,7 @@ function adminSelectUserSelect(DbConnection $db, $task, $position, Month $month,
 
 
 function eventuallyAddDelete($row, $taskColumn) {
-    if ($row['volunteer'] == $_SESSION['id'] or $_SESSION['permessi']<=1)
+    if (($_SESSION['permessi']==PermissionPage::EVENING && $row['volunteer'] == $_SESSION['id']) || $_SESSION['permessi']<=PermissionPage::ADMIN)
         return "<a href=\"delete_prenotazione.php?volunteer={$row['volunteer']}&day={$row['day']}&task={$row['task']}&position={$row['position']}\"
             onclick=\"return confirm('Sei sicuro di voler cancellare la prenotazione?')\">
                 <img alt='cancella prenotazione' src='../img/bin.png' width='15' height='15'>
