@@ -7,6 +7,8 @@ create table Users (
 	firstname VARCHAR(30) NOT NULL,
 	lastname VARCHAR(30) NOT NULL,
 	email VARCHAR(50),
+	CF varchar(15),
+	birthdate DATE,
 	psw VARCHAR(150),
 	phone VARCHAR(20),
 	address VARCHAR(75),
@@ -47,3 +49,49 @@ create table Turni (
 	FOREIGN KEY(volunteer) REFERENCES Users(id) ON UPDATE CASCADE ON DELETE CASCADE
 
 )ENGINE=InnoDB;
+
+
+
+
+create table Events (
+	id INT(8) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+	type VARCHAR(15) NOT NULL,
+	title VARCHAR(100) NOT NULL,
+	date DATE,
+	timeStart TIME NOT NULL,
+	timeEnd TIME NOT NULL,
+	location VARCHAR(300),
+	description LONGTEXT,
+	requirements LONGTEXT,
+	minAttendants INT(6),
+	maxAttendants INT(6),
+	who VARCHAR(256)
+)ENGINE=InnoDB;
+
+
+
+CREATE TABLE eventsattendants (
+	event INT(8) UNSIGNED NOT NULL,
+	volunteer INT(8) UNSIGNED NOT NULL,
+
+	FOREIGN KEY(event) REFERENCES Events(id) ON UPDATE CASCADE ON DELETE CASCADE,
+	FOREIGN KEY(volunteer) REFERENCES Users(id) ON UPDATE CASCADE ON DELETE CASCADE,
+	PRIMARY KEY (event, volunteer)
+)ENGINE = InnoDB;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
