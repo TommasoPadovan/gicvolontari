@@ -14,6 +14,16 @@ class Login extends Command {
 	}
 
 	protected function template() {
+		/*var_dump($_POST);
+		echo '<br>'; 
+		$userslist = $this->db->query('SELECT * FROM users');
+		foreach ($userslist as $row) {
+			echo 'riga: ';
+			var_dump($row);
+			echo '<br>';
+		}
+		echo "me here";
+		exit;*/
 		if ( isset($_POST['Email']) && isset($_POST['Password']))  {
 			$user = $this->db->select('users', ['email' => $_POST['Email']]);
 

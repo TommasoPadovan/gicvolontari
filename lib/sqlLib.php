@@ -81,7 +81,7 @@ class DbConnection {
 
 
 	public function getUserName($id) {
-		$statement = $this->pdo->prepare("SELECT * FROM Users WHERE id=:id");
+		$statement = $this->pdo->prepare("SELECT * FROM users WHERE id=:id");
 		$statement->execute(array(':id' => $id));
 		$user = $statement->fetchAll(PDO::FETCH_ASSOC);
 		$user = $user[0];
@@ -89,7 +89,7 @@ class DbConnection {
 	}
 
 	public function getUser($id) {
-		$statement = $this->pdo->prepare("SELECT * FROM Users WHERE id=:id");
+		$statement = $this->pdo->prepare("SELECT * FROM users WHERE id=:id");
 		$statement->execute(array(':id' => $id));
 		$user = $statement->fetchAll(PDO::FETCH_ASSOC);
 		return $user[0];

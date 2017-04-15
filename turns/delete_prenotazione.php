@@ -26,7 +26,7 @@ class DeleteReservationCommand extends Command {
 		$task = $_GET['task'];
 		$position = $_GET['position'];
 
-		if ($volunteer == $_SESSION['id'] || $_SESSION['id']<=1) {
+		if ($volunteer == $_SESSION['id'] || $_SESSION['permessi']<=PermissionPage::ADMIN) {
 			$db->deleteRows('turni', array(
 				'volunteer' => $volunteer,
 				'day' => $day,

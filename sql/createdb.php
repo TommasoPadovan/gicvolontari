@@ -1,7 +1,7 @@
 <?php
 require_once('../lib/sqlLib.php');
-$db = new PDO('mysql:host=127.0.0.1;charset=utf8mb4', 'root', '');
 
+$db = new DbConnection();
 
 $db->query("DROP SCHEMA IF EXISTS `liltvolontari`;");
 echo "schema dropped...<br />";
@@ -11,7 +11,8 @@ echo "schema created...<br />";
 
 
 
-$db = new DbConnection();
+
+$db->query('USE liltvolontari');
 echo "db selected...<br />";
 
 
@@ -39,13 +40,13 @@ echo "users table created<br />";
 
 
 $db->query("
-	INSERT INTO `liltvolontari`.`users` (`firstname`, `lastname`, `email`, `psw`, `position`, `permessi`) VALUES ('admin', 'admin', 'admin', '21232f297a57a5a743894a0e4a801fc3', '1', '1');");
+	INSERT INTO `users` (`firstname`, `lastname`, `email`, `psw`, `position`, `permessi`) VALUES ('admin', 'admin', 'admin', '21232f297a57a5a743894a0e4a801fc3', '1', '1');");
 echo "added admin...<br />";
 $db->query("
-	INSERT INTO `liltvolontari`.`users` (`firstname`, `lastname`, `email`, `psw`, `position`, `permessi`) VALUES ('riunione', 'riunione', 'riunione', '', '99', '99');");
+	INSERT INTO `users` (`firstname`, `lastname`, `email`, `psw`, `position`, `permessi`) VALUES ('riunione', 'riunione', 'riunione', '', '99', '99');");
 echo "added 'riunione' placeholder...<br />";
 $db->query("
-    UPDATE `liltvolontari`.`users` SET `id`='0' WHERE `id`='2';
+    UPDATE `users` SET `id`='0' WHERE `id`='2';
 ");
 echo "moved riunione placeholder from id 2 to id 0...<br / >";
 
