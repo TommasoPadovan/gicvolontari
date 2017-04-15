@@ -70,6 +70,7 @@ if (!$constraints->areOk()) {
         $requirements = $selectedEvent['requirements'];
         $minAttendants = $selectedEvent['minAttendants'];
         $maxAttendants = $selectedEvent['maxAttendants'];
+        if ($maxAttendants == 0) $maxAttendants = 420;
 
         $who = unserialize($selectedEvent['who']);
 

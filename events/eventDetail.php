@@ -177,7 +177,15 @@ FORM
 
 
         $liAttendants = "";
-        $volunteerThisEvent = $this->db->select('eventsattendants', ['event' => $this->event['id']]);
+//        $volunteerThisEvent = $this->db->select('eventsattendants', ['event' => $this->event['id']]);
+        $volunteerThisEvent = $this->db->prepare("
+          SELECT *
+          FROM eventsattendants
+          WHERE event = :event
+          ORDER BY timestamp ASC");
+        $volunteerThisEvent->execute([':event' => $this->event['id']]);
+        $maxAttendants = $this->event['maxAttendants'];
+        $attendantsCounter = 1;
         foreach ($volunteerThisEvent as $item) {
             $volunteerDetail = $this->db->getUser($item['volunteer']);
 
@@ -195,6 +203,9 @@ FORM
                 PermissionPage::MORNING => $removeOwnReservationLink
             ]))->out();
             $liAttendants.= "<li>$removeReservationLink {$volunteerDetail['firstname']} {$volunteerDetail['lastname']}</li>";
+            if ($attendantsCounter == $maxAttendants)
+                $liAttendants.="--------------<br />Riserve:";
+            $attendantsCounter++;
         }
 
         return <<<RESDIV

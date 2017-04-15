@@ -53,7 +53,12 @@ foreach ($meetings as $meeting) {
 MEETING;
 	if ($meeting['requirements'] != '' && $meeting['requirements'] != null )
 		$meetingsList.= "<p>Sono stati indicati i seguenti requisiti: {$meeting['requirements']}</p>";
-	$meetingsList.= "</li>\n";
+
+    //vedo se è iscritto come riserva o no
+    if ($commitments->isOverbooked($_SESSION['id'], $meeting['event']))
+        $meetingsList.='(Riserva)';
+
+    $meetingsList.= "</li>\n";
 }
 
 $eventsList='';
@@ -68,6 +73,11 @@ foreach ($events as $event) {
 EVENT;
 	if ($event['requirements'] != '' && $event['requirements'] != null )
 		$eventsList.= "<p>Sono stati indicati i seguenti requisiti: {$event['requirements']}</p>";
+
+    //vedo se è iscritto come riserva o no
+    if ($commitments->isOverbooked($_SESSION['id'], $event['event']))
+        $eventsList.='(Riserva)';
+
 	$eventsList.= "</li>\n";
 }
 

@@ -19,14 +19,21 @@ $db = new DbConnection();
 
 
 $addEventAdminButton =
-    (new PermissionString([PermissionPage::ADMIN => "<a class=\"btn btn-default pull-right\" href=\"add_event.php\">Aggiungi evento</a>"]))->out();
+    (new PermissionString([PermissionPage::ADMIN =>
+            "<a class=\"btn btn-default pull-right\" href=\"add_event.php\">Aggiungi evento</a>"]))->out();
 
 
 
 
 
 $eventList='';
-$allEvents = $db->select('events');
+$today = date("Y-m-d");
+//$allEvents = $db->select('events');
+$allEvents = $db->query("
+SELECT *
+FROM events
+WHERE (date BETWEEN '$today 00:00:01' AND '2500-12-31 00:00:00')
+");
 foreach ($allEvents as $row) {
     $eventList.=(new EventDetail($row['id']))->getCard();
 }
@@ -40,6 +47,9 @@ $content = <<<HTML
 <hr />
 <div>
     $eventList
+</div>
+<div>
+    <a href="events_in_past.php" class="btn btn-default">Eventi Passati</a>
 </div>
 HTML;
 

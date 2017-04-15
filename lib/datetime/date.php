@@ -23,4 +23,20 @@ class Date {
         return "{$this->d}/{$this->m}/{$this->y}";
     }
 
+    public function isAfter(Date $date) {
+        return $this->y >= $date->y && $this->m >= $date->m && $this->d >= $date->d;
+    }
+
+    public function isBefore(Date $date) {
+        return !$this->isAfter($date);
+    }
+
+    public function inFuture() {
+        return $this->isAfter(new Date(date("Y-m-d")));
+    }
+
+    public function inPast() {
+        return $this->isBefore(new Date(date("Y-m-d")));
+    }
+
 }

@@ -77,5 +77,27 @@ class Commitments{
         return $events;
     }
 
+    public function isOverbooked($volunteerID, $eventID) {
+        $maxAttendants = $this->db->select('events', [
+            'id' => $eventID
+        ]);
+        $maxAttendants = $maxAttendants[0]['maxAttendants'];
+
+        $myTimestamp = $this->db->select('eventsattendants', [
+            'event' => $eventID,
+            'volunteer' => $volunteerID
+        ]);
+        $myTimestamp = $myTimestamp[0]['timestamp'];
+
+        $volunteerQueue = $this->db->prepare("
+            SELECT *
+            FROM eventsattendants
+            WHERE timestamp < :timestamp
+        ");
+        $volunteerQueue->execute([':timestamp' => $myTimestamp]);
+
+        return !count($volunteerQueue) < $maxAttendants;
+    }
+
 
 }
