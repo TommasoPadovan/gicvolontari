@@ -39,6 +39,22 @@ class EventDetail {
         $timeStart = (new Time($this->event['timeStart']))->getSimpleTime();
         $timeEnd = (new Time($this->event['timeEnd']))->getSimpleTime();
         $location = $this->event['location'];
+        $nPartecipanti = count($this->db->select('eventsattendants', [
+            'event' => $this->event['id']
+        ]));
+        $amIReserved = count($this->db->select('eventsattendants', [
+            'event' => $this->event['id'],
+            'volunteer' => $_SESSION['id']
+        ]));
+        if ($amIReserved == 0) $amIReserved= <<<END
+<a href="process_reserve_for_event_or_course.php?event={$this->event['id']}"
+class="btn btn-default">Iscriviti all'evento!</a>
+END;
+        else $amIReserved = <<<END
+Sei iscritto <a href='process_remove_reservation.php?event={$this->event['id']}'><img src='../img/bin.png' alt='cancella' height='15' width='15'
+                    onclick="return confirm('Sei sicuro di voler cancellare la prenotazione?')"/>
+                </a>
+END;
 
         $adminEditButton = (new PermissionString([
             PermissionPage::ADMIN => "<a class='pull-right' href='add_event.php?id={$this->event['id']}'><img src='../img/pencil.png' alt='modifica' height='15' width='15'></a> "
@@ -54,22 +70,19 @@ class EventDetail {
 
 
         return <<<TAG
-            <div class="panel panel-default">
+            <div class="col-sm-4 panel panel-default">
                 <div class="panel-body">
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <h2><a href="eventDescriptionPage.php?id={$this->event['id']}">$title</a></h2>
-                            $adminEditButton
-                            $adminRemoveButton
-                            <!--<p><label>Tipo: </label> $type</p>-->
-                            <p><label>Data e Ora: </label> il $date dalle ore $timeStart alle ore $timeEnd</p>
-                            <!--<p><label>Inizio: </label> $timeStart</p>-->
-                            <!--<p><label>Fine: </label> $timeEnd</p>-->
-                            <p><label>Luogo: </label> $location</p>
-                        </div>
-                        <div class="col-sm-6 vertical_line">
-                            $reservationDiv
-                        </div>
+                    <div>
+                        <h4><a href="eventDescriptionPage.php?id={$this->event['id']}">$title</a></h4>
+                        $adminEditButton
+                        $adminRemoveButton
+                        <!--<p><label>Tipo: </label> $type</p>-->
+                        <p><label>Data e Ora: </label> il $date dalle ore $timeStart alle ore $timeEnd</p>
+                        <!--<p><label>Inizio: </label> $timeStart</p>-->
+                        <!--<p><label>Fine: </label> $timeEnd</p>-->
+                        <p><label>Luogo: </label> $location</p>
+                        <p><label>Iscritti: </label> $nPartecipanti</p>
+                        <p>$amIReserved</p>
                     </div>
                 </div>
             </div>
@@ -82,7 +95,7 @@ TAG;
         /**
          * here i get variables i will use in the pdf template
          */
-        $type = $this>$this->event['type'];
+        $type = $this->event['type'];
         $title = $this->event['title'];
         $date = (new Date($this->event['date']))->getItalianDate();
         $timeStart = (new Time($this->event['timeStart']))->getSimpleTime();
@@ -90,6 +103,7 @@ TAG;
         $location = $this->event['location'];
         $description = $this->event['description'];
         $requirements = $this->event['requirements'];
+        $resoconto = $this->event['resoconto'];
         $minAttendants = $this->event['minAttendants'];
         $maxAttendants = $this->event['maxAttendants'];
         $who = unserialize($this->event['who']);
@@ -111,6 +125,7 @@ TAG;
         $reservationDiv = $this->getReservationDiv();
         return <<<TAG
             <div class="panel panel-default">
+                <a class="pull-right" href="print_event_detail.php?id={$_GET['id']}"><img src="../img/print.png" width="30" height="30" alt="stampa dettagli evento"></a>
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-sm-6">
@@ -133,6 +148,8 @@ TAG;
                         </div>
                         <div class="col-sm-6 vertical_line">
                             $reservationDiv
+                            <hr />
+                            <p><label>Resoconto: </label> $resoconto</p>
                         </div>
                     </div>
                 </div>

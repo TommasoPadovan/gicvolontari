@@ -2,6 +2,7 @@
 require_once('../lib/generalLayout.php');
 require_once('../lib/permission.php');
 require_once('../lib/sqlLib.php');
+require_once('../lib/datetime/month.php');
 
 $db = new DbConnection;
 
@@ -44,6 +45,7 @@ function userRow($row, $db)  {
 	}
 
 	$presenze = getPresenze($db, $row['id'], intval(date("Y")), intval(date("m")));
+	$presenzeProssimo = getPresenze($db, $row['id'], intval(date("Y")), intval(date("m"))+1);
 	$currentYear = date("Y");
 	$actions = <<<LINK
 <a href="volunteer_form.php?id=$id"><img src="../img/pencil.png" alt="modifica" width='15' height='15'></a>
@@ -61,11 +63,16 @@ LINK;
 			<td>$position</th>
 			<td>$permission</td>
 			<td>$presenze</td>
+			<td>$presenzeProssimo</td>
 			<td>$actions</th>
 		</tr>
 EOF;
 	return $row;
 }
+
+$currentMonthName = (new Month(date("m"), date("Y")))->getMonthName();
+$nextMonthName = (new Month(date("m")+1, date("Y")))->getMonthName();
+
 
 //setting the content of the page
 $content = <<<HTML
@@ -169,7 +176,8 @@ $content = <<<HTML
 				<th>Email</th>
 				<th>Posizione</th>
 				<th>Permessi</th>
-				<th>Presenze ultimo mese</th>
+				<th>Presenze $currentMonthName</th>
+				<th>Presenze $nextMonthName</th>
 				<th>Azioni</th>
 			</tr>
 		</thead>

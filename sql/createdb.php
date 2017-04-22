@@ -91,6 +91,7 @@ create table events (
 	location VARCHAR(300),
 	description LONGTEXT,
 	requirements LONGTEXT,
+	resoconto LONGTEXT,
 	minAttendants INT(6),
 	maxAttendants INT(6),
 	who VARCHAR(256)

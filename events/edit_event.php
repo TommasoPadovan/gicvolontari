@@ -34,6 +34,8 @@ class EditEventCommand extends Command {
         else $location = '';
         if ( isset($_POST['description']) )$description = $_POST['description'];
         else $description = '';
+        if ( isset($_POST['resoconto']) )$resoconto = $_POST['resoconto'];
+        else $resoconto = '';
         if ( isset($_POST['requirements']) )$requirements = $_POST['requirements'];
         else $requirements = '';
         if ( isset($_POST['minAttendants']) )$minAttendants = $_POST['minAttendants'];
@@ -63,10 +65,12 @@ class EditEventCommand extends Command {
             'location'      =>  $location,
             'description'   =>  $description,
             'requirements'  =>  $requirements,
+            'resoconto'     =>  $resoconto,
             'minAttendants' =>  $minAttendants,
             'maxAttendants' =>  $maxAttendants,
             'who'           =>  $who
         ];
+        if ($newDataArray['maxAttendants'] == 0) $newDataArray['maxAttendants'] = 420;
 
         if ($_POST['id'] == null) {     //sto creando un evento nuovo
             $db->insert('events', $newDataArray);           //inserisco l'evento

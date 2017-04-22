@@ -41,6 +41,7 @@ if (!$constraints->areOk()) {
     $requirements = '';
     $minAttendants = '';
     $maxAttendants = '';
+    $resoconto = '';
     $whoCheck = [
         'sera1' => 'checked=\'checked\'',
         'sera2' => 'checked=\'checked\'',
@@ -70,6 +71,7 @@ if (!$constraints->areOk()) {
         $requirements = $selectedEvent['requirements'];
         $minAttendants = $selectedEvent['minAttendants'];
         $maxAttendants = $selectedEvent['maxAttendants'];
+        $resoconto = $selectedEvent['resoconto'];
         if ($maxAttendants == 0) $maxAttendants = 420;
 
         $who = unserialize($selectedEvent['who']);
@@ -133,13 +135,19 @@ if (!$constraints->areOk()) {
 				<input type="number" class="form-control" id="maxAttendants" placeholder="Massimo Partecipanti" name="maxAttendants" value="$maxAttendants">
 			</div>
 		</div><div class="row">
-				<div class="form-group col-sm-6">
+			<div class="form-group col-sm-6">
 				<label for="description">Descrizione</label>
-				<textarea class="form-control" id="description" placeholder="Descrizione" name="description" rows="10">$description</textarea>
+				<textarea class="form-control" id="description" placeholder="Descrizione" name="description" rows="6">$description</textarea>
 			</div>
 			<div class="form-group col-sm-6">
 				<label for="requirements">Requisiti</label>
-				<textarea class="form-control" id="requirements" placeholder="Requisiti" name="requirements" rows="10">$requirements</textarea>
+				<textarea class="form-control" id="requirements" placeholder="Requisiti" name="requirements" rows="6">$requirements</textarea>
+			</div>
+		</div>
+		<div class="row">
+		    <div class="form-group col-sm-12">
+				<label for="description">Resoconto</label>
+				<textarea class="form-control" id="resoconto" placeholder="Resoconto" name="resoconto" rows="7">$resoconto</textarea>
 			</div>
 		</div>
 
