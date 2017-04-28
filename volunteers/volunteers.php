@@ -165,7 +165,7 @@ $content = <<<HTML
 </form>
 <hr />
 
-<a href="export_csv.php" class="btn btn-default pull-right">Esporta in Excell</a>
+<a href="export_csv.php" class="btn btn-default pull-right">Esporta in Excel</a>
 <h1>Lista Volontari</h1>
 <div class="table-responsive">
 	<table class="table table-striped table-bordered table-condensed">

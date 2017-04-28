@@ -36,7 +36,8 @@ class AdminReserveUserForEventOrCourseCommand extends Command {
                 'timestamp' => time()
             ]);
 
-            echo("<script> window.location='{$this->lastPage}'; </script>");
+//            echo("<script> window.location='{$this->lastPage}'; </script>");
+            header("Location: {$this->lastPage}");
         }
 
     }

@@ -142,7 +142,7 @@ function adminAddMonthButton() {
 
 function adminCsvExportButton($shownMonth) {
     return (new PermissionString([
-        PermissionPage::ADMIN => "<a href='export_csv.php?Mese=$shownMonth' class='pull-right btn btn-default'>Esporta In Excell</a>"
+        PermissionPage::ADMIN => "<a href='export_csv.php?Mese=$shownMonth' class='pull-right btn btn-default'>Esporta In Excel</a>"
     ]))->out();
 }
 
