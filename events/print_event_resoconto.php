@@ -2,9 +2,10 @@
 /**
  * Created by IntelliJ IDEA.
  * User: kurt
- * Date: 22/04/17
- * Time: 17.15
+ * Date: 02/05/2017
+ * Time: 15:44
  */
+
 
 require_once('eventDetail.php');
 require_once('../lib/generalLayout.php');
@@ -34,15 +35,9 @@ if ($constraints->areOk()) {
         'id' => $_GET['id']
     ])[0];
 
-    //loading attendants IDs list
-    $eventsAttendantsIDsList = $db->select('eventsattendants', [
-        'event' => $event['id']
-    ]);
-
     $type = $event['type'];
     if ($type == "riunione") $type = "Riunione";
     if ($type == "evento") $type = "Evento";
-
     $title = $event['title'];
     $date = (new Date($event['date']))->getItalianDate();
     $timeStart = (new Time($event['timeStart']))->getSimpleTime();
@@ -64,7 +59,7 @@ if ($constraints->areOk()) {
 
     //titolone pagina
     $pdf->SetFont('Times', 'b', 20);
-    $pdf->Cell(0, 10, "$type: $title", 0, 1);
+    $pdf->Cell(0, 10, "Resoconto $type: $title", 0, 1);
     $pdf->SetFont('Times', '', 12);
 
     //data ora
@@ -72,36 +67,6 @@ if ($constraints->areOk()) {
 
     //luogo
     $pdf->MultiCell(0, 10, "Presso: $location", 0, 1);
-
-    //descrizione
-    $pdf->Cell(0, 10, ' ', 0, 1);
-    $pdf->SetFont('Times', 'iu', 16);
-    $pdf->Cell(0, 10, 'Descrizione', 0, 1);
-    $pdf->SetFont('Times', '', 12);
-
-    $pdf->MultiCell(0, 10, $description, 0, 1);
-
-    //requisiti
-    $pdf->Cell(0, 10, ' ', 0, 1);
-    $pdf->SetFont('Times', 'iu', 16);
-    $pdf->Cell(0, 10, 'Requisiti', 0, 1);
-    $pdf->SetFont('Times', '', 12);
-
-    $pdf->MultiCell(0, 10, $requirements, 0, 1);
-
-    //attendants
-    $pdf->Cell(0, 10, ' ', 0, 1);
-    $pdf->SetFont('Times', 'iu', 16);
-    $pdf->Cell(0, 10, 'Presenze', 0, 1);
-    $pdf->SetFont('Times', '', 12);
-
-    $counter=1;
-    foreach ($eventsAttendantsIDsList as $row) {
-        $pdf->Cell(0, 10,
-            "$counter. ".$db->getUserName($row['volunteer'])."\t_____________________",
-            0, 1);
-        $counter++;
-    }
 
     //resoconto/verbale
     if ($resoconto!='') {
@@ -113,15 +78,12 @@ if ($constraints->areOk()) {
         $pdf->MultiCell(0, 10, $resoconto, 0, 1);
     }
 
-
-
-
     $pdf->Output();
 } else {
     $content = $constraints->getErrorContent();
     try {
         $generalLayout = new GeneralLayout(GeneralLayout::HOMEPATH."events/eventsandcourses.php", PermissionPage::MORNING);
-        $generalLayout->yieldElem('title', "Stampa Dettagli Evento");
+        $generalLayout->yieldElem('title', "Stampa Solo Resoconto");
         $generalLayout->yieldElem('content', $content);
         echo $generalLayout->getPage();
     }

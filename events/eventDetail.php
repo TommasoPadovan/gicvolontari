@@ -122,6 +122,10 @@ TAG;
         foreach($who as $role)
             $liWhoCanReserve.="<li>$role</li>\n";
 
+        $adminButtonPrintResoconto = (new PermissionString([
+            PermissionPage::ADMIN => "<a class=\"pull-right\" href=\"print_event_resoconto.php?id={$_GET['id']}\"><img src=\"../img/print.png\" width=\"30\" height=\"30\" alt=\"stampa solo resoconto\"></a>"
+        ]))->out();
+
         $reservationDiv = $this->getReservationDiv();
         return <<<TAG
             <div class="panel panel-default">
@@ -149,6 +153,7 @@ TAG;
                         <div class="col-sm-6 vertical_line">
                             $reservationDiv
                             <hr />
+                            $adminButtonPrintResoconto
                             <p><label>Resoconto: </label> $resoconto</p>
                         </div>
                     </div>

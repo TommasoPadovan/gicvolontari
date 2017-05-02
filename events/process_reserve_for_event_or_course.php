@@ -79,11 +79,16 @@ class ReserveForEventOrCourseCommand extends Command {
                     'timestamp' => time()
                 ]);
 
-
                 //sei iscritto con riserva?
-                if (count($db->select('events', [
-                    'id' => $_GET['event']
-                ])) >= $event[0]['maxAttendants'] ) {
+//                var_dump(count($db->select('events', [
+//                    'id' => $_GET['event']
+//                ])));
+//                echo "<br />";
+//                var_dump($event[0]['maxAttendants']);
+//                exit;
+                if (count($db->select('eventsattendants', [
+                    'event' => $_GET['event']
+                ])) > $event[0]['maxAttendants'] ) {
                     echo("<script>
                         alert('Prenotazione effettuata ma con riserva, potrai partecipare solo se si libera un posto.');
                         window.location='{$this->lastPage}';

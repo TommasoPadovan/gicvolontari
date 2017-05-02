@@ -6,7 +6,7 @@ session_start();
 
 class GeneralLayout extends PermissionPage {
 
-	const HOMEPATH = '/pado/gicvolontari/';
+	const HOMEPATH = '/padoWeb/gicvolontari/';
 
 	private $elems;
 
