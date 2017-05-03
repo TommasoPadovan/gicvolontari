@@ -12,6 +12,7 @@ require_once('../lib/permissionString.php');
 require_once('../lib/sqlLib.php');
 require_once('../lib/datetime/date.php');
 require_once('../lib/datetime/time.php');
+require_once('../commitments/classCommitments.php');
 
 class EventDetail {
 
@@ -46,15 +47,30 @@ class EventDetail {
             'event' => $this->event['id'],
             'volunteer' => $_SESSION['id']
         ]));
-        if ($amIReserved == 0) $amIReserved= <<<END
-<a href="process_reserve_for_event_or_course.php?event={$this->event['id']}"
-class="btn btn-default">Iscriviti all'evento!</a>
+        if ($amIReserved == 0){
+            $amIReserved= <<<END
+    <a href="process_reserve_for_event_or_course.php?event={$this->event['id']}"
+    class="btn btn-default">Iscriviti all'evento!</a>
 END;
-        else $amIReserved = <<<END
-Sei iscritto <a href='process_remove_reservation.php?event={$this->event['id']}'><img src='../img/bin.png' alt='cancella' height='15' width='15'
-                    onclick="return confirm('Sei sicuro di voler cancellare la prenotazione?')"/>
-                </a>
+            $style = '';
+        }
+        else {
+            if ( (new Commitments())->isOverbooked($_SESSION['id'], $this->event['id']) ) {
+                $amIReserved = <<<END
+    Sei iscritto con riserva <a href='process_remove_reservation.php?event={$this->event['id']}'><img src='../img/bin.png' alt='cancella' height='15' width='15'
+                        onclick="return confirm('Sei sicuro di voler cancellare la prenotazione?')"/>
+                    </a>
 END;
+                $style = 'registered_reserve';
+            } else {
+                $amIReserved = <<<END
+    Sei iscritto! <a href='process_remove_reservation.php?event={$this->event['id']}'><img src='../img/bin.png' alt='cancella' height='15' width='15'
+                        onclick="return confirm('Sei sicuro di voler cancellare la prenotazione?')"/>
+                    </a>
+END;
+                $style = 'registered';
+            }
+        }
 
         $adminEditButton = (new PermissionString([
             PermissionPage::ADMIN => "<a class='pull-right' href='add_event.php?id={$this->event['id']}'><img src='../img/pencil.png' alt='modifica' height='15' width='15'></a> "
@@ -70,7 +86,7 @@ END;
 
 
         return <<<TAG
-            <div class="col-sm-4 panel panel-default">
+            <div class="col-sm-4 panel panel-default $style">
                 <div class="panel-body">
                     <div>
                         <h4><a href="eventDescriptionPage.php?id={$this->event['id']}">$title</a></h4>

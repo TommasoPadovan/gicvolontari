@@ -266,9 +266,9 @@ function calendarContent (Month $month, $day, DbConnection $db) {
             adminSelectUserSelect($db, 'clown', 3, $month, $day)
         ];
         $thirdRow = "</tr><tr>
-				<td class='oasi'>{$dayTurns['oasi'][3]} {$selectArr[0]}</td>
-				<td class='fiabe'>{$dayTurns['fiabe'][3]} {$selectArr[1]}</td>
-				<td class='clown'>{$dayTurns['clown'][3]} {$selectArr[2]}</td>";
+				<td>{$dayTurns['oasi'][3]} {$selectArr[0]}</td>
+				<td>{$dayTurns['fiabe'][3]} {$selectArr[1]}</td>
+				<td>{$dayTurns['clown'][3]} {$selectArr[2]}</td>";
     } else $thirdRow='';
 
     $numeroENomeGiorno = "<strong>$day</strong> - " . $month->getDayName($day);
@@ -276,23 +276,28 @@ function calendarContent (Month $month, $day, DbConnection $db) {
     return <<<END
 	<p>$numeroENomeGiorno</p>
 	<hr />
-	<table class="table table-striped table-bordered table-condensed">
+	<table class="table table-bordered table-condensed">
+	    <colgroup>
+	        <col class="oasi">
+	        <col class="fiabe">
+	        <col class="clown">
+        </colgroup>
 		<thead>
 			<tr>
-				<th class='oasi'>Oasi</th>
-				<th class='fiabe'>Fiabe</th>
-				<th class='clown'>Clown</th>
+				<th>Oasi</th>
+				<th>Fiabe</th>
+				<th>Clown</th>
 			</tr>
 		</thead>
 		<tbody>
 			<tr>
-				<td class='oasi'>{$dayTurns['oasi'][1]}</td>
-				<td class='fiabe'>{$dayTurns['fiabe'][1]}</td>
-				<td class='clown'>{$dayTurns['clown'][1]}</td>
+				<td>{$dayTurns['oasi'][1]}</td>
+				<td>{$dayTurns['fiabe'][1]}</td>
+				<td>{$dayTurns['clown'][1]}</td>
 			</tr><tr>
-				<td class='oasi'>{$dayTurns['oasi'][2]}</td>
-				<td class='fiabe'>{$dayTurns['fiabe'][2]}</td>
-				<td class='clown'>{$dayTurns['clown'][2]}</td>
+				<td>{$dayTurns['oasi'][2]}</td>
+				<td>{$dayTurns['fiabe'][2]}</td>
+				<td>{$dayTurns['clown'][2]}</td>
 			$thirdRow
 			</tr>
 		</tbody>

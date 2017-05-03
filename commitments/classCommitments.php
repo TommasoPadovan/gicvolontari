@@ -92,11 +92,14 @@ class Commitments{
         $volunteerQueue = $this->db->prepare("
             SELECT *
             FROM eventsattendants
-            WHERE timestamp < :timestamp
+            WHERE timestamp < :timestamp AND event = :eventID
         ");
-        $volunteerQueue->execute([':timestamp' => $myTimestamp]);
+        $volunteerQueue->execute([
+            ':timestamp' => $myTimestamp,
+            ':eventID' => $eventID
+        ]);
 
-        return !count($volunteerQueue) < $maxAttendants;
+        return !($volunteerQueue->rowCount() < $maxAttendants);
     }
 
 

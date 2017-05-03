@@ -41,15 +41,15 @@ foreach ($allEvents as $row) {
 
 $content = <<<HTML
 <h1>Eventi</h1>
+$addEventAdminButton
 <div>
     <p>
     Questa pagina mostra il riepilogo dei prossimi eventi in programma. Se vuoi maggiori dettagli
     o vedere chi parteciperà clicca sul nome dell'evento.
     </p>
-    $addEventAdminButton
 </div>
 <hr />
-<div class="row">
+<div class="row row_equal">
     $eventList
 </div>
 <div>

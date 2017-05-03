@@ -27,7 +27,7 @@ $events = $commitments->getEventsArray();
 
 
 
-
+//header comune
 $pdf = new PDF();
 $pdf->AliasNbPages();
 $pdf->AddPage();
@@ -37,11 +37,12 @@ $pdf->SetFont('Times','',12);
 $pdf->Cell(0,10,' ',0,1);
 $xMargin = $pdf->GetX();
 
+//title
 $pdf->SetFont('Times', 'b', 20);
 $pdf->Cell(0,10,'Promemoria impegni',0,1);
 $pdf->SetFont('Times','',12);
 
-
+//turni sera
 $pdf->Cell(0,10,' ',0,1);
 $pdf->SetFont('Times', 'iu', 16);
 $pdf->Cell(0,10,'Turni Sera',0,1);
@@ -52,7 +53,7 @@ foreach ($turns as $turn) {
 }
 
 
-
+//riunioni
 $pdf->Cell(0,10,' ',0,1);
 $pdf->SetFont('Times', 'iu', 16);
 $pdf->Cell(0,10,'Riunioni',0,1);
@@ -65,11 +66,13 @@ foreach ($meetings as $meeting) {
         $pdf->MultiCell(0,10,"Il {$meeting['date']} dalle {$meeting['timeStart']} alle {$meeting['timeEnd']} presso {$meeting['location']}",0,1);
         if ($meeting['requirements'] != '' && $meeting['requirements'] != null )
             $pdf->Write(5, "Sono stati indicati i seguenti requisiti: {$meeting['requirements']} \n");
+        if ($commitments->isOverbooked($_SESSION['id'], $meeting['event']))
+            $pdf->Cell(0,10,"(Riserva)",0,1);
     }
 }
 
 
-
+//eventi
 $pdf->Cell(0,10,' ',0,1);
 $pdf->SetFont('Times', 'iu', 16);
 $pdf->Cell(0,10,'Eventi',0,1);
@@ -82,6 +85,8 @@ foreach ($events as $event) {
         $pdf->MultiCell(0,10,"Il {$event['date']} dalle {$event['timeStart']} alle {$event['timeEnd']} presso {$event['location']}",0,1);
         if ($event['requirements'] != '' && $event['requirements'] != null )
             $pdf->Write(5, "Sono stati indicati i seguenti requisiti: {$event['requirements']}\n");
+        if ($commitments->isOverbooked($_SESSION['id'], $event['event']))
+            $pdf->Cell(0,10,"(Riserva)",0,1);
     }
 }
 
