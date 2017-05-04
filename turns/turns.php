@@ -252,7 +252,7 @@ function calendarContent (Month $month, $day, DbConnection $db) {
 
     //nomi di quelli già prenotati
     foreach ($turniVolontari as $row) {
-        $dayTurns[$row['task']][$row['position']] = $db->getUserName($row['volunteer'])
+        $dayTurns[$row['task']][$row['position']] = "<p class='auto-scale'>{$db->getUserName($row['volunteer'])}"
             .eventuallyAddDelete($row, $dayTurns[$row['task']]);
     }
 
@@ -276,18 +276,18 @@ function calendarContent (Month $month, $day, DbConnection $db) {
     return <<<END
 	<p>$numeroENomeGiorno</p>
 	<hr />
-	<table class="table table-bordered table-condensed">
+	<table class="table table-bordered table-condensed fixed">
 	    <colgroup>
 	        <col class="oasi">
 	        <col class="fiabe">
 	        <col class="clown">
         </colgroup>
 		<thead>
-			<tr>
-				<th>Oasi</th>
-				<th>Fiabe</th>
-				<th>Clown</th>
-			</tr>
+			<!--<tr>-->
+				<!--<th>Oasi</th>-->
+				<!--<th>Fiabe</th>-->
+				<!--<th>Clown</th>-->
+			<!--</tr>-->
 		</thead>
 		<tbody>
 			<tr>

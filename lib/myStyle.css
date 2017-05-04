@@ -54,19 +54,54 @@
   padding: 0 90px;
 }*/
 
-.fiabe {
-  background-color: #cdf7f7;
-  padding: 0 90px;
-}
+
+/*.oasi {*/
+    /*background: #4cbdff; !* For browsers that do not support gradients *!*/
+    /*background: -webkit-linear-gradient(left, #4cbdff , #4cffc6); !* For Safari 5.1 to 6.0 *!*/
+    /*background: -o-linear-gradient(right, #4cbdff, #4cffc6); !* For Opera 11.1 to 12.0 *!*/
+    /*background: -moz-linear-gradient(right, #4cbdff, #4cffc6); !* For Firefox 3.6 to 15 *!*/
+    /*background: linear-gradient(to right, #4cbdff , #4cffc6); !* Standard syntax *!*/
+/*}*/
+
+/*.fiabe {*/
+    /*background: #a5ff4c; !* For browsers that do not support gradients *!*/
+    /*background: -webkit-linear-gradient(left, #4cffc6 , #a5ff4c); !* For Safari 5.1 to 6.0 *!*/
+    /*background: -o-linear-gradient(right, #4cffc6, #a5ff4c); !* For Opera 11.1 to 12.0 *!*/
+    /*background: -moz-linear-gradient(right, #4cffc6, #a5ff4c); !* For Firefox 3.6 to 15 *!*/
+    /*background: linear-gradient(to right, #4cffc6 , #a5ff4c); !* Standard syntax *!*/
+/*}*/
+
+/*.clown {*/
+    /*background: #fc4741; !* For browsers that do not support gradients *!*/
+    /*background: -webkit-linear-gradient(left, #a5ff4c 0% , #fc9840 20%,  #fc4741 100%); !* For Safari 5.1 to 6.0 *!*/
+    /*background: -o-linear-gradient(right, #a5ff4c 0%, #fc9840 20%,  #fc4741 100%); !* For Opera 11.1 to 12.0 *!*/
+    /*background: -moz-linear-gradient(right, #a5ff4c 0%, #fc9840 20%,  #fc4741 100%); !* For Firefox 3.6 to 15 *!*/
+    /*background: linear-gradient(to right, #a5ff4c 0%, #fc9840 20%,  #fc4741 100%); !* Standard syntax *!*/
+/*}*/
+
 
 .oasi {
-  background-color: #d0f7cd;
-  padding: 0 90px;
+    background: #4cbdff; /* For browsers that do not support gradients */
+    background: -webkit-linear-gradient(left, #4cbdff , #4ce4ff); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(right, #4cbdff, #4ce4ff); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(right, #4cbdff, #4ce4ff); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(to right, #4cbdff , #4ce4ff); /* Standard syntax */
+}
+
+.fiabe {
+    background: #5aff4c; /* For browsers that do not support gradients */
+    background: -webkit-linear-gradient(left, #4cffa2 , #5aff4c); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(right, #4cffa2, #5aff4c); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(right, #4cffa2, #5aff4c); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(to right, #4cffa2 , #5aff4c); /* Standard syntax */
 }
 
 .clown {
-  background-color: #fcdede;
-  padding: 0 90px;
+    background: #fc4741; /* For browsers that do not support gradients */
+    background: -webkit-linear-gradient(left, #fc9840,  #fc4741); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(right, #fc9840,  #fc4741); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(right, #fc9840,  #fc4741); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(to right, #fc9840,  #fc4741); /* Standard syntax */
 }
 
 
@@ -108,3 +143,19 @@ div.registered_reserve {
     flex-direction: column;
 }
 
+
+
+table.fixed {
+    table-layout:fixed;
+    width:100%;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    -webkit-hyphens: auto;
+    -ms-hyphens: auto;
+    -moz-hyphens: auto;
+    hyphens: auto;
+}
+
+p.auto-scale {
+    font-size: small;
+}
