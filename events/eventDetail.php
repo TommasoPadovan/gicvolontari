@@ -157,8 +157,8 @@ TAG;
                             <!--<p><label>Inizio: </label> $timeStart</p>-->
                             <!--<p><label>Fine: </label> $timeEnd</p>-->
                             <p><label>Luogo: </label> $location</p>
-                            <p><label>Descrizione: </label> $description</p>
-                            <p><label>Requisiti: </label> $requirements</p>
+                            <p class="formatted-text"><label>Descrizione: </label> $description</p>
+                            <p class="formatted-text"><label>Requisiti: </label> $requirements</p>
                             <p><label>Minimo partecipanti: </label> $minAttendants</p>
                             <p><label>Massimo participanti: </label> $maxAttendants</p>
                             <p><label>Chi si può iscrivere?</label></p>
@@ -170,7 +170,7 @@ TAG;
                             $reservationDiv
                             <hr />
                             $adminButtonPrintResoconto
-                            <p><label>Resoconto: </label> $resoconto</p>
+                            <p class="formatted-text"><label>Resoconto: </label> $resoconto</p>
                         </div>
                     </div>
                 </div>
