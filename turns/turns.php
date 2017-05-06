@@ -283,11 +283,11 @@ function calendarContent (Month $month, $day, DbConnection $db) {
 	        <col class="clown">
         </colgroup>
 		<thead>
-			<!--<tr>-->
-				<!--<th>Oasi</th>-->
-				<!--<th>Fiabe</th>-->
-				<!--<th>Clown</th>-->
-			<!--</tr>-->
+			<tr>
+				<th>Oasi</th>
+				<th>Fiabe</th>
+				<th>Clown</th>
+			</tr>
 		</thead>
 		<tbody>
 			<tr>
