@@ -161,5 +161,6 @@ p.auto-scale {
 }
 
 p.formatted-text {
-    white-space: pre;
+    white-space: pre-line;
+
 }

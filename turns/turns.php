@@ -316,10 +316,16 @@ function adminSelectUserSelect(DbConnection $db, $task, $position, Month $month,
     $m = $month->getMonth();
 
     $selectString = "<select name='user'>";
-    $allUsers = $db->select('users');
+    $allUsers = $db->query('
+        SELECT *
+        FROM users
+        ORDER BY lastname, firstname ASC
+    ');
     foreach	($allUsers as $user)
-        if ($user['id'] != 0)
-            $selectString.= "<option value='{$user['id']}'>{$user['lastname']}</option> \n";
+        if ($user['id'] != 0) {
+            $firstNameFirstLetter = substr($user['firstname'],0,1);
+            $selectString.= "<option value='{$user['id']}'>{$user['lastname']} $firstNameFirstLetter.</option> \n";
+        }
     $selectString.='</select>';
 
     return (new PermissionString([

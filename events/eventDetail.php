@@ -190,7 +190,12 @@ TAG;
      */
     private function getReservationDiv() {
         $options='';
-        $allUsers = $this->db->select('users');
+        //$allUsers = $this->db->select('users');
+        $allUsers = $this->db->query("
+            SELECT *
+            FROM users
+            ORDER BY lastname, firstname ASC
+        ");
         foreach ($allUsers as $user)
             if ($user['id'] != 0)
                 $options.= "<option value='{$user['id']}'>{$user['lastname']} {$user['firstname']}</option>";

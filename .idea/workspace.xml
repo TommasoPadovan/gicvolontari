@@ -5,7 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c70546f0-d070-4f10-b6a5-303fa8dc1774" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/events/eventDetail.php" afterPath="$PROJECT_DIR$/events/eventDetail.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/myStyle.css" afterPath="$PROJECT_DIR$/lib/myStyle.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/turns/turns.php" afterPath="$PROJECT_DIR$/turns/turns.php" />
     </list>
@@ -39,35 +39,9 @@
       <file leaf-file-name="myStyle.css" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/lib/myStyle.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.5961145">
-              <caret line="102" column="70" selection-start-line="102" selection-start-column="70" selection-end-line="102" selection-end-column="70" />
+            <state vertical-scroll-proportion="0.8609407">
+              <caret line="163" column="25" selection-start-line="163" selection-start-column="25" selection-end-line="163" selection-end-column="25" />
               <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="eventDescriptionPage.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/events/eventDescriptionPage.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="30" column="59" selection-start-line="30" selection-start-column="59" selection-end-line="30" selection-end-column="59" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="classCommitments.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/commitments/classCommitments.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="98" column="34" selection-start-line="98" selection-start-column="34" selection-end-line="98" selection-end-column="34" />
-              <folding>
-                <marker date="1493818714476" expanded="true" signature="369:576" placeholder="SELECT c.mon... " />
-                <marker date="1493818714476" expanded="true" signature="1197:1327" placeholder="SELECT * FRO... eventsattendants" />
-                <marker date="1493818714476" expanded="true" signature="1689:1819" placeholder="SELECT * FRO... eventsattendants" />
-                <marker date="1493818714476" expanded="true" signature="2557:2640" placeholder="SELECT * FRO... eventsattendants" />
-                <marker date="1493818714476" expanded="true" signature="2557:2661" placeholder="SELECT * FRO... eventsattendants" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -75,37 +49,34 @@
       <file leaf-file-name="eventDetail.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/events/eventDetail.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="171" column="54" selection-start-line="171" selection-start-column="54" selection-end-line="171" selection-end-column="54" />
+            <state vertical-scroll-proportion="-10.576923">
+              <caret line="196" column="44" selection-start-line="194" selection-start-column="11" selection-end-line="196" selection-end-column="44" />
               <folding>
-                <marker date="1493881606977" expanded="true" signature="3268:3358" placeholder="..." />
-                <marker date="1493881606977" expanded="true" signature="5634:5724" placeholder="..." />
-                <marker date="1493881606977" expanded="true" signature="6271:8086" placeholder="..." />
-                <marker date="1493881606977" expanded="true" signature="6482:8067" placeholder="..." />
-                <marker date="1493881606977" expanded="true" signature="6520:8044" placeholder="..." />
-                <marker date="1493881606977" expanded="true" signature="6567:7695" placeholder="..." />
-                <marker date="1493881606977" expanded="true" signature="7581:7664" placeholder="..." />
-                <marker date="1493881606977" expanded="true" signature="7756:8017" placeholder="..." />
-                <marker date="1493881606977" expanded="true" signature="9521:9625" placeholder="SELECT * FRO... eventsattendants" />
-                <marker date="1493881606977" expanded="true" signature="10152:10336" placeholder="..." />
-                <marker date="1493881606977" expanded="true" signature="10216:10315" placeholder="..." />
-                <marker date="1493881606977" expanded="true" signature="10571:10840" placeholder="..." />
+                <marker date="1494081815660" expanded="true" signature="3268:3358" placeholder="..." />
+                <marker date="1494081815660" expanded="true" signature="5634:5724" placeholder="..." />
+                <marker date="1494081815660" expanded="true" signature="6271:8086" placeholder="..." />
+                <marker date="1494081815660" expanded="true" signature="6482:8067" placeholder="..." />
+                <marker date="1494081815660" expanded="true" signature="6520:8044" placeholder="..." />
+                <marker date="1494081815660" expanded="true" signature="6567:7695" placeholder="..." />
+                <marker date="1494081815660" expanded="true" signature="7581:7664" placeholder="..." />
+                <marker date="1494081815660" expanded="true" signature="7756:8017" placeholder="..." />
+                <marker date="1494081815660" expanded="true" signature="8472:8548" placeholder="SELECT * FRO... users" />
+                <marker date="1494081815660" expanded="true" signature="9663:9767" placeholder="SELECT * FRO... eventsattendants" />
+                <marker date="1494081815660" expanded="true" signature="10294:10478" placeholder="..." />
+                <marker date="1494081815660" expanded="true" signature="10358:10457" placeholder="..." />
+                <marker date="1494081815660" expanded="true" signature="10713:10982" placeholder="..." />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="eventsandcourses.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/events/eventsandcourses.php">
+      <file leaf-file-name="createdb.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/sql/createdb.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="51" column="25" selection-start-line="51" selection-start-column="25" selection-end-line="51" selection-end-column="25" />
+            <state vertical-scroll-proportion="-26.846153">
+              <caret line="103" column="29" selection-start-line="103" selection-start-column="13" selection-end-line="103" selection-end-column="29" />
               <folding>
-                <marker date="1493819370268" expanded="true" signature="692:777" placeholder="SELECT * FRO... events" />
-                <marker date="1493819370268" expanded="true" signature="935:1115" placeholder="..." />
-                <marker date="1493819370268" expanded="true" signature="943:1108" placeholder="..." />
-                <marker date="1493819370268" expanded="true" signature="1150:1172" placeholder="..." />
-                <marker date="1493819370268" expanded="true" signature="1178:1261" placeholder="..." />
+                <marker date="1493730757772" expanded="true" signature="2423:2764" placeholder="CREATE TABLE... eventsattendants" />
               </folding>
             </state>
           </provider>
@@ -114,29 +85,30 @@
       <file leaf-file-name="turns.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/turns/turns.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-23.538462">
-              <caret line="289" column="17" selection-start-line="285" selection-start-column="12" selection-end-line="289" selection-end-column="17" />
+            <state vertical-scroll-proportion="-21.038462">
+              <caret line="326" column="101" selection-start-line="326" selection-start-column="101" selection-end-line="326" selection-end-column="101" />
               <folding>
-                <marker date="1494078672674" expanded="true" signature="1107:1234" placeholder="SELECT * FRO... turni" />
-                <marker date="1494078672674" expanded="true" signature="4477:4535" placeholder="SELECT year,... " />
-                <marker date="1494078672674" expanded="true" signature="5739:5852" placeholder="..." />
-                <marker date="1494078672674" expanded="true" signature="7184:7344" placeholder="SELECT * FRO... turni" />
-                <marker date="1494078672674" expanded="true" signature="9331:9351" placeholder="..." />
-                <marker date="1494078672674" expanded="true" signature="9331:9489" placeholder="..." />
-                <marker date="1494078672674" expanded="true" signature="9711:10221" placeholder="..." />
-                <marker date="1494078672674" expanded="true" signature="9727:9748" placeholder="..." />
-                <marker date="1494078672674" expanded="true" signature="9727:9833" placeholder="..." />
-                <marker date="1494078672674" expanded="true" signature="9843:9927" placeholder="..." />
-                <marker date="1494078672674" expanded="true" signature="9851:9916" placeholder="..." />
-                <marker date="1494078672674" expanded="true" signature="9937:10211" placeholder="..." />
-                <marker date="1494078672674" expanded="true" signature="9945:9965" placeholder="..." />
-                <marker date="1494078672674" expanded="true" signature="9945:10064" placeholder="..." />
-                <marker date="1494078672674" expanded="true" signature="10068:10088" placeholder="..." />
-                <marker date="1494078672674" expanded="true" signature="10068:10200" placeholder="..." />
-                <marker date="1494078672674" expanded="false" signature="11133:11146" placeholder="..." />
-                <marker date="1494078672674" expanded="true" signature="11187:11593" placeholder="..." />
-                <marker date="1494078672674" expanded="true" signature="11239:11584" placeholder="..." />
-                <marker date="1494078672674" expanded="true" signature="11962:12163" placeholder="..." />
+                <marker date="1494082366393" expanded="true" signature="1107:1234" placeholder="SELECT * FRO... turni" />
+                <marker date="1494082366393" expanded="true" signature="4477:4535" placeholder="SELECT year,... " />
+                <marker date="1494082366393" expanded="true" signature="5739:5852" placeholder="..." />
+                <marker date="1494082366393" expanded="true" signature="7184:7344" placeholder="SELECT * FRO... turni" />
+                <marker date="1494082366393" expanded="true" signature="9331:9351" placeholder="..." />
+                <marker date="1494082366393" expanded="true" signature="9331:9489" placeholder="..." />
+                <marker date="1494082366393" expanded="true" signature="9711:10221" placeholder="..." />
+                <marker date="1494082366393" expanded="true" signature="9727:9748" placeholder="..." />
+                <marker date="1494082366393" expanded="true" signature="9727:9833" placeholder="..." />
+                <marker date="1494082366393" expanded="true" signature="9843:9927" placeholder="..." />
+                <marker date="1494082366393" expanded="true" signature="9851:9916" placeholder="..." />
+                <marker date="1494082366393" expanded="true" signature="9937:10211" placeholder="..." />
+                <marker date="1494082366393" expanded="true" signature="9945:9965" placeholder="..." />
+                <marker date="1494082366393" expanded="true" signature="9945:10064" placeholder="..." />
+                <marker date="1494082366393" expanded="true" signature="10068:10088" placeholder="..." />
+                <marker date="1494082366393" expanded="true" signature="10068:10200" placeholder="..." />
+                <marker date="1494082366393" expanded="true" signature="10704:10772" placeholder="SELECT * FRO... users" />
+                <marker date="1494082366393" expanded="false" signature="11312:11325" placeholder="..." />
+                <marker date="1494082366393" expanded="true" signature="11366:11772" placeholder="..." />
+                <marker date="1494082366393" expanded="true" signature="11418:11763" placeholder="..." />
+                <marker date="1494082366393" expanded="true" signature="12141:12342" placeholder="..." />
               </folding>
             </state>
           </provider>
@@ -447,8 +419,8 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
       <pane id="Scratches" />
+      <pane id="Scope" />
       <pane id="PackagesPane" />
     </panes>
   </component>
@@ -458,7 +430,7 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="js-jscs-nodeInterpreter" value="C:\Program Files\nodejs\node.exe" />
-    <property name="SearchEverywhereHistoryKey" value="sql&#9;FILE&#9;file://C:/xampp/htdocs/padoWeb/gicvolontari/lib/sqlLib.php&#10;eventsand&#9;FILE&#9;file://C:/xampp/htdocs/padoWeb/gicvolontari/events/eventsandcourses.php&#10;crea&#9;FILE&#9;file://C:/xampp/htdocs/padoWeb/gicvolontari/sql/createdb.php&#10;process_reser&#9;FILE&#9;file://C:/xampp/htdocs/padoWeb/gicvolontari/events/process_reserve_for_event_or_course.php&#10;genera&#9;FILE&#9;file://C:/xampp/htdocs/padoWeb/gicvolontari/lib/generalLayout.php&#10;volunteers&#9;FILE&#9;file:///opt/lampp/htdocs/pado/gicvolontari/volunteers/volunteers.php&#10;turns&#9;FILE&#9;file:///opt/lampp/htdocs/pado/gicvolontari/turns/turns.php&#10;events_in&#9;FILE&#9;file:///opt/lampp/htdocs/pado/gicvolontari/events/events_in_past.php&#10;add_&#9;FILE&#9;file:///opt/lampp/htdocs/pado/gicvolontari/events/add_event.php&#10;user_edit_&#9;FILE&#9;file:///opt/lampp/htdocs/pado/gicvolontari/volunteers/user_edit_own_profile.php&#10;volunteer_form&#9;FILE&#9;file://C:/xampp/htdocs/padoWeb/sitoLilt/volunteers/volunteer_form.php&#10;add_event&#9;FILE&#9;file://C:/xampp/htdocs/padoWeb/sitoLilt/events/add_event.php&#10;eventDes&#9;FILE&#9;file://C:/xampp/htdocs/padoWeb/sitoLilt/events/eventDescriptionPage.php&#10;admin_rese&#9;FILE&#9;file://C:/xampp/htdocs/padoWeb/sitoLilt/events/admin_reserve_user_for_event_or_course.php&#10;turn&#9;FILE&#9;file://C:/xampp/htdocs/padoWeb/sitoLilt/turns/turns.php&#10;process_reserve_&#9;FILE&#9;file://C:/xampp/htdocs/padoWeb/sitoLilt/events/process_reserve_for_event_or_course.php&#10;events&#9;FILE&#9;file://C:/xampp/htdocs/padoWeb/sitoLilt/events/eventsandcourses.php&#10;voluntee&#9;FILE&#9;file://C:/xampp/htdocs/padoWeb/sitoLilt/volunteers/volunteers.php&#10;add_eve&#9;FILE&#9;file://C:/xampp/htdocs/padoWeb/sitoLilt/events/add_event.php&#10;evendes&#9;FILE&#9;file://C:/xampp/htdocs/padoWeb/sitoLilt/events/eventDescriptionPage.php&#10;even&#9;FILE&#9;file://C:/xampp/htdocs/padoWeb/sitoLilt/events/eventsandcourses.php&#10;hom&#9;FILE&#9;file://C:/xampp/htdocs/padoWeb/sitoLilt/home.php&#10;gene&#9;FILE&#9;file://C:/xampp/htdocs/padoWeb/sitoLilt/lib/generalLayout.php&#10;myst&#9;FILE&#9;file://C:/xampp/htdocs/padoWeb/sitoLilt/lib/myStyle.css&#10;mont&#9;FILE&#9;file://C:/xampp/htdocs/padoWeb/sitoLilt/lib/datetime/month.php&#10;time&#9;FILE&#9;file://C:/xampp/htdocs/padoWeb/sitoLilt/lib/datetime/time.php&#10;myco&#9;FILE&#9;file://C:/xampp/htdocs/padoWeb/sitoLilt/commitments/mycommittments.php&#10;date&#9;FILE&#9;file://C:/xampp/htdocs/padoWeb/sitoLilt/lib/datetime/date.php&#10;.sql&#9;FILE&#9;file://C:/xampp/htdocs/padoWeb/sitoLilt/sql/createTables.sql&#10;sqlLi&#9;FILE&#9;file://C:/xampp/htdocs/padoWeb/sitoLilt/lib/sqlLib.php&#10;print_volun&#9;FILE&#9;file://C:/xampp/htdocs/padoWeb/sitoLilt/volunteers/print_volunteer_detail.php&#10;month&#9;FILE&#9;file://C:/xampp/htdocs/padoWeb/sitoLilt/lib/datetime/month.php&#10;mys&#9;FILE&#9;file://C:/xampp/htdocs/padoWeb/sitoLilt/lib/myStyle.css&#10;print_&#9;FILE&#9;file://C:/xampp/htdocs/padoWeb/sitoLilt/volunteers/print_volunteer_detail.php&#10;print&#9;FILE&#9;file://C:/xampp/htdocs/padoWeb/sitoLilt/commitments/print_committments.php&#10;volunteer_deta&#9;FILE&#9;file://C:/xampp/htdocs/padoWeb/sitoLilt/volunteers/volunteer_detail.php&#10;prova_&#9;FILE&#9;file://C:/xampp/htdocs/padoWeb/sitoLilt/prova_pdf.php&#10;prova&#9;FILE&#9;file://C:/xampp/htdocs/padoWeb/sitoLilt/prova_pdf.php&#10;volunte&#9;FILE&#9;file://C:/xampp/htdocs/padoWeb/sitoLilt/volunteers.php&#10;mycomm&#9;FILE&#9;file://C:/xampp/htdocs/padoWeb/sitoLilt/mycommittments.php&#10;add_e&#9;FILE&#9;file://C:/xampp/htdocs/padoWeb/sitoLilt/add_event.php&#10;sty&#9;FILE&#9;file://C:/xampp/htdocs/padoWeb/sitoLilt/lib/myStyle.css&#10;permi&#9;FILE&#9;file://C:/xampp/htdocs/padoWeb/sitoLilt/lib/permissionString.php&#10;add&#9;FILE&#9;file://C:/xampp/htdocs/padoWeb/sitoLilt/add_event.php&#10;eventsanù&#9;null&#9;null&#10;admin&#9;FILE&#9;file://C:/xampp/htdocs/padoWeb/sitoLilt/admin_add_user.php&#10;pro&#9;FILE&#9;file://C:/xampp/htdocs/padoWeb/sitoLilt/process_prenota.php&#10;sqll&#9;FILE&#9;file://C:/xampp/htdocs/padoWeb/sitoLilt/lib/sqlLib.php&#10;volun&#9;FILE&#9;file://C:/xampp/htdocs/padoWeb/sitoLilt/volunteers.php" />
+    <property name="SearchEverywhereHistoryKey" value="mys&#9;FILE&#9;file://C:/xampp/htdocs/padoWeb/gicvolontari/lib/myStyle.css&#10;mysq&#9;null&#9;null&#10;turn&#9;FILE&#9;file://C:/xampp/htdocs/padoWeb/gicvolontari/turns/turns.php&#10;crea&#9;FILE&#9;file://C:/xampp/htdocs/padoWeb/gicvolontari/sql/createdb.php&#10;getcar&#9;null&#9;null&#10;sql&#9;FILE&#9;file://C:/xampp/htdocs/padoWeb/gicvolontari/lib/sqlLib.php&#10;eventsand&#9;FILE&#9;file://C:/xampp/htdocs/padoWeb/gicvolontari/events/eventsandcourses.php&#10;process_reser&#9;FILE&#9;file://C:/xampp/htdocs/padoWeb/gicvolontari/events/process_reserve_for_event_or_course.php&#10;genera&#9;FILE&#9;file://C:/xampp/htdocs/padoWeb/gicvolontari/lib/generalLayout.php&#10;volunteers&#9;FILE&#9;file:///opt/lampp/htdocs/pado/gicvolontari/volunteers/volunteers.php&#10;turns&#9;FILE&#9;file:///opt/lampp/htdocs/pado/gicvolontari/turns/turns.php&#10;events_in&#9;FILE&#9;file:///opt/lampp/htdocs/pado/gicvolontari/events/events_in_past.php&#10;add_&#9;FILE&#9;file:///opt/lampp/htdocs/pado/gicvolontari/events/add_event.php&#10;user_edit_&#9;FILE&#9;file:///opt/lampp/htdocs/pado/gicvolontari/volunteers/user_edit_own_profile.php&#10;volunteer_form&#9;FILE&#9;file://C:/xampp/htdocs/padoWeb/sitoLilt/volunteers/volunteer_form.php&#10;add_event&#9;FILE&#9;file://C:/xampp/htdocs/padoWeb/sitoLilt/events/add_event.php&#10;eventDes&#9;FILE&#9;file://C:/xampp/htdocs/padoWeb/sitoLilt/events/eventDescriptionPage.php&#10;admin_rese&#9;FILE&#9;file://C:/xampp/htdocs/padoWeb/sitoLilt/events/admin_reserve_user_for_event_or_course.php&#10;process_reserve_&#9;FILE&#9;file://C:/xampp/htdocs/padoWeb/sitoLilt/events/process_reserve_for_event_or_course.php&#10;events&#9;FILE&#9;file://C:/xampp/htdocs/padoWeb/sitoLilt/events/eventsandcourses.php&#10;voluntee&#9;FILE&#9;file://C:/xampp/htdocs/padoWeb/sitoLilt/volunteers/volunteers.php&#10;add_eve&#9;FILE&#9;file://C:/xampp/htdocs/padoWeb/sitoLilt/events/add_event.php&#10;evendes&#9;FILE&#9;file://C:/xampp/htdocs/padoWeb/sitoLilt/events/eventDescriptionPage.php&#10;even&#9;FILE&#9;file://C:/xampp/htdocs/padoWeb/sitoLilt/events/eventsandcourses.php&#10;hom&#9;FILE&#9;file://C:/xampp/htdocs/padoWeb/sitoLilt/home.php&#10;gene&#9;FILE&#9;file://C:/xampp/htdocs/padoWeb/sitoLilt/lib/generalLayout.php&#10;myst&#9;FILE&#9;file://C:/xampp/htdocs/padoWeb/sitoLilt/lib/myStyle.css&#10;mont&#9;FILE&#9;file://C:/xampp/htdocs/padoWeb/sitoLilt/lib/datetime/month.php&#10;time&#9;FILE&#9;file://C:/xampp/htdocs/padoWeb/sitoLilt/lib/datetime/time.php&#10;myco&#9;FILE&#9;file://C:/xampp/htdocs/padoWeb/sitoLilt/commitments/mycommittments.php&#10;date&#9;FILE&#9;file://C:/xampp/htdocs/padoWeb/sitoLilt/lib/datetime/date.php&#10;.sql&#9;FILE&#9;file://C:/xampp/htdocs/padoWeb/sitoLilt/sql/createTables.sql&#10;sqlLi&#9;FILE&#9;file://C:/xampp/htdocs/padoWeb/sitoLilt/lib/sqlLib.php&#10;print_volun&#9;FILE&#9;file://C:/xampp/htdocs/padoWeb/sitoLilt/volunteers/print_volunteer_detail.php&#10;month&#9;FILE&#9;file://C:/xampp/htdocs/padoWeb/sitoLilt/lib/datetime/month.php&#10;print_&#9;FILE&#9;file://C:/xampp/htdocs/padoWeb/sitoLilt/volunteers/print_volunteer_detail.php&#10;print&#9;FILE&#9;file://C:/xampp/htdocs/padoWeb/sitoLilt/commitments/print_committments.php&#10;volunteer_deta&#9;FILE&#9;file://C:/xampp/htdocs/padoWeb/sitoLilt/volunteers/volunteer_detail.php&#10;prova_&#9;FILE&#9;file://C:/xampp/htdocs/padoWeb/sitoLilt/prova_pdf.php&#10;prova&#9;FILE&#9;file://C:/xampp/htdocs/padoWeb/sitoLilt/prova_pdf.php&#10;volunte&#9;FILE&#9;file://C:/xampp/htdocs/padoWeb/sitoLilt/volunteers.php&#10;mycomm&#9;FILE&#9;file://C:/xampp/htdocs/padoWeb/sitoLilt/mycommittments.php&#10;add_e&#9;FILE&#9;file://C:/xampp/htdocs/padoWeb/sitoLilt/add_event.php&#10;sty&#9;FILE&#9;file://C:/xampp/htdocs/padoWeb/sitoLilt/lib/myStyle.css&#10;permi&#9;FILE&#9;file://C:/xampp/htdocs/padoWeb/sitoLilt/lib/permissionString.php&#10;add&#9;FILE&#9;file://C:/xampp/htdocs/padoWeb/sitoLilt/add_event.php&#10;eventsanù&#9;null&#9;null&#10;admin&#9;FILE&#9;file://C:/xampp/htdocs/padoWeb/sitoLilt/admin_add_user.php&#10;pro&#9;FILE&#9;file://C:/xampp/htdocs/padoWeb/sitoLilt/process_prenota.php&#10;sqll&#9;FILE&#9;file://C:/xampp/htdocs/padoWeb/sitoLilt/lib/sqlLib.php" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -1089,11 +1061,12 @@
       <workItem from="1493823444809" duration="8000" />
       <workItem from="1493877703337" duration="4347000" />
       <workItem from="1494077968805" duration="3398000" />
+      <workItem from="1494081546743" duration="1511000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="204843000" />
+    <option name="totallyTimeSpent" value="206354000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1920" height="1080" extended-state="6" />
@@ -1155,13 +1128,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/lib/datetime/time.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="23" column="28" selection-start-line="23" selection-start-column="28" selection-end-line="23" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/lib/datetime/month.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1464,13 +1430,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/sql/createdb.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-30.76923">
-          <caret line="103" column="29" selection-start-line="103" selection-start-column="13" selection-end-line="103" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/lib/permissionString.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.24335378">
@@ -1522,7 +1481,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/commitments/classCommitments.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
+        <state vertical-scroll-proportion="1.7034764">
           <caret line="98" column="34" selection-start-line="98" selection-start-column="34" selection-end-line="98" selection-end-column="34" />
           <folding>
             <marker date="1493818714476" expanded="true" signature="369:576" placeholder="SELECT c.mon... " />
@@ -1550,7 +1509,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/events/eventDescriptionPage.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
+        <state vertical-scroll-proportion="0.43456033">
           <caret line="30" column="59" selection-start-line="30" selection-start-column="59" selection-end-line="30" selection-end-column="59" />
           <folding />
         </state>
@@ -1558,58 +1517,78 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/events/eventDetail.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="171" column="54" selection-start-line="171" selection-start-column="54" selection-end-line="171" selection-end-column="54" />
+        <state vertical-scroll-proportion="-10.576923">
+          <caret line="196" column="44" selection-start-line="194" selection-start-column="11" selection-end-line="196" selection-end-column="44" />
           <folding>
-            <marker date="1493881606977" expanded="true" signature="3268:3358" placeholder="..." />
-            <marker date="1493881606977" expanded="true" signature="5634:5724" placeholder="..." />
-            <marker date="1493881606977" expanded="true" signature="6271:8086" placeholder="..." />
-            <marker date="1493881606977" expanded="true" signature="6482:8067" placeholder="..." />
-            <marker date="1493881606977" expanded="true" signature="6520:8044" placeholder="..." />
-            <marker date="1493881606977" expanded="true" signature="6567:7695" placeholder="..." />
-            <marker date="1493881606977" expanded="true" signature="7581:7664" placeholder="..." />
-            <marker date="1493881606977" expanded="true" signature="7756:8017" placeholder="..." />
-            <marker date="1493881606977" expanded="true" signature="9521:9625" placeholder="SELECT * FRO... eventsattendants" />
-            <marker date="1493881606977" expanded="true" signature="10152:10336" placeholder="..." />
-            <marker date="1493881606977" expanded="true" signature="10216:10315" placeholder="..." />
-            <marker date="1493881606977" expanded="true" signature="10571:10840" placeholder="..." />
+            <marker date="1494081815660" expanded="true" signature="3268:3358" placeholder="..." />
+            <marker date="1494081815660" expanded="true" signature="5634:5724" placeholder="..." />
+            <marker date="1494081815660" expanded="true" signature="6271:8086" placeholder="..." />
+            <marker date="1494081815660" expanded="true" signature="6482:8067" placeholder="..." />
+            <marker date="1494081815660" expanded="true" signature="6520:8044" placeholder="..." />
+            <marker date="1494081815660" expanded="true" signature="6567:7695" placeholder="..." />
+            <marker date="1494081815660" expanded="true" signature="7581:7664" placeholder="..." />
+            <marker date="1494081815660" expanded="true" signature="7756:8017" placeholder="..." />
+            <marker date="1494081815660" expanded="true" signature="8472:8548" placeholder="SELECT * FRO... users" />
+            <marker date="1494081815660" expanded="true" signature="9663:9767" placeholder="SELECT * FRO... eventsattendants" />
+            <marker date="1494081815660" expanded="true" signature="10294:10478" placeholder="..." />
+            <marker date="1494081815660" expanded="true" signature="10358:10457" placeholder="..." />
+            <marker date="1494081815660" expanded="true" signature="10713:10982" placeholder="..." />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sql/createdb.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-26.846153">
+          <caret line="103" column="29" selection-start-line="103" selection-start-column="13" selection-end-line="103" selection-end-column="29" />
+          <folding>
+            <marker date="1493730757772" expanded="true" signature="2423:2764" placeholder="CREATE TABLE... eventsattendants" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$APPLICATION_PLUGINS_DIR$/php/lib/php.jar!/com/jetbrains/php/lang/psi/stubs/data/mysqli.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.3415133">
+          <caret line="51" column="6" selection-start-line="51" selection-start-column="6" selection-end-line="51" selection-end-column="6" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/turns/turns.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-23.538462">
-          <caret line="289" column="17" selection-start-line="285" selection-start-column="12" selection-end-line="289" selection-end-column="17" />
+        <state vertical-scroll-proportion="-21.038462">
+          <caret line="326" column="101" selection-start-line="326" selection-start-column="101" selection-end-line="326" selection-end-column="101" />
           <folding>
-            <marker date="1494078672674" expanded="true" signature="1107:1234" placeholder="SELECT * FRO... turni" />
-            <marker date="1494078672674" expanded="true" signature="4477:4535" placeholder="SELECT year,... " />
-            <marker date="1494078672674" expanded="true" signature="5739:5852" placeholder="..." />
-            <marker date="1494078672674" expanded="true" signature="7184:7344" placeholder="SELECT * FRO... turni" />
-            <marker date="1494078672674" expanded="true" signature="9331:9351" placeholder="..." />
-            <marker date="1494078672674" expanded="true" signature="9331:9489" placeholder="..." />
-            <marker date="1494078672674" expanded="true" signature="9711:10221" placeholder="..." />
-            <marker date="1494078672674" expanded="true" signature="9727:9748" placeholder="..." />
-            <marker date="1494078672674" expanded="true" signature="9727:9833" placeholder="..." />
-            <marker date="1494078672674" expanded="true" signature="9843:9927" placeholder="..." />
-            <marker date="1494078672674" expanded="true" signature="9851:9916" placeholder="..." />
-            <marker date="1494078672674" expanded="true" signature="9937:10211" placeholder="..." />
-            <marker date="1494078672674" expanded="true" signature="9945:9965" placeholder="..." />
-            <marker date="1494078672674" expanded="true" signature="9945:10064" placeholder="..." />
-            <marker date="1494078672674" expanded="true" signature="10068:10088" placeholder="..." />
-            <marker date="1494078672674" expanded="true" signature="10068:10200" placeholder="..." />
-            <marker date="1494078672674" expanded="false" signature="11133:11146" placeholder="..." />
-            <marker date="1494078672674" expanded="true" signature="11187:11593" placeholder="..." />
-            <marker date="1494078672674" expanded="true" signature="11239:11584" placeholder="..." />
-            <marker date="1494078672674" expanded="true" signature="11962:12163" placeholder="..." />
+            <marker date="1494082366393" expanded="true" signature="1107:1234" placeholder="SELECT * FRO... turni" />
+            <marker date="1494082366393" expanded="true" signature="4477:4535" placeholder="SELECT year,... " />
+            <marker date="1494082366393" expanded="true" signature="5739:5852" placeholder="..." />
+            <marker date="1494082366393" expanded="true" signature="7184:7344" placeholder="SELECT * FRO... turni" />
+            <marker date="1494082366393" expanded="true" signature="9331:9351" placeholder="..." />
+            <marker date="1494082366393" expanded="true" signature="9331:9489" placeholder="..." />
+            <marker date="1494082366393" expanded="true" signature="9711:10221" placeholder="..." />
+            <marker date="1494082366393" expanded="true" signature="9727:9748" placeholder="..." />
+            <marker date="1494082366393" expanded="true" signature="9727:9833" placeholder="..." />
+            <marker date="1494082366393" expanded="true" signature="9843:9927" placeholder="..." />
+            <marker date="1494082366393" expanded="true" signature="9851:9916" placeholder="..." />
+            <marker date="1494082366393" expanded="true" signature="9937:10211" placeholder="..." />
+            <marker date="1494082366393" expanded="true" signature="9945:9965" placeholder="..." />
+            <marker date="1494082366393" expanded="true" signature="9945:10064" placeholder="..." />
+            <marker date="1494082366393" expanded="true" signature="10068:10088" placeholder="..." />
+            <marker date="1494082366393" expanded="true" signature="10068:10200" placeholder="..." />
+            <marker date="1494082366393" expanded="true" signature="10704:10772" placeholder="SELECT * FRO... users" />
+            <marker date="1494082366393" expanded="false" signature="11312:11325" placeholder="..." />
+            <marker date="1494082366393" expanded="true" signature="11366:11772" placeholder="..." />
+            <marker date="1494082366393" expanded="true" signature="11418:11763" placeholder="..." />
+            <marker date="1494082366393" expanded="true" signature="12141:12342" placeholder="..." />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/lib/myStyle.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5961145">
-          <caret line="102" column="70" selection-start-line="102" selection-start-column="70" selection-end-line="102" selection-end-column="70" />
+        <state vertical-scroll-proportion="0.8609407">
+          <caret line="163" column="25" selection-start-line="163" selection-start-column="25" selection-end-line="163" selection-end-column="25" />
           <folding />
         </state>
       </provider>
