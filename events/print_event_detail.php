@@ -74,20 +74,24 @@ if ($constraints->areOk()) {
     $pdf->MultiCell(0, 10, "Presso: $location", 0, 1);
 
     //descrizione
-    $pdf->Cell(0, 10, ' ', 0, 1);
-    $pdf->SetFont('Times', 'iu', 16);
-    $pdf->Cell(0, 10, 'Descrizione', 0, 1);
-    $pdf->SetFont('Times', '', 12);
+    if ($description != '') {
+        $pdf->Cell(0, 10, ' ', 0, 1);
+        $pdf->SetFont('Times', 'iu', 16);
+        $pdf->Cell(0, 10, 'Descrizione', 0, 1);
+        $pdf->SetFont('Times', '', 12);
 
-    $pdf->MultiCell(0, 10, $description, 0, 1);
+        $pdf->MultiCell(0, 10, $description, 0, 1);
+    }
 
     //requisiti
-    $pdf->Cell(0, 10, ' ', 0, 1);
-    $pdf->SetFont('Times', 'iu', 16);
-    $pdf->Cell(0, 10, 'Requisiti', 0, 1);
-    $pdf->SetFont('Times', '', 12);
+    if ($requirements != '') {
+        $pdf->Cell(0, 10, ' ', 0, 1);
+        $pdf->SetFont('Times', 'iu', 16);
+        $pdf->Cell(0, 10, 'Requisiti', 0, 1);
+        $pdf->SetFont('Times', '', 12);
 
-    $pdf->MultiCell(0, 10, $requirements, 0, 1);
+        $pdf->MultiCell(0, 10, $requirements, 0, 1);
+    }
 
     //attendants
     $pdf->Cell(0, 10, ' ', 0, 1);
@@ -104,7 +108,7 @@ if ($constraints->areOk()) {
     }
 
     //resoconto/verbale
-    if ($resoconto!='') {
+    if ($resoconto != '') {
         $pdf->Cell(0, 10, ' ', 0, 1);
         $pdf->SetFont('Times', 'iu', 16);
         $pdf->Cell(0, 10, 'Resoconto / Verbale', 0, 1);
