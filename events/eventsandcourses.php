@@ -30,9 +30,10 @@ $eventList='';
 $today = date("Y-m-d");
 //$allEvents = $db->select('events');
 $allEvents = $db->query("
-SELECT *
-FROM events
-WHERE (date BETWEEN '$today 00:00:00' AND '2500-12-31 00:00:00')
+    SELECT *
+    FROM events
+    WHERE (date BETWEEN '$today 00:00:00' AND '2500-12-31 00:00:00')
+    ORDER BY date, timeStart
 ");
 foreach ($allEvents as $row) {
     $eventList.=(new EventDetail($row['id']))->getCard();
