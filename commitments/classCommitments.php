@@ -43,12 +43,15 @@ class Commitments{
     }
 
     public function getMeetingsArray() {
+        $today = date("Y-m-d");
         $allEvents = $this->db->prepare("
             SELECT *
             FROM eventsattendants AS ea JOIN events AS e ON ea.event = e.id
-            WHERE ea.volunteer = :volunteerId
+            WHERE ea.volunteer = :volunteerId AND (e.date BETWEEN '$today 00:00:00' AND '2500-00-00 00:00:00')
         ");
-        $allEvents->execute([':volunteerId' => $_SESSION['id']]);
+        $allEvents->execute([
+            ':volunteerId' => $_SESSION['id']
+        ]);
 
 
         $meetings=[];
@@ -61,12 +64,15 @@ class Commitments{
     }
 
     public function getEventsArray() {
+        $today = date("Y-m-d");
         $allEvents = $this->db->prepare("
             SELECT *
             FROM eventsattendants AS ea JOIN events AS e ON ea.event = e.id
-            WHERE ea.volunteer = :volunteerId
+            WHERE ea.volunteer = :volunteerId AND (e.date BETWEEN '$today 00:00:00' AND '2500-00-00 00-00-00')
         ");
-        $allEvents->execute([':volunteerId' => $_SESSION['id']]);
+        $allEvents->execute([
+            ':volunteerId' => $_SESSION['id']
+        ]);
 
         $events=[];
         foreach ($allEvents as $e) {
