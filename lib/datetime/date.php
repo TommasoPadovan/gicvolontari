@@ -23,6 +23,10 @@ class Date {
         return "{$this->d}/{$this->m}/{$this->y}";
     }
 
+    public function getEnglishDate() {
+        return "{$this->m}/{$this->d}/{$this->y}";
+    }
+
     public function isAfter(Date $date) {
         return  (intval($this->y) > intval($date->y)) ||
                 (intval($this->y) == intval($date->y) && intval($this->m) > intval($date->m)) ||

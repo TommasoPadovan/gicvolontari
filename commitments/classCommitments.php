@@ -109,4 +109,13 @@ class Commitments{
     }
 
 
+    public function getGoogleCalendarFileCsv() {
+        $turnsArray = $this->getTurnsArray();
+        $meetingsArray = $this->getMeetingsArray();
+        $eventsArray = $this->getEventsArray();
+
+
+    }
+
+
 }
