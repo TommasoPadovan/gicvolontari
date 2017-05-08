@@ -24,7 +24,9 @@ class Date {
     }
 
     public function isAfter(Date $date) {
-        return $this->y >= $date->y && $this->m >= $date->m && $this->d >= $date->d;
+        return  (intval($this->y) > intval($date->y)) ||
+                (intval($this->y) == intval($date->y) && intval($this->m) > intval($date->m)) ||
+                (intval($this->y) == intval($date->y) && intval($this->m) == intval($date->m) && intval($this->d) >= intval($date->d)) ;
     }
 
     public function isBefore(Date $date) {

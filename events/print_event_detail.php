@@ -64,7 +64,7 @@ if ($constraints->areOk()) {
 
     //titolone pagina
     $pdf->SetFont('Times', 'b', 20);
-    $pdf->Cell(0, 10, "$type: $title", 0, 1);
+    $pdf->MultiCell(0, 10, "$type: $title", 0, 1);
     $pdf->SetFont('Times', '', 12);
 
     //data ora
