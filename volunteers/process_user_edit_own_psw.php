@@ -9,6 +9,7 @@
 require_once('../lib/sqlLib.php');
 require_once('../lib/permissionsMng.php');
 require_once('../lib/personalCommand.php');
+require_once('../lib/JsLib.php');
 
 class UserModifyOwnPswCommand extends PersonalCommand {
 
@@ -35,9 +36,9 @@ class UserModifyOwnPswCommand extends PersonalCommand {
                     ['psw' => md5($newPsw)],
                     ['id' => $id]
                 );
-                echo("<script> alert('Password aggiornata con successo'); window.location='../home.php'; </script>");
-            } else echo("<script> alert('La vecchia password è errata'); window.location='user_edit_own_psw.php'; </script>");
-        } echo("<script> alert('Le due password non corrispondono'); window.location='user_edit_own_psw.php'; </script>");
+                JS::alertAndRedirect('Password aggiornata con successo', '../home.php');
+            } else JS::alertAndRedirect('La vecchia password è errata', 'user_edit_own_psw.php');
+        } JS::alertAndRedirect('Le due password non corrispondono', 'user_edit_own_psw.php');
 
     }
 }

@@ -8,6 +8,7 @@
 require_once('../lib/command.php');
 require_once('../lib/sqlLib.php');
 require_once('../lib/datetime/date.php');
+require_once('../lib/JsLib.php');
 
 class ReserveForEventOrCourseCommand extends Command {
 
@@ -59,16 +60,13 @@ class ReserveForEventOrCourseCommand extends Command {
                     'event' => $_GET['event'],
                     'volunteer' => $me['id']
                 ]))!=0) {
-                echo("<script> alert('Sei già iscritto a questo evento.'); window.location='{$this->lastPage}'; </script>");
+                JS::alertAndRedirect('Sei già iscritto a questo evento.', $this->lastPage);
                 exit;
             }
 
             //l'evento è nel futuro o nel passato?
             if ($eventDate->inPast()) {
-                echo("<script>
-                    alert('Non puoi iscriverti perché questo evento è già passato.');
-                    window.location='{$this->lastPage}';
-                </script>");
+                JS::alertAndRedirect('Non puoi iscriverti perché questo evento è già passato.', $this->lastPage);
                 exit;
             }
 
@@ -89,19 +87,13 @@ class ReserveForEventOrCourseCommand extends Command {
                 if (count($db->select('eventsattendants', [
                     'event' => $_GET['event']
                 ])) > $event[0]['maxAttendants'] ) {
-                    echo("<script>
-                        alert('Prenotazione effettuata ma con riserva, potrai partecipare solo se si libera un posto.');
-                        window.location='{$this->lastPage}';
-                    </script>");
+                    JS::alertAndRedirect('Prenotazione effettuata ma con riserva, potrai partecipare solo se si libera un posto.', $this->lastPage);
                 } else {    //sei iscritto regolarmente?
-                    echo("<script>
-                        alert('Prenotazione effettuata con successo.');
-                        window.location='{$this->lastPage}';
-                    </script>");
+                    JS::alertAndRedirect('Prenotazione effettuata con successo.', $this->lastPage);
                 }
             }
             else
-                echo("<script> alert('I volontari con il tuo ruolo non possono iscriversi a questo evento'); window.location='{$this->lastPage}'; </script>");
+                JS::alertAndRedirect('I volontari con il tuo ruolo non possono iscriversi a questo evento', $this->lastPage);
         }
 
 
