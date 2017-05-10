@@ -32,10 +32,12 @@ class AdminReserveUserForEventOrCourseCommand extends Command {
         } else {
             $db->insert('eventsattendants', [
                 'event' => $event,
-                'volunteer' => $user
+                'volunteer' => $user,
+                'timestamp' => time()
             ]);
 
-            echo("<script> window.location='{$this->lastPage}'; </script>");
+//            echo("<script> window.location='{$this->lastPage}'; </script>");
+            header("Location: {$this->lastPage}");
         }
 
     }

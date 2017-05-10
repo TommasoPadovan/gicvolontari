@@ -20,18 +20,8 @@ if ( isset( $_SESSION['id'] ) ) {
 <hr />
 <div class="row">
 	<div class="col-sm-3">
-		<form action='process_logout.php' method="POST">
-			<button type="submit" class="btn btn-default btn-block" name="logout" value="logout">Logout</button>
-		</form>
-	</div>
-</div>
-<div class="row">
-	<div class="col-sm-3">
+		<a class="btn btn-default btn-block" href="process_logout.php">Logout</a>
 		<a class="btn btn-default btn-block" href="volunteers/user_edit_own_profile.php">Modifica il tuo profilo</a>
-	</div>
-</div>
-<div class="row">
-	<div class="col-sm-3">
 		<a class="btn btn-default btn-block" href="volunteers/user_edit_own_psw.php">Modifica la tua password</a>
 	</div>
 </div>

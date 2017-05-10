@@ -12,6 +12,7 @@ require_once('../lib/permissionString.php');
 require_once('../lib/sqlLib.php');
 require_once('../lib/datetime/date.php');
 require_once('../lib/datetime/time.php');
+require_once('../commitments/classCommitments.php');
 
 class EventDetail {
 
@@ -39,6 +40,37 @@ class EventDetail {
         $timeStart = (new Time($this->event['timeStart']))->getSimpleTime();
         $timeEnd = (new Time($this->event['timeEnd']))->getSimpleTime();
         $location = $this->event['location'];
+        $nPartecipanti = count($this->db->select('eventsattendants', [
+            'event' => $this->event['id']
+        ]));
+        $amIReserved = count($this->db->select('eventsattendants', [
+            'event' => $this->event['id'],
+            'volunteer' => $_SESSION['id']
+        ]));
+        if ($amIReserved == 0){
+            $amIReserved= <<<END
+    <a href="process_reserve_for_event_or_course.php?event={$this->event['id']}"
+    class="btn btn-default">Iscriviti all'evento!</a>
+END;
+            $style = '';
+        }
+        else {
+            if ( (new Commitments())->isOverbooked($_SESSION['id'], $this->event['id']) ) {
+                $amIReserved = <<<END
+    Sei iscritto con riserva <a href='process_remove_reservation.php?event={$this->event['id']}'><img src='../img/bin.png' alt='cancella' height='15' width='15'
+                        onclick="return confirm('Sei sicuro di voler cancellare la prenotazione?')"/>
+                    </a>
+END;
+                $style = 'registered_reserve';
+            } else {
+                $amIReserved = <<<END
+    Sei iscritto! <a href='process_remove_reservation.php?event={$this->event['id']}'><img src='../img/bin.png' alt='cancella' height='15' width='15'
+                        onclick="return confirm('Sei sicuro di voler cancellare la prenotazione?')"/>
+                    </a>
+END;
+                $style = 'registered';
+            }
+        }
 
         $adminEditButton = (new PermissionString([
             PermissionPage::ADMIN => "<a class='pull-right' href='add_event.php?id={$this->event['id']}'><img src='../img/pencil.png' alt='modifica' height='15' width='15'></a> "
@@ -54,22 +86,19 @@ class EventDetail {
 
 
         return <<<TAG
-            <div class="panel panel-default">
+            <div class="col-sm-4 panel panel-default $style">
                 <div class="panel-body">
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <h2><a href="eventDescriptionPage.php?id={$this->event['id']}">$title</a></h2>
-                            $adminEditButton
-                            $adminRemoveButton
-                            <!--<p><label>Tipo: </label> $type</p>-->
-                            <p><label>Data e Ora: </label> il $date dalle ore $timeStart alle ore $timeEnd</p>
-                            <!--<p><label>Inizio: </label> $timeStart</p>-->
-                            <!--<p><label>Fine: </label> $timeEnd</p>-->
-                            <p><label>Luogo: </label> $location</p>
-                        </div>
-                        <div class="col-sm-6 vertical_line">
-                            $reservationDiv
-                        </div>
+                    <div>
+                        <h4><a href="eventDescriptionPage.php?id={$this->event['id']}">$title</a></h4>
+                        $adminEditButton
+                        $adminRemoveButton
+                        <!--<p><label>Tipo: </label> $type</p>-->
+                        <p><label>Data e Ora: </label> il $date dalle ore $timeStart alle ore $timeEnd</p>
+                        <!--<p><label>Inizio: </label> $timeStart</p>-->
+                        <!--<p><label>Fine: </label> $timeEnd</p>-->
+                        <p><label>Luogo: </label> $location</p>
+                        <p><label>Iscritti: </label> $nPartecipanti</p>
+                        <p>$amIReserved</p>
                     </div>
                 </div>
             </div>
@@ -82,7 +111,7 @@ TAG;
         /**
          * here i get variables i will use in the pdf template
          */
-        $type = $this>$this->event['type'];
+        $type = $this->event['type'];
         $title = $this->event['title'];
         $date = (new Date($this->event['date']))->getItalianDate();
         $timeStart = (new Time($this->event['timeStart']))->getSimpleTime();
@@ -90,6 +119,7 @@ TAG;
         $location = $this->event['location'];
         $description = $this->event['description'];
         $requirements = $this->event['requirements'];
+        $resoconto = $this->event['resoconto'];
         $minAttendants = $this->event['minAttendants'];
         $maxAttendants = $this->event['maxAttendants'];
         $who = unserialize($this->event['who']);
@@ -108,9 +138,14 @@ TAG;
         foreach($who as $role)
             $liWhoCanReserve.="<li>$role</li>\n";
 
+        $adminButtonPrintResoconto = (new PermissionString([
+            PermissionPage::ADMIN => "<a class=\"pull-right\" href=\"print_event_resoconto.php?id={$_GET['id']}\"><img src=\"../img/print.png\" width=\"30\" height=\"30\" alt=\"stampa solo resoconto\"></a>"
+        ]))->out();
+
         $reservationDiv = $this->getReservationDiv();
         return <<<TAG
             <div class="panel panel-default">
+                <a class="pull-right" href="print_event_detail.php?id={$_GET['id']}"><img src="../img/print.png" width="30" height="30" alt="stampa dettagli evento"></a>
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-sm-6">
@@ -122,8 +157,8 @@ TAG;
                             <!--<p><label>Inizio: </label> $timeStart</p>-->
                             <!--<p><label>Fine: </label> $timeEnd</p>-->
                             <p><label>Luogo: </label> $location</p>
-                            <p><label>Descrizione: </label> $description</p>
-                            <p><label>Requisiti: </label> $requirements</p>
+                            <p class="formatted-text"><label>Descrizione: </label> $description</p>
+                            <p class="formatted-text"><label>Requisiti: </label> $requirements</p>
                             <p><label>Minimo partecipanti: </label> $minAttendants</p>
                             <p><label>Massimo participanti: </label> $maxAttendants</p>
                             <p><label>Chi si può iscrivere?</label></p>
@@ -133,6 +168,9 @@ TAG;
                         </div>
                         <div class="col-sm-6 vertical_line">
                             $reservationDiv
+                            <hr />
+                            $adminButtonPrintResoconto
+                            <p class="formatted-text"><label>Resoconto: </label> $resoconto</p>
                         </div>
                     </div>
                 </div>
@@ -152,7 +190,12 @@ TAG;
      */
     private function getReservationDiv() {
         $options='';
-        $allUsers = $this->db->select('users');
+        //$allUsers = $this->db->select('users');
+        $allUsers = $this->db->query("
+            SELECT *
+            FROM users
+            ORDER BY lastname, firstname ASC
+        ");
         foreach ($allUsers as $user)
             if ($user['id'] != 0)
                 $options.= "<option value='{$user['id']}'>{$user['lastname']} {$user['firstname']}</option>";
@@ -177,7 +220,15 @@ FORM
 
 
         $liAttendants = "";
-        $volunteerThisEvent = $this->db->select('eventsattendants', ['event' => $this->event['id']]);
+//        $volunteerThisEvent = $this->db->select('eventsattendants', ['event' => $this->event['id']]);
+        $volunteerThisEvent = $this->db->prepare("
+          SELECT *
+          FROM eventsattendants
+          WHERE event = :event
+          ORDER BY timestamp ASC");
+        $volunteerThisEvent->execute([':event' => $this->event['id']]);
+        $maxAttendants = $this->event['maxAttendants'];
+        $attendantsCounter = 1;
         foreach ($volunteerThisEvent as $item) {
             $volunteerDetail = $this->db->getUser($item['volunteer']);
 
@@ -195,6 +246,9 @@ FORM
                 PermissionPage::MORNING => $removeOwnReservationLink
             ]))->out();
             $liAttendants.= "<li>$removeReservationLink {$volunteerDetail['firstname']} {$volunteerDetail['lastname']}</li>";
+            if ($attendantsCounter == $maxAttendants)
+                $liAttendants.="--------------<br />Riserve:";
+            $attendantsCounter++;
         }
 
         return <<<RESDIV

@@ -4,6 +4,7 @@ require_once('../lib/permission.php');
 require_once('../lib/sqlLib.php');
 require_once('../lib/datetime/month.php');
 require_once('../lib/command.php');
+require_once('../lib/JsLib.php');
 
 
 class UserAddTurnCommand extends Command {
@@ -94,7 +95,7 @@ class UserAddTurnCommand extends Command {
 
 
 	private function abortMission($msg='Operazione non valida') {
-		echo("<script> alert('$msg'); window.location='{$this->lastPage}'; </script>");
+		JS::alertAndRedirect($msg, $this->lastPage);
 	}
 
 }

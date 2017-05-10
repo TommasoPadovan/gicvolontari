@@ -7,6 +7,8 @@
  */
 require_once('../lib/command.php');
 require_once('../lib/sqlLib.php');
+require_once('../lib/datetime/date.php');
+require_once('../lib/JsLib.php');
 
 class ReserveForEventOrCourseCommand extends Command {
 
@@ -46,26 +48,52 @@ class ReserveForEventOrCourseCommand extends Command {
             }
             $position = $me['position'];
 
+            //SANITY CHECK
 
             $event = $db->select('events', ['id' => $_GET['event']]);
             $whoCanReserve = unserialize($event[0]['who']);
+            $eventDate = new Date($event[0]['date']);
 
+
+            //sei già iscritto?
             if (count($db->select('eventsattendants', [
                     'event' => $_GET['event'],
                     'volunteer' => $me['id']
                 ]))!=0) {
-                echo("<script> alert('Sei già iscritto a questo evento.'); window.location='{$this->lastPage}'; </script>");
+                JS::alertAndRedirect('Sei già iscritto a questo evento.', $this->lastPage);
+                exit;
+            }
+
+            //l'evento è nel futuro o nel passato?
+            if ($eventDate->inPast()) {
+                JS::alertAndRedirect('Non puoi iscriverti perché questo evento è già passato.', $this->lastPage);
+                exit;
             }
 
             if ($permissionStr == 'admin' || in_array($permissionStr.$position, $whoCanReserve)) {
                 $db->insert('eventsattendants', [
                     'event' => $_GET['event'],
-                    'volunteer' => $_SESSION['id']
+                    'volunteer' => $_SESSION['id'],
+                    'timestamp' => time()
                 ]);
-                echo("<script> alert('Prenotazione effettuata con successo.'); window.location='{$this->lastPage}'; </script>");
+
+                //sei iscritto con riserva?
+//                var_dump(count($db->select('events', [
+//                    'id' => $_GET['event']
+//                ])));
+//                echo "<br />";
+//                var_dump($event[0]['maxAttendants']);
+//                exit;
+                if (count($db->select('eventsattendants', [
+                    'event' => $_GET['event']
+                ])) > $event[0]['maxAttendants'] ) {
+                    JS::alertAndRedirect('Prenotazione effettuata ma con riserva, potrai partecipare solo se si libera un posto.', $this->lastPage);
+                } else {    //sei iscritto regolarmente?
+                    JS::alertAndRedirect('Prenotazione effettuata con successo.', $this->lastPage);
+                }
             }
             else
-                echo("<script> alert('I volontari con il tuo ruolo non possono iscriversi a questo evento'); window.location='{$this->lastPage}'; </script>");
+                JS::alertAndRedirect('I volontari con il tuo ruolo non possono iscriversi a questo evento', $this->lastPage);
         }
 
 

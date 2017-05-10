@@ -43,12 +43,15 @@ class Commitments{
     }
 
     public function getMeetingsArray() {
+        $today = date("Y-m-d");
         $allEvents = $this->db->prepare("
             SELECT *
             FROM eventsattendants AS ea JOIN events AS e ON ea.event = e.id
-            WHERE ea.volunteer = :volunteerId
+            WHERE ea.volunteer = :volunteerId AND (e.date BETWEEN '$today 00:00:00' AND '2500-00-00 00:00:00')
         ");
-        $allEvents->execute([':volunteerId' => $_SESSION['id']]);
+        $allEvents->execute([
+            ':volunteerId' => $_SESSION['id']
+        ]);
 
 
         $meetings=[];
@@ -61,12 +64,15 @@ class Commitments{
     }
 
     public function getEventsArray() {
+        $today = date("Y-m-d");
         $allEvents = $this->db->prepare("
             SELECT *
             FROM eventsattendants AS ea JOIN events AS e ON ea.event = e.id
-            WHERE ea.volunteer = :volunteerId
+            WHERE ea.volunteer = :volunteerId AND (e.date BETWEEN '$today 00:00:00' AND '2500-00-00 00-00-00')
         ");
-        $allEvents->execute([':volunteerId' => $_SESSION['id']]);
+        $allEvents->execute([
+            ':volunteerId' => $_SESSION['id']
+        ]);
 
         $events=[];
         foreach ($allEvents as $e) {
@@ -75,6 +81,40 @@ class Commitments{
         }
 
         return $events;
+    }
+
+    public function isOverbooked($volunteerID, $eventID) {
+        $maxAttendants = $this->db->select('events', [
+            'id' => $eventID
+        ]);
+        $maxAttendants = $maxAttendants[0]['maxAttendants'];
+
+        $myTimestamp = $this->db->select('eventsattendants', [
+            'event' => $eventID,
+            'volunteer' => $volunteerID
+        ]);
+        $myTimestamp = $myTimestamp[0]['timestamp'];
+
+        $volunteerQueue = $this->db->prepare("
+            SELECT *
+            FROM eventsattendants
+            WHERE timestamp < :timestamp AND event = :eventID
+        ");
+        $volunteerQueue->execute([
+            ':timestamp' => $myTimestamp,
+            ':eventID' => $eventID
+        ]);
+
+        return !($volunteerQueue->rowCount() < $maxAttendants);
+    }
+
+
+    public function getGoogleCalendarFileCsv() {
+        $turnsArray = $this->getTurnsArray();
+        $meetingsArray = $this->getMeetingsArray();
+        $eventsArray = $this->getEventsArray();
+
+
     }
 
 

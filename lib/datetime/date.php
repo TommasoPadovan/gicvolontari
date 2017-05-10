@@ -23,4 +23,26 @@ class Date {
         return "{$this->d}/{$this->m}/{$this->y}";
     }
 
+    public function getEnglishDate() {
+        return "{$this->m}/{$this->d}/{$this->y}";
+    }
+
+    public function isAfter(Date $date) {
+        return  (intval($this->y) > intval($date->y)) ||
+                (intval($this->y) == intval($date->y) && intval($this->m) > intval($date->m)) ||
+                (intval($this->y) == intval($date->y) && intval($this->m) == intval($date->m) && intval($this->d) >= intval($date->d)) ;
+    }
+
+    public function isBefore(Date $date) {
+        return !$this->isAfter($date);
+    }
+
+    public function inFuture() {
+        return $this->isAfter(new Date(date("Y-m-d")));
+    }
+
+    public function inPast() {
+        return $this->isBefore(new Date(date("Y-m-d")));
+    }
+
 }

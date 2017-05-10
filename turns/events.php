@@ -3,6 +3,7 @@ require_once('../lib/generalLayout.php');
 require_once('../lib/permissionsMng.php');
 require_once('../lib/sqlLib.php');
 require_once('../lib/datetime/month.php');
+require_once('../lib/JsLib.php');
 
 
 
@@ -54,13 +55,12 @@ if ( isset($_POST['submit']) ) {
 				}
 			}
 
-
-			echo "<script>alert(\"Mese aggiunto con successo\")</script>";
+			JS::alert("Mese aggiunto con successo");
 		} else {
-			echo "<script>alert(\"Il mese che hai inserito è gia abilitato alle iscrizioni per i turni\")</script>";
+			JS::alert("Il mese che hai inserito è già abilitato alle iscrizioni per i turni");
 		}
 	} else {
-		echo "<script>alert(\"Il mese che hai inserito è nel passato, deve essere nel futuro\")</script>";
+		JS::alert("Il mese che hai inserito è nel passato, deve essere nel futuro");
 	}
 }
 

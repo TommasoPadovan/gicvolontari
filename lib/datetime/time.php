@@ -24,4 +24,14 @@ class Time {
         return "{$this->h}:{$this->m}";
     }
 
+    public function getEnglishTime() {
+        $h = intval($this->h);
+        $ampm = "AM";
+        if ($h>12) {
+            $h -= 12;
+            $ampm = "PM";
+        }
+        return "$h:{$this->m} $ampm";
+    }
+
 }

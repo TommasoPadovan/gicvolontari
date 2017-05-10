@@ -53,7 +53,12 @@ foreach ($meetings as $meeting) {
 MEETING;
 	if ($meeting['requirements'] != '' && $meeting['requirements'] != null )
 		$meetingsList.= "<p>Sono stati indicati i seguenti requisiti: {$meeting['requirements']}</p>";
-	$meetingsList.= "</li>\n";
+
+    //vedo se è iscritto come riserva o no
+    if ($commitments->isOverbooked($_SESSION['id'], $meeting['event']))
+        $meetingsList.='(Riserva)';
+
+    $meetingsList.= "</li>\n";
 }
 
 $eventsList='';
@@ -68,6 +73,11 @@ foreach ($events as $event) {
 EVENT;
 	if ($event['requirements'] != '' && $event['requirements'] != null )
 		$eventsList.= "<p>Sono stati indicati i seguenti requisiti: {$event['requirements']}</p>";
+
+    //vedo se è iscritto come riserva o no
+    if ($commitments->isOverbooked($_SESSION['id'], $event['event']))
+        $eventsList.='(Riserva)';
+
 	$eventsList.= "</li>\n";
 }
 
@@ -77,6 +87,10 @@ $content = <<<HTML
 	<img src="../img/print.png" alt="stampa" height="30" width="30">
 </a>
 <h1>I miei impegni</h1>
+<div class="pull-right">
+	<a class="btn btn-default" href="export_google_cal_csv.php">Esporta In Google Calendar</a>
+	<a href="https://support.google.com/calendar/answer/37118?hl=it" target="_blank"><img src="../img/info.png" alt='info' height='30' width='30'></a>
+</div>
 <div class="row">
 	<div class="col-sm-6">
 		$eveningTurns

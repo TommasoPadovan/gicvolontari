@@ -2,7 +2,7 @@
 DROP SCHEMA IF EXISTS `liltvolontari`;
 CREATE SCHEMA `liltvolontari` ;
 
-create table Users (
+create table users (
 	id INT(8) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
 	firstname VARCHAR(30) NOT NULL,
 	lastname VARCHAR(30) NOT NULL,
@@ -27,7 +27,7 @@ INSERT INTO `liltvolontari`.`users` (`firstname`, `lastname`, `email`, `psw`, `p
 
 
 
-create table Calendar (
+create table calendar (
 	id INT(8) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
 	year INT(4) NOT NULL,
 	month INT(2) NOT NULL,
@@ -38,22 +38,22 @@ create table Calendar (
 ) ENGINE=InnoDB;
 
 
-create table Turni (
+create table turni (
 	day INT(8) UNSIGNED NOT NULL,
 	task VARCHAR(30) NOT NULL,
 	position INT(2) NOT NULL,
 	volunteer INT(8) UNSIGNED NOT NULL,
 
 	PRIMARY KEY(day, task, position, volunteer),
-	FOREIGN KEY(day) REFERENCES Calendar(id) ON UPDATE CASCADE ON DELETE CASCADE,
-	FOREIGN KEY(volunteer) REFERENCES Users(id) ON UPDATE CASCADE ON DELETE CASCADE
+	FOREIGN KEY(day) REFERENCES calendar(id) ON UPDATE CASCADE ON DELETE CASCADE,
+	FOREIGN KEY(volunteer) REFERENCES users(id) ON UPDATE CASCADE ON DELETE CASCADE
 
 )ENGINE=InnoDB;
 
 
 
 
-create table Events (
+create table events (
 	id INT(8) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
 	type VARCHAR(15) NOT NULL,
 	title VARCHAR(100) NOT NULL,
@@ -74,8 +74,8 @@ CREATE TABLE eventsattendants (
 	event INT(8) UNSIGNED NOT NULL,
 	volunteer INT(8) UNSIGNED NOT NULL,
 
-	FOREIGN KEY(event) REFERENCES Events(id) ON UPDATE CASCADE ON DELETE CASCADE,
-	FOREIGN KEY(volunteer) REFERENCES Users(id) ON UPDATE CASCADE ON DELETE CASCADE,
+	FOREIGN KEY(event) REFERENCES events(id) ON UPDATE CASCADE ON DELETE CASCADE,
+	FOREIGN KEY(volunteer) REFERENCES users(id) ON UPDATE CASCADE ON DELETE CASCADE,
 	PRIMARY KEY (event, volunteer)
 )ENGINE = InnoDB;
 

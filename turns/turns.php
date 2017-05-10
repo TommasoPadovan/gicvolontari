@@ -142,7 +142,7 @@ function adminAddMonthButton() {
 
 function adminCsvExportButton($shownMonth) {
     return (new PermissionString([
-        PermissionPage::ADMIN => "<a href='export_csv.php?Mese=$shownMonth' class='pull-right btn btn-default'>Esporta In Excell</a>"
+        PermissionPage::ADMIN => "<a href='export_csv.php?Mese=$shownMonth' class='pull-right btn btn-default'>Esporta In Excel</a>"
     ]))->out();
 }
 
@@ -252,7 +252,7 @@ function calendarContent (Month $month, $day, DbConnection $db) {
 
     //nomi di quelli già prenotati
     foreach ($turniVolontari as $row) {
-        $dayTurns[$row['task']][$row['position']] = $db->getUserName($row['volunteer'])
+        $dayTurns[$row['task']][$row['position']] = "<p class='auto-scale'>{$db->getUserName($row['volunteer'])}"
             .eventuallyAddDelete($row, $dayTurns[$row['task']]);
     }
 
@@ -266,9 +266,9 @@ function calendarContent (Month $month, $day, DbConnection $db) {
             adminSelectUserSelect($db, 'clown', 3, $month, $day)
         ];
         $thirdRow = "</tr><tr>
-				<td class='oasi'>{$dayTurns['oasi'][3]} {$selectArr[0]}</td>
-				<td class='fiabe'>{$dayTurns['fiabe'][3]} {$selectArr[1]}</td>
-				<td class='clown'>{$dayTurns['clown'][3]} {$selectArr[2]}</td>";
+				<td>{$dayTurns['oasi'][3]} {$selectArr[0]}</td>
+				<td>{$dayTurns['fiabe'][3]} {$selectArr[1]}</td>
+				<td>{$dayTurns['clown'][3]} {$selectArr[2]}</td>";
     } else $thirdRow='';
 
     $numeroENomeGiorno = "<strong>$day</strong> - " . $month->getDayName($day);
@@ -276,23 +276,28 @@ function calendarContent (Month $month, $day, DbConnection $db) {
     return <<<END
 	<p>$numeroENomeGiorno</p>
 	<hr />
-	<table class="table table-striped table-bordered table-condensed">
+	<table class="table table-bordered table-condensed fixed">
+	    <colgroup>
+	        <col class="oasi">
+	        <col class="fiabe">
+	        <col class="clown">
+        </colgroup>
 		<thead>
 			<tr>
-				<th class='oasi'>Oasi</th>
-				<th class='fiabe'>Fiabe</th>
-				<th class='clown'>Clown</th>
+				<th>Oasi</th>
+				<th>Fiabe</th>
+				<th>Clown</th>
 			</tr>
 		</thead>
 		<tbody>
 			<tr>
-				<td class='oasi'>{$dayTurns['oasi'][1]}</td>
-				<td class='fiabe'>{$dayTurns['fiabe'][1]}</td>
-				<td class='clown'>{$dayTurns['clown'][1]}</td>
+				<td>{$dayTurns['oasi'][1]}</td>
+				<td>{$dayTurns['fiabe'][1]}</td>
+				<td>{$dayTurns['clown'][1]}</td>
 			</tr><tr>
-				<td class='oasi'>{$dayTurns['oasi'][2]}</td>
-				<td class='fiabe'>{$dayTurns['fiabe'][2]}</td>
-				<td class='clown'>{$dayTurns['clown'][2]}</td>
+				<td>{$dayTurns['oasi'][2]}</td>
+				<td>{$dayTurns['fiabe'][2]}</td>
+				<td>{$dayTurns['clown'][2]}</td>
 			$thirdRow
 			</tr>
 		</tbody>
@@ -311,10 +316,16 @@ function adminSelectUserSelect(DbConnection $db, $task, $position, Month $month,
     $m = $month->getMonth();
 
     $selectString = "<select name='user'>";
-    $allUsers = $db->select('users');
+    $allUsers = $db->query('
+        SELECT *
+        FROM users
+        ORDER BY lastname, firstname ASC
+    ');
     foreach	($allUsers as $user)
-        if ($user['id'] != 0)
-            $selectString.= "<option value='{$user['id']}'>{$user['lastname']}</option> \n";
+        if ($user['id'] != 0) {
+            $firstNameFirstLetter = substr($user['firstname'],0,1);
+            $selectString.= "<option value='{$user['id']}'>{$user['lastname']} $firstNameFirstLetter.</option> \n";
+        }
     $selectString.='</select>';
 
     return (new PermissionString([
