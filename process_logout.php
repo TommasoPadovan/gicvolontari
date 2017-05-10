@@ -10,12 +10,11 @@ class Logout extends Command {
 
 	protected function template() {
 
-		if ( isset($_POST['logout']) ) {
-			unset($_SESSION['id']);
-			unset($_SESSION['permessi']);
-			unset($_SESSION['name']);
-			unset($_SESSION);
-		}
+		unset($_SESSION['id']);
+		unset($_SESSION['permessi']);
+		unset($_SESSION['name']);
+		unset($_SESSION);
+
 		header("Location: home.php");
 	}
 }
