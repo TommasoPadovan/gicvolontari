@@ -149,6 +149,7 @@ QUERY
         <div class="col-sm-2 col-xs-6">
             <input class="btn btn-default btn-block" type="submit" value="Filtra per anno">
         </div>
+        <div class="pull-right"><a class="btn btn-default" href="process_admin_reset_psw.php?id={$user['id']}">Reset password</a></div>
     </div>
 </form>
 

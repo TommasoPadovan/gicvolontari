@@ -99,7 +99,7 @@ class Month {
 				return 'Maggio';
 				break;
 			case 6:
-				return 'Giungo';
+				return 'Giugno';
 				break;
 			case 7:
 				return 'Luglio';
