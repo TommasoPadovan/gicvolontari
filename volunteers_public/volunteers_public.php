@@ -87,7 +87,7 @@ $content = <<<HTML
 <form method="GET" action="#">
     <div class="form-group row">
 		<div class="select col-sm-4 col-xs-6">
-            <input type="text" class="form-control" name="omnisearch" id="omnisearch" value="$omnisearch">
+            <input type="text" class="form-control" name="omnisearch" id="omnisearch" value="$omnisearch" autofocus="autofocus">
         </div>
         <div class="col-sm-2 col-xs-6">
             <input class="btn btn-default btn-block" type="submit" value="Cerca">
