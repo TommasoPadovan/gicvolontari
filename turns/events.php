@@ -92,6 +92,9 @@ function monthRow($row) {
 <a onclick="return confirm('Sei sicuro di voler eliminare il mese selezionato? Tutte le prenotazioni e gli eventi associati verranno cancellati')" href='delete_month.php?year=$year&month=$month'>
 	<img src="../img/bin.png" alt="cancella" width="15" height="15">
 </a>
+<a href="turns.php?Mese=$year-$month">
+	<img src="../img/details.png" width="15" height="15">
+</a>
 LINK;
 
 	$row = <<<EOF
