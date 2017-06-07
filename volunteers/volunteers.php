@@ -186,10 +186,10 @@ $content = <<<HTML
 <h1>Lista Volontari</h1>
 <form method="GET" action="#">
     <div class="form-group row">
-		<div class="select col-sm-4 col-xs-6">
+		<div class="select col-sm-4 col-xs-9">
             <input type="text" class="form-control" name="omnisearch" id="omnisearch" value="$omnisearch" autofocus="autofocus">
         </div>
-        <div class="col-sm-2 col-xs-6">
+        <div class="col-sm-2 col-xs-3">
             <input class="btn btn-default btn-block" type="submit" value="Cerca">
         </div>
     </div>
