@@ -8,12 +8,29 @@ $db = new DbConnection;
 
 
 
-
+if (isset($_GET['omnisearch'])) $omnisearch = $_GET['omnisearch'];
+else $omnisearch = '';
 
 
 //table of users in the db
 $usersTable='';
-$users = $db->query('SELECT * FROM users ORDER BY permessi, lastname, firstname');
+if ($omnisearch == '')
+	$users = $db->query('SELECT * FROM users ORDER BY permessi, lastname, firstname');
+else {
+	$statement = $db->prepare(<<<TAG
+    SELECT *
+    FROM users
+    WHERE firstname LIKE :omnisearch
+        OR lastname LIKE :omnisearch
+        OR email LIKE :omnisearch
+        OR phone LIKE :omnisearch
+    ORDER BY permessi, lastname, firstname
+TAG
+
+	);
+	$statement->execute([':omnisearch' => "%$omnisearch%"]);
+	$users = $statement->fetchAll(PDO::FETCH_ASSOC);
+}
 foreach ($users as $row) {
 	if ($row['id'] != 0)	//l'utente 0 è il placeholder per la riunione che va ad occupare i turni della sera
 		$usersTable.=userRow($row, $db);
@@ -167,6 +184,16 @@ $content = <<<HTML
 
 <a href="export_csv.php" class="btn btn-default pull-right">Esporta in Excel</a>
 <h1>Lista Volontari</h1>
+<form method="GET" action="#">
+    <div class="form-group row">
+		<div class="select col-sm-4 col-xs-6">
+            <input type="text" class="form-control" name="omnisearch" id="omnisearch" value="$omnisearch" autofocus="autofocus">
+        </div>
+        <div class="col-sm-2 col-xs-6">
+            <input class="btn btn-default btn-block" type="submit" value="Cerca">
+        </div>
+    </div>
+</form>
 <div class="table-responsive">
 	<table class="table table-striped table-bordered table-condensed">
 		<thead>

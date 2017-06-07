@@ -134,6 +134,13 @@ QUERY
         $yearOptions.="<option value='$i'>$i</option>";
 
 
+    $address = "{$user['address']}";
+    if ($user['address2'] != '') $address .= ", {$user['address2']}";
+    $address2 = "{$user['cap']}";
+    if ($user['city'] != '') $address2 .= ", {$user['city']}";
+    if ($user['prov'] != '') $address2 .= "({$user['prov']})";
+    $address2 .= " {$user['state']}";
+
     $content = <<<HTML
 <a class="pull-right" href="print_volunteer_detail.php?id={$_GET['id']}&year={$_GET['year']}"><img src="../img/print.png" width="30" height="30" alt="stampa dettagli volontario"></a>
 <h1>Dettagli di {$user['firstname']} {$user['lastname']}</h1>
@@ -149,8 +156,26 @@ QUERY
         <div class="col-sm-2 col-xs-6">
             <input class="btn btn-default btn-block" type="submit" value="Filtra per anno">
         </div>
+        <div class="pull-right"><a class="btn btn-default" href="process_admin_reset_psw.php?id={$user['id']}">Reset password</a></div>
     </div>
 </form>
+
+<h2>Dati personali</h2>
+<div class="row">
+    <div class="col-sm-6">
+        <p><label for="Nome"><strong>Nome: </strong></label> {$user['firstname']}</p>
+        <p><label for="Cognome"><strong>Cognome: </strong></label> {$user['lastname']}</p>
+        <p><label for="Email"><strong>Email: </strong></label> {$user['email']}</p>
+        <p><label for="Telefono"><strong>Telefono: </strong></label> {$user['phone']}</p>
+
+    </div>
+    <div class="col-sm-6">
+        <p><label for="CF"><strong>CF: </strong></label> {$user['CF']}</p>
+        <p><label for="Data di nascita"><strong>Data di nascita: </strong></label> {$user['birthdate']}</p>
+        <p><label for="Indirizzo"><strong>Indirizzo: </strong></label> $address</p>
+        <p><label for="Indirizzo riga 2"></label> $address2</p>
+    </div>
+</div>
 
 <h2>Riassunto presenze ai turni serali</h2>
 

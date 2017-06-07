@@ -23,6 +23,7 @@ class GeneralLayout extends PermissionPage {
 
 		$this->pages = array(
 			new Page(self::HOMEPATH.'volunteers/volunteers.php','Volontari', PermissionPage::ADMIN),
+			new Page(self::HOMEPATH.'volunteers_public/volunteers_public.php', "Lista Volontari", PermissionPage::MORNING),
 			new Page(self::HOMEPATH."turns/turns.php", 'Turni', PermissionPage::MORNING),
 			new Page(self::HOMEPATH.'events/eventsandcourses.php', 'Eventi', PermissionPage::MORNING),
 			new Page(self::HOMEPATH.'commitments/mycommittments.php', 'Miei Impegni', PermissionPage::MORNING)
