@@ -117,7 +117,7 @@ function prevMonthButton($shownMonth, $currentMonth) {
         $shownMonth[1] = 12;
         $shownMonth[0]--;
     }
-    if ($shownMonth[0]>=$currentMonth[0] && $shownMonth[1]>=$currentMonth[1]) {
+    if ($shownMonth[0]>$currentMonth[0] || ($shownMonth[0]==$currentMonth[0] && $shownMonth[1]>=$currentMonth[1])) {
         $targetMonth = $shownMonth[0].'-'.str_pad($shownMonth[1], 2, '0', STR_PAD_LEFT);
 
         return "<a href='turns.php?Mese=$targetMonth' class='btn btn-default btn-block'><img src=\"../img/lArrow.png\" width='30em' height='50em' alt='vai al mese precedente'></a>";
