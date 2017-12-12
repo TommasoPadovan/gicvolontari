@@ -127,7 +127,7 @@ function prevMonthButton($shownMonth, $currentMonth) {
 
 
 function getMaxMonth(DbConnection $db) {
-    $yearMonths = $db->query("SELECT year, month FROM calendar ORDER BY year, month DESC")->fetchAll(PDO::FETCH_ASSOC);
+    $yearMonths = $db->query("SELECT year, month FROM calendar ORDER BY year DESC, month DESC")->fetchAll(PDO::FETCH_ASSOC);
     $year = $yearMonths[0]['year'];
     $month = str_pad($yearMonths[0]['month'], 2, '0', STR_PAD_LEFT);
     return "$year-$month";
