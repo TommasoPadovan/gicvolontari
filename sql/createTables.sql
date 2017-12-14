@@ -73,6 +73,9 @@ create table events (
 CREATE TABLE eventsattendants (
 	event INT(8) UNSIGNED NOT NULL,
 	volunteer INT(8) UNSIGNED NOT NULL,
+	note varchar(100),
+  timestamp int(11),
+  multiplicity int(11),
 
 	FOREIGN KEY(event) REFERENCES events(id) ON UPDATE CASCADE ON DELETE CASCADE,
 	FOREIGN KEY(volunteer) REFERENCES users(id) ON UPDATE CASCADE ON DELETE CASCADE,

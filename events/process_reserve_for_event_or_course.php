@@ -26,6 +26,11 @@ class ReserveForEventOrCourseCommand extends Command {
 
 
         if ( isset($_SESSION['id']) && isset($_GET['event'])) {
+            $multiplicity = 1;
+            if ( isset($_GET['multiplicity']) ) $multiplicity = $_GET['multiplicity'];
+            $note = '';
+            if ( isset($_GET['note']) ) $note = $_GET['note'];
+
             //can i reserve?
             $me = $db->getUser($_SESSION['id']);
             $permission = $me['permessi'];
@@ -74,6 +79,8 @@ class ReserveForEventOrCourseCommand extends Command {
                 $db->insert('eventsattendants', [
                     'event' => $_GET['event'],
                     'volunteer' => $_SESSION['id'],
+                    'multiplicity' => $multiplicity,
+                    'note' => $note,
                     'timestamp' => time()
                 ]);
 
